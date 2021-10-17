@@ -36,7 +36,7 @@ module.exports = {
 
 		message.delete();
 
-    // if (!message.member.roles.cache.has(staffrole)) return message.reply({ embeds: [Prohibited] });
+     if (!message.member.roles.cache.has(staffrole)) return message.reply({ embeds: [Prohibited] });
     if (!args[1]) return message.channel.send({ embeds: [Error] }); // If there is args[1], there must be args[0]
 
     try {
