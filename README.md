@@ -20,7 +20,6 @@ If you decided to help out with the bot and you found a few lines of code that c
 
 * also make sure the jointocreate.js, giveaway.js and topic.js are working as best as possible in /toworkon/
 
-* make sure the give-role command is restricted to the users's role - so they cant give themselfs a higher role
 
 # Issues
 If you found any issues that are related to the bot, then you can create an [issue](https://github.com/MrXez/Squatch/issues)
