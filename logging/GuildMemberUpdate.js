@@ -1,11 +1,11 @@
-const { MessageEmbed } = require('discord.js');
+const discord = require('discord.js');
 const { channelLog } = require('../config/constants/channel.json');
 
 module.exports = (client) => {
   client.on('guildMemberUpdate', async (Old, New) => {
     const logs = await client.channels.cache.get(channelLog);
     if (Old.user.tag !== New.user.tag || Old.displayName !== New.displayName || Old.user.username !== New.user.username) {
-      const embed = new MessageEmbed()
+      const embed = new discord.MessageEmbed()
         .setTitle('Member Updated')
         .setColor('GREEN');
       if (Old.user.tag !== New.user.tag) {

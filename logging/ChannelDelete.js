@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const discord = require('discord.js');
 const { channelLog } = require('../config/constants/channel.json');
 
 module.exports = (client) => {

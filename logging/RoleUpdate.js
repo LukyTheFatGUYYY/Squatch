@@ -1,11 +1,11 @@
-const { MessageEmbed } = require('discord.js');
+const discord = require('discord.js');
 const { channelLog } = require('../config/constants/channel.json');
 
 module.exports = (client) => {
   client.on('roleUpdate', async (Old, New) => {
     const logs = await client.channels.cache.get(channelLog);
     if (Old.hexColor !== New.hexColor || Old.name !== New.name || Old.hoist !== New.hoist || Old.mentionable !== New.mentionable) {
-      const embed = new MessageEmbed()
+      const embed = new discord.MessageEmbed()
         .setTitle('Role Updated')
         .setColor(New.hexColor);
 

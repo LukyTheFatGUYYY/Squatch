@@ -1,10 +1,10 @@
-const { MessageEmbed } = require('discord.js');
+const discord = require('discord.js');
 const { channelLog } = require('../config/constants/channel.json');
 
 module.exports = (client) => {
   client.on('emojiDelete', async (emoji) => {
     const logs = await client.channels.cache.get(channelLog);
-    const embed = new MessageEmbed()
+    const embed = new discord.MessageEmbed()
       .setTitle('Emoji Deleted')
       .setColor('GREEN')
       .setDescription('A custom emoji was deleted.')

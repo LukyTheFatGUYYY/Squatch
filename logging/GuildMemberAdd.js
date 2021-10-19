@@ -1,10 +1,10 @@
-const { MessageEmbed } = require('discord.js');
+const discord = require('discord.js');
 const { channelLog } = require('../config/constants/channel.json');
 
 module.exports = (client) => {
   client.on('guildMemberAdd', async (member) => {
     const logs = await client.channels.cache.get(channelLog);
-    const embed = new MessageEmbed()
+    const embed = new discord.MessageEmbed()
       .setTitle('Member Joined')
       .setColor('GREEN')
       .setDescription('A new member joined the server.')

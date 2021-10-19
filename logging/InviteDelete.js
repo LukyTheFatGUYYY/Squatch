@@ -1,10 +1,10 @@
-const { MessageEmbed } = require('discord.js');
+const discord = require('discord.js');
 const { channelLog } = require('../config/constants/channel.json');
 
 module.exports = (client) => {
   client.on('inviteDelete', async (invite) => {
     const logs = await client.channels.cache.get(channelLog);
-    const embed = new MessageEmbed()
+    const embed = new discord.MessageEmbed()
       .setTitle('Invite Deleted')
       .setColor('GREEN')
       .addField('Invite Code', invite.code, true)
