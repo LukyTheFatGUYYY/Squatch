@@ -8,8 +8,7 @@ module.exports = {
   category: 'ticket',
   clientPermissions: [],
   userPermissions: [],
-  run: (msg, data) => {
-    msg.delete();
+  run: (message, data) => {
     const welcome = new Discord.MessageEmbed()
       .setColor('GREEN')
       .setTitle(`Welcome ${message.author.username}`)
@@ -46,19 +45,19 @@ module.exports = {
         .setTitle('Ticket')
         .setDescription(`You can view your ticket at <#${channel.id}>`);
 
-      message.channel.send({ embeds: [viewchannel] }).then((msg) => msg.delete({ timeout: 10000 }));
-      channel.send(welcome).then((msg) => {
-        msg.react('<:envelope:>');
+      message.channel.send({ embeds: [viewchannel] }).then((message) => message.delete({ timeout: 10000 }));
+      channel.send(welcome).then((message) => {
+        message.react('<:envelope:>');
         const filter = (reaction, user) => user.id === message.author.id && reaction.emoji.name === ':envelope:';
-        msg.awaitReactions(filter, { max: 1 }).then(async (cls) => {
+        message.awaitReactions(filter, { max: 1 }).then(async (cls) => {
           const delete1 = new Discord.MessageEmbed()
             .setColor('RED')
             .setTitle('Deletion')
             .setDescription('Ticket Will be deleted in 5 seconds');
 
-          await msg.channel.send({ embeds: [delete1] });
+          await message.channel.send({ embeds: [delete1] });
           setTimeout(() => {
-            msg.channel.delete();
+            message.channel.delete();
           }, 5000);
         });
       });
