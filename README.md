@@ -5,7 +5,7 @@
 N/A
 
 # Customize the bot
-You can customize all of the related channel ids at [/config/constants/channel.json](https://github.com/MrXez/Squatch/blob/main/config/constants/channel.json) and you can customize all of the related role ids at /config/constants/roles.json.
+You can customize all of the related channel ids at [/config/constants/channel.json](https://github.com/MrXez/Squatch/blob/main/config/constants/channel.json) and you can customize all of the related role ids at [/config/constants/roles.json](https://github.com/MrXez/Squatch/blob/main/config/constants/roles.json).
 
 If you decide to keep the pcbuildhelp.js file at [/events/](https://github.com/MrXez/Squatch/tree/main/events) then you will need to add an API key at [/config/constants/api.json](https://github.com/MrXez/Squatch/blob/main/config/constants/api.json). You can customize some related information at [/config/constants/other.json](https://github.com/MrXez/Squatch/blob/main/config/constants/other.json).
 
@@ -15,13 +15,12 @@ To add your bots token, you can add the token at [/config/credentials.env](https
 If you decided to help out with the bot and you found a few lines of code that could cause a problem or think you have a better way of doing something then you're more then welcome to create a pull request and show the code you would like to change and explain the difference.
 
 # To-Do
-***
 * Fix the webscraping which can be found at /events/pcbuildhelp.js
 
 * Also make sure the jointocreate.js, giveaway.js and topic.js are working as best as possible in /toworkon/
 
 
-# Issues
+# [Issues](https://github.com/MrXez/Squatch/issues)
 If you found any issues that are related to the bot, then you can create an [issue](https://github.com/MrXez/Squatch/issues).
 
 # How to install the bot
