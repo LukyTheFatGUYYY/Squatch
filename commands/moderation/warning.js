@@ -10,8 +10,8 @@ module.exports = {
   aliases: [],
   usage: '<Case ID> <User ID>',
   description: 'Get information about a case',
-  run: async (client, msg, args, prefix, command) => {
-    msg.delete();
+  run: async (client, msg, args, prefix) => {
+    msg.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

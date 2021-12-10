@@ -10,16 +10,17 @@ module.exports = {
     clientPermissions: [],
     userPermissions: [],
     run: async (client, message, data) => {
+        message.delete({ timeout: 3000 });
         let userArray = message.content.split(" ");
         let userArgs = userArray.slice(1);
         const Notenoughpermission = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('You do not have enough permission to use this command');
-      const mentionuser = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Please mention a valid user');
+            .setColor('RED')
+            .setTitle('Error')
+            .setDescription('You do not have enough permission to use this command');
+        const mentionuser = new Discord.MessageEmbed()
+            .setColor('RED')
+            .setTitle('Error')
+            .setDescription('Please mention a valid user');
         let user = message.mentions.members.first() || message.guild.members.cache.get(userArgs[0]) || message.guild.members.cache.find(x => x.user.username.toLowerCase() === userArgs.slice(0).join(" ") || x.user.username === userArgs[0])
 
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.reply({ embeds: [Notenoughpermission] });

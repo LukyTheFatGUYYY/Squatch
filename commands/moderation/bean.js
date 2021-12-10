@@ -15,7 +15,7 @@ module.exports = {
   clientPermissions: [],
   userPermissions: [],
   run: async (client, msg, args) => {
-    msg.delete();
+    msg.delete({timeout: 3000});
     const warnsDB = new Enmap({ name: 'warns' });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')

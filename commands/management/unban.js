@@ -9,8 +9,8 @@ module.exports = {
   aliases: [],
   usage: '<User ID>',
   description: 'Unban a user from the server',
-  run: async (client, msg, args, prefix, command) => {
-    msg.delete();
+  run: async (client, msg, args) => {
+    msg.delete({timeout: 3000});
     if (!msg.member.roles.cache.has(adminrole)) {
       return msg.reply(
         "I'm sorry but you have to be an administrator to use this command!",

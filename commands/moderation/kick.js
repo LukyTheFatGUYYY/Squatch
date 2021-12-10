@@ -14,8 +14,8 @@ module.exports = {
   aliases: [],
   usage: '<User ID/@mention> <reason>',
   description: 'Kick a member',
-  run: async (client, msg, args, prefix, command) => {
-    msg.delete();
+  run: async (client, msg, args) => {
+    msg.delete({timeout: 3000});
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()

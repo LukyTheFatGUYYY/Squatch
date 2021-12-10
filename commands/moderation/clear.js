@@ -11,6 +11,7 @@ module.exports = {
   description: 'clear a certain amount of messages!',
   usage: 'Clear <Amounts Of Messages>',
   run: async (client, message, args) => {
+    message.delete({timeout: 3000});
     const server = client.guilds.cache.get(serverID);
     const warnLogs = server.channels.cache.get(channelLog);
     const Prohibited = new Discord.MessageEmbed()

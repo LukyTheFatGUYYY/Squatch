@@ -7,13 +7,8 @@ module.exports = {
   category: 'moderation',
   clientPermissions: [],
   userPermissions: [],
-	/**
-	 * 
-	 * @param {Discord.Client} client 
-	 * @param {Discord.Message} message 
-	 * @param {Array} args 
-	 */
   run: async (_client, message, args) => {
+    message.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

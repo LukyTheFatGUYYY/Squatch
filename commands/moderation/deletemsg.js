@@ -11,7 +11,7 @@ module.exports = {
   usage: '<message link>',
   description: 'Delete a message',
   run: async (client, message, args) => {
-    message.delete();
+    message.delete({timeout: 3000});
     const server = client.guilds.cache.get(serverID);
     const warnLogs = server.channels.cache.get(channelLog);
     const invalidlink = new Discord.MessageEmbed()

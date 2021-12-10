@@ -12,8 +12,8 @@ module.exports = {
   aliases: [],
   usage: '<User ID>',
   description: 'Clear all warnings of a user',
-  run: async (client, msg, args, prefix, command) => {
-    msg.delete();
+  run: async (client, msg, args) => {
+    msg.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

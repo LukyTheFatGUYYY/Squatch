@@ -13,8 +13,8 @@ module.exports = {
   category: 'staff',
   clientPermissions: [],
   userPermissions: [],
-  run: (message, data) => {
-    message.delete();
+  run: (client, message, data) => {
+    message.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
