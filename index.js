@@ -16,6 +16,10 @@ const client = new Discord.Client({
 });
 const config = require('./config/main.json');
 
+client.on("ready", () => {
+  client.user.setActivity(`the server`, {type: 'WATCHING'});
+});
+
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 const talkedRecently = new Map();
