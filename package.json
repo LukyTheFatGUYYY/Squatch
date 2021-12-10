@@ -2,16 +2,16 @@
   "dependencies": {
     "@haileybot/captcha-generator": "^1.7.0",
     "@iamtraction/google-translate": "^1.1.2",
-    "better-sqlite3": "^7.4.3",
+    "better-sqlite3": "^7.4.5",
     "canvas": "^2.8.0",
-    "discord.js": "^13.2.0",
+    "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
     "enmap": "^5.8.7",
     "fakerator": "^0.3.4",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
-    "mongoose": "^6.0.10",
-    "nanoid": "^3.1.29",
+    "mongoose": "^6.1.1",
+    "nanoid": "^3.1.30",
     "table-topic-generator": "^1.0.2"
   }
 }
