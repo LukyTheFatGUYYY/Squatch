@@ -91,7 +91,7 @@ client.on('messageCreate', async (message) => {
         `Correct usage: ${config.prefix}${command.name} ${command.usage}`,
       );
     }
-    command.run(client, message, args, { config, db: {} });
+    command.run(client, message, args, data, { config, db: {} });
   } catch (err) {
     message.channel
       .send(`:x: An error occured while running that command. Please contact 
