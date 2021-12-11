@@ -12,7 +12,6 @@ const { readdirSync } = require("fs");
 
 const client = new Discord.Client({
   intents: 32767, // every intents
-  presence: require('./config/presence.json'),
 });
 const config = require('./config/main.json');
 
