@@ -11,7 +11,7 @@ module.exports = {
   run: (client, message, args, data) => {
     const { args } = data;
 
-    msg.delete();
+    message.delete();
     function ChangeLatter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -70,54 +70,54 @@ module.exports = {
     });
 
     if (!args[0]) {
-      return msg.channel.send({ embeds: [embedhelp] });
+      return message.channel.send({ embeds: [embedhelp] });
     }
 
     if (args[0].toLowerCase() === 'management') {
-      return msg.channel.send(managementembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(managementembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Management') {
-      return msg.channel.send(managementembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(managementembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'misc') {
-      return msg.channel.send(miscembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Misc') {
-      return msg.channel.send(miscembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'miscellaneous') {
-      return msg.channel.send(miscembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Miscellaneous') {
-      return msg.channel.send(miscembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'moderation') {
-      return msg.channel.send(modembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Moderation') {
-      return msg.channel.send(modembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'mod') {
-      return msg.channel.send(modembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Mod') {
-      return msg.channel.send(modembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Utility') {
-      return msg.channel.send(utilityembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(utilityembed).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'utility') {
-      return msg.channel.send(utilityembed).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send(utilityembed).then((message) => message.delete({ timeout: 50000 }));
     }
 
     const cmd = client.commands.get(args[0].toLowerCase()) || client.commands.get(client.aliases.get(args[0].toLowerCase()));
 
-    if (!cmd) return msg.channel.send(embedhelp).then((msg) => msg.delete({ timeout: 50000 }));
+    if (!cmd) return message.channel.send(embedhelp).then((message) => message.delete({ timeout: 50000 }));
 
     if (cmd.aliases === null) cmd.aliases = '';
     if (cmd.description.length === 0) cmd.description = 'N/A';
     if (cmd.category === null) cmd.category = 'No Category!';
-    if (cmd.name === null) return msg.channel.send('Something Went Wrong!');
+    if (cmd.name === null) return message.channel.send('Something Went Wrong!');
 
     const cmdhelp = new MessageEmbed()
       .setColor(Color)
@@ -127,9 +127,9 @@ module.exports = {
       .addField('Category', `${ChangeLatter(cmd.category)}`)
       .addField('Description', `${cmd.description}`);
     if (cmd) {
-      return msg.channel.send({ embeds: [cmdhelp] }).then((msg) => msg.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [cmdhelp] }).then((message) => message.delete({ timeout: 50000 }));
     }
-    return msg.channel.send({ embeds: [embedhelp] }).then((msg) => msg.delete({ timeout: 50000 }));
+    return message.channel.send({ embeds: [embedhelp] }).then((message) => message.delete({ timeout: 50000 }));
 
     // End
   },
