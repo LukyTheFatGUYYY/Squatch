@@ -9,7 +9,6 @@ module.exports = {
   clientPermissions: [],
   userPermissions: [],
   run: (client, message, args, data) => {
-    const { args } = data;
     const server = message.guild;
     const statusMoji = {
       dnd: '<:red_circle:>',

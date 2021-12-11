@@ -9,8 +9,6 @@ module.exports = {
   clientPermissions: [],
   userPermissions: [],
   run: (client, message, args, data) => {
-    const { args } = data;
-
     message.delete();
     function ChangeLatter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);

@@ -10,7 +10,7 @@ module.exports = {
   aliases: ['delmsg'],
   usage: '<message link>',
   description: 'Delete a message',
-  run: async (client, message, args, data) => {
+  run: async (client, message, args) => {
     message.delete({timeout: 3000});
     const server = client.guilds.cache.get(serverID);
     const warnLogs = server.channels.cache.get(channelLog);
