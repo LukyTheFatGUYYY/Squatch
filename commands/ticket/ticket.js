@@ -8,7 +8,7 @@ module.exports = {
   category: 'ticket',
   clientPermissions: [],
   userPermissions: [],
-  run: (message, data) => {
+  run: (client, message, args, data) => {
     const welcome = new Discord.MessageEmbed()
       .setColor('GREEN')
       .setTitle(`Welcome ${message.author.username}`)

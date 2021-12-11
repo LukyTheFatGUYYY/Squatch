@@ -8,9 +8,9 @@ module.exports = {
   category: 'info',
   clientPermissions: [],
   userPermissions: [],
-  run: (client, msg, data) => {
+  run: (client, message, args, data) => {
     const { args } = data;
-    const server = msg.guild;
+    const server = message.guild;
     const statusMoji = {
       dnd: '<:red_circle:>',
       offline: '<:black_circle:>',
@@ -34,9 +34,9 @@ module.exports = {
         || server.members.cache.find((m) => m.user.username.toLowerCase() == args[0].toLowerCase())
         || server.members.cache.find((m) => m.user.tag.toLowerCase() == args[0].toLowerCase())
         || server.members.cache.find((m) => m.displayName.toLowerCase() == args[0].toLowerCase())
-        || msg.mentions.members.first() || false;
+        || message.mentions.members.first() || false;
     }
-    if (!args[0]) member = msg.member;
+    if (!args[0]) member = message.member;
     if (member) {
       const em = new MessageEmbed()
         .setAuthor(`${member.displayName}'s information`, member.user.displayAvatarURL({ format: 'png', dynamic: true }))
@@ -49,13 +49,13 @@ module.exports = {
         .addField('Status', `${statusMoji[member.user.presence.status]} ${statusName[member.user.presence.status]}`, true)
         .addField('Main Device', `${device[Object.keys(member.user.presence.clientStatus)[0]]} ${Object.keys(member.user.presence.clientStatus)[0].toProperCase()}`, true);
       if (member.user.presence.activities[0] && member.user.presence.activities[0].name !== 'Custom Status') em.addField('Activity', `${member.user.presence.activities[0].type.toProperCase()} ${member.user.presence.activities[0].name}`);
-      if (msg.member.id != member.id) {
-        em.setFooter(`Requested by ${msg.member.displayName}`);
+      if (message.member.id != member.id) {
+        em.setFooter(`Requested by ${message.member.displayName}`);
       }
-      msg.channel.send({ embeds: [em] });
+      message.channel.send({ embeds: [em] });
     } else {
-      let user = msg.author;
-      if (args[0]) user = client.users.cache.get(args[0]) || msg.author;
+      let user = message.author;
+      if (args[0]) user = client.users.cache.get(args[0]) || message.author;
       const em = new MessageEmbed()
         .setAuthor(`${user.username}'s information`, user.displayAvatarURL({ format: 'png', dynamic: true }))
         .setThumbnail(user.displayAvatarURL({ format: 'png', dynamic: true }))
@@ -63,8 +63,8 @@ module.exports = {
         .addField('Username', user.username, true)
         .addField('Tag', user.tag, true)
         .addField(`Created At [${moment(user.createdTimestamp).fromNow()}]`, moment(user.createdTimestamp).format('LLL'))
-        .setFooter(`Requested by ${msg.member.displayName}`);
-      msg.channel.send({ embeds: [em] });
+        .setFooter(`Requested by ${message.member.displayName}`);
+        message.channel.send({ embeds: [em] });
     }
   },
 };

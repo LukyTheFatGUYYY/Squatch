@@ -16,8 +16,8 @@ module.exports = {
   aliases: [],
   usage: '<User ID/@mention> <duration (seconds)> <reason>',
   description: 'Mute a member',
-  run: async (client, msg, args) => {
-    msg.delete({timeout: 3000});
+  run: async (client, message, args, data) => {
+    message.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor("RED")
       .setTitle('Prohibited User')
@@ -50,14 +50,14 @@ module.exports = {
     const mutedDB = new Enmap({ name: 'mutes' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const server = client.guilds.cache.get(serverID);
-    if (!msg.member.roles.cache.has(staffrole)) {
-      return msg
+    if (!message.member.roles.cache.has(staffrole)) {
+      return message
         .reply({ embeds: [Prohibited] });
     }
-    const toWarn = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
-    const moderator = msg.member;
+    const toWarn = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    const moderator = message.member;
     if (!toWarn) {
-      return msg
+      return message
         .reply({ embeds: [validuser] });
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
@@ -66,14 +66,14 @@ module.exports = {
     });
     let duration = args[1];
     if (!duration) {
-      return msg
+      return message
         .reply({ embeds: [durationtime] });
     }
     if (!/^\d+$/.test(duration)) {
-      return msg
+      return message
         .reply({ embeds: [durationtime] })
         .then((d) => d.delete({ timeout: 5000 }))
-        .then(msg.delete({ timeout: 2000 }));
+        .then(message.delete({ timeout: 2000 }));
     }
     if (duration == '0') duration = '100000000000';
     let reason = args
@@ -82,23 +82,23 @@ module.exports = {
       .replace(args[1], '')
       .trim();
     if (!reason) {
-      return msg
+      return message
         .reply({ embeds: [stateareason] });
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return msg.reply({ embeds: [cantmuteyourself] });
+    if (moderator.id == toWarn.id) return message.reply({ embeds: [cantmuteyourself] });
     if (
       server.member(moderator.id).roles.highest.rawPosition
       <= (server.member(toWarn.id)
         ? server.member(toWarn.id).roles.highest.rawPosition
         : 0)
     ) {
-      return msg
+      return message
         .reply({ embeds: [samerankorhigher] });
     }
     const warnLogs = server.channels.cache.get(channelLog);
     mutedDB.set(toWarn.id, {
-      roles: msg.guild
+      roles: message.guild
         .member(toWarn.id)
         .roles.cache.array()
         .filter(
@@ -143,7 +143,7 @@ module.exports = {
     const emChan = new MessageEmbed()
       .setDescription(`You have succesfully muted **${toWarn.user.tag}**.`)
       .setColor('ORANGE')
-    await msg.channel
+    await message.channel
       .send({ embeds: [emChan] });
     warnsDB.set(
       toWarn.id,
@@ -154,6 +154,6 @@ module.exports = {
       },
       `warns.${caseID}`,
     );
-    return msg.guild.member(toWarn.id).roles.set(['795934921717710879']);
+    return message.guild.member(toWarn.id).roles.set(['795934921717710879']);
   },
 };

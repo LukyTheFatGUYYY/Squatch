@@ -15,8 +15,8 @@ module.exports = {
   category: 'moderation',
   clientPermissions: [],
   userPermissions: [],
-  run: async (client, msg, args) => {
-    msg.delete({timeout: 3000});
+  run: async (client, message, args, data) => {
+    message.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
@@ -42,29 +42,29 @@ module.exports = {
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const server = client.guilds.cache.get(serverID);
-    if (!msg.member.roles.cache.has(staffrole)) return msg.reply(Prohibited);
-    if (!msg.mentions.members && !client.users.cache.get(args[0])) {
+    if (!message.member.roles.cache.has(staffrole)) return message.reply(Prohibited);
+    if (!message.mentions.members && !client.users.cache.get(args[0])) {
       await client.users.fetch(args[0]);
     }
-    const toWarn = msg.mentions.users.first() || client.users.cache.get(args[0]);
-    const moderator = msg.member;
-    if (!toWarn) return msg.reply({ embeds: [validuser] });
+    const toWarn = message.mentions.users.first() || client.users.cache.get(args[0]);
+    const moderator = message.member;
+    if (!toWarn) return message.reply({ embeds: [validuser] });
     warnsDB.ensure(toWarn.id, { warns: {} });
     let reason = args.join(' ').replace(args[0], '').trim();
     if (!reason) {
-      return msg.reply(
+      return message.reply(
         stateareason,
       );
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return msg.reply(cantbanyourself);
+    if (moderator.id == toWarn.id) return message.reply(cantbanyourself);
     if (
       server.members.cache.get(moderator.id).roles.highest.rawPosition
       <= (server.members.cache.get(toWarn.id)
         ? server.members.cache.get(toWarn.id).roles.highest.rawPosition
         : 0)
     ) {
-      return msg.reply(
+      return message.reply(
         samerankorhigher,
       );
     }
@@ -89,7 +89,7 @@ module.exports = {
     const emChan = new MessageEmbed()
       .setDescription(`You have succesfully banned **${toWarn.tag}**.`)
       .setColor('GREEN');
-    await msg.channel.send({ embeds: [emChan] });
+    await message.channel.send({ embeds: [emChan] });
     warnsDB.set(
       toWarn.id,
       {

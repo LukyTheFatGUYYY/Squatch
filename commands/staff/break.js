@@ -13,7 +13,7 @@ module.exports = {
   category: 'staff',
   clientPermissions: [],
   userPermissions: [],
-  run: (client, message, data) => {
+  run: (client, message, args, data) => {
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

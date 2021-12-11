@@ -14,8 +14,8 @@ module.exports = {
   aliases: [],
   usage: '<User ID/@mention> <reason>',
   description: 'Kick a member',
-  run: async (client, msg, args) => {
-    msg.delete({timeout: 3000});
+  run: async (client, message, args, data) => {
+    message.delete({timeout: 3000});
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()
@@ -41,31 +41,31 @@ module.exports = {
       .setTitle('Error')
       .setDescription('You can\'t kick that user due to role hierarchy');
     const server = client.guilds.cache.get(serverID);
-    if (!msg.member.roles.cache.has(staffrole)) {
-      return msg
+    if (!message.member.roles.cache.has(staffrole)) {
+      return message
         .reply(Prohibited);
     }
-    const toWarn = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
-    const moderator = msg.member;
+    const toWarn = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    const moderator = message.member;
     if (!toWarn) {
-      return msg
+      return message
         .reply(validuser);
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
     let reason = args.join(' ').replace(args[0], '').trim();
     if (!reason) {
-      return msg
+      return message
         .reply(stateareason);
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return msg.reply(cantkickyourself);
+    if (moderator.id == toWarn.id) return message.reply(cantkickyourself);
     if (
       server.members.cache.get(moderator.id).roles.highest.rawPosition
       <= (server.members.cache.get(toWarn.id)
         ? server.members.cache.get(toWarn.id).roles.highest.rawPosition
         : 0)
     ) {
-      return msg
+      return message
         .reply(samerankorhigher);
     }
     const warnLogs = server.channels.cache.get(channelLog);
@@ -79,7 +79,7 @@ module.exports = {
       .addField('Moderator', `${moderator.user.tag} (${moderator.id})`)
       .addField('Reason', `\`(kicked) - ${reason}\``)
     await warnLogs.send(em);
-    const Server = msg.member.guild.name;
+    const Server = message.member.guild.name;
     const emUser = new MessageEmbed()
       .setTitle('Kicked')
       .setColor('RED')
@@ -91,7 +91,7 @@ module.exports = {
     const emChan = new MessageEmbed()
       .setDescription(`You have succesfully kicked **${toWarn.user.tag}**.`)
       .setColor("GREEN");
-    await msg.channel
+    await message.channel
       .send({ embeds: [emChan] });
     warnsDB.set(
       toWarn.id,

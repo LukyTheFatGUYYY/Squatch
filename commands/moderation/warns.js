@@ -11,8 +11,8 @@ module.exports = {
   aliases: [],
   usage: '<User ID>',
   description: 'Get a list of cases',
-  run: async (_client, msg, args) => {
-    msg.delete({timeout: 3000});
+  run: async (client, message, args, data) => {
+    message.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
@@ -26,9 +26,9 @@ module.exports = {
         'Please enable your dms with this server to that I can send you the information you requested!',
       );
     const warnsDB = new Enmap({ name: 'warns' });
-    const user = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]) || msg.member;
+    const user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member;
     warnsDB.ensure(user.id, { points: 0, warns: {} });
-    if (user.id == msg.member.id) {
+    if (user.id == message.member.id) {
       const em = new Discord.MessageEmbed()
         .setTitle('Warnings')
         .setColor('GREEN')
@@ -38,8 +38,8 @@ module.exports = {
             : 'You have not been warned before'
           }\``,
         );
-      await msg.author.send({ embeds: [em] }).catch((err) => msg.reply(enabledms));
-      await msg.channel.send({
+      await message.author.send({ embeds: [em] }).catch((err) => message.reply(enabledms));
+      await message.channel.send({
         embeds: [
           new Discord.MessageEmbed()
             .setColor('GREEN')
@@ -49,7 +49,7 @@ module.exports = {
         ],
       });
     } else {
-      if (!msg.member.roles.cache.has(staffrole)) return msg.reply(Prohibited);
+      if (!message.member.roles.cache.has(staffrole)) return message.reply(Prohibited);
       const em = new Discord.MessageEmbed()
         .setTitle('Warnings')
         .setColor('GREEN')
@@ -59,8 +59,8 @@ module.exports = {
             : 'User has not been warned before'
           }\``,
         );
-      await msg.member.send(em).catch((err) => msg.reply(enabledms));
-      await msg.channel.send({
+      await message.member.send(em).catch((err) => message.reply(enabledms));
+      await message.channel.send({
         embeds: [
           new MessageEmbed().setColor('RED').setDescription(warninginfo),
         ],

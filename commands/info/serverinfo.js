@@ -9,9 +9,9 @@ module.exports = {
   category: 'info',
   clientPermissions: [],
   userPermissions: [],
-  run: (client, msg, data) => {
+  run: (client, message, args, data) => {
     const { args } = data;
-    const server = msg.guild;
+    const server = message.guild;
     const regions = {
 
     };
@@ -43,6 +43,6 @@ module.exports = {
       .addField(`Members [${memberCount}]`, `👤 ${humanCount} | 🤖 ${botsCount}`)
       .addField(`Channels [${server.channels.cache.size.toLocaleString()}]`, `⌨️ ${textChannels} | 🗣️ ${voiceChannels} | 📂 ${categories}`)
       .addField('Options', server.features.length > 0 ? serverOptions : 'None');
-    msg.channel.send({ embeds: [em] });
+      message.channel.send({ embeds: [em] });
   },
 };

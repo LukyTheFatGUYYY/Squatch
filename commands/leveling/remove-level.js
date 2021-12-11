@@ -9,7 +9,7 @@ module.exports = {
     category: 'leveling',
     clientPermissions: [],
     userPermissions: [],
-    run: async (client, message, data) => {
+    run: async (client, message, args, data) => {
         let userArray = message.content.split(" ");
         let userArgs = userArray.slice(1);
         const mentionuser = new Discord.MessageEmbed()

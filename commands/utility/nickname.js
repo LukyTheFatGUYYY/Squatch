@@ -8,7 +8,7 @@ module.exports = {
     clientPermissions: [],
     userPermissions: [],
     run: (client, msg, args) => {
-    let mentionMember = msg.mentions.members.first();
+    let mentionMember = message.mentions.members.first();
     let newNickname = args.slice(1).join(" ");
     const mentionuser = new Discord.MessageEmbed()
       .setTitle("Error")
@@ -23,17 +23,17 @@ module.exports = {
       .addField(`Can't change nickname of this user, does he have a higher role? Is the server creator? Have I got the permission to change his nickname?`)
       .setColor("RED");
     if (!mentionMember) {
-      return msg.reply({ embeds: [mentionuser] });
+      return message.reply({ embeds: [mentionuser] });
     }
     if (!newNickname) {
-      return msg.reply({ embeds: [nicknamechange] });
+      return message.reply({ embeds: [nicknamechange] });
     }
     try {
       mentionMember.setNickname(newNickname);
     } catch (error) {
-      msg.reply({ embeds: [cantchangeit] });
+      message.reply({ embeds: [cantchangeit] });
     }
-    msg.channel.send(
+    message.channel.send(
       `Changed nickname of ${mentionMember} to **${newNickname}**`
     );
   },

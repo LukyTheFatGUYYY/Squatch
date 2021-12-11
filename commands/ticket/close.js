@@ -9,7 +9,7 @@ module.exports = {
   category: 'ticket',
   clientPermissions: [],
   userPermissions: [],
-  run: async (client, message, data) => {
+  run: async (client, message, args, data) => {
     message.delete();
     const delete1 = new Discord.MessageEmbed()
       .setColor('RED')

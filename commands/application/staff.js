@@ -10,7 +10,7 @@ module.exports = {
   usage: '[accept|deny]',
   category: 'application',
   guildOnly: false,
-  run: async (message, data) => {
+  run: async (client, message, args, data) => {
     if (message.channel.type !== 'DM') {
       message.delete();
       const Application = new Discord.MessageEmbed()

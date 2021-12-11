@@ -10,7 +10,7 @@ module.exports = {
     category: 'leveling',
     clientPermissions: [],
     userPermissions: [],
-    run: async (client, message, data) => {
+    run: async (client, message, args, data) => {
         if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.reply(`I do not have permission to manage roles!`);
         if (!message.member.hasPermission("MANAGE_ROLES") || !message.member.hasPermission("MANAGE_GUILD")) return message.reply(`You do not have permission to use this command!`);
 

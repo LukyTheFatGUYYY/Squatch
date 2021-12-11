@@ -19,15 +19,15 @@ module.exports = {
             .setTitle("Error")
             .addField(`Please enter the piece of text you would like to translate`)
             .setColor("RED");
-        if (!lang) return msg.channel.send({ embeds: [pleasecorrectyourself] });
-        if (!txt) return msg.channel.send({ embeds: [Notext] });
+        if (!lang) return message.channel.send({ embeds: [pleasecorrectyourself] });
+        if (!txt) return message.channel.send({ embeds: [Notext] });
         translate(txt, { to: lang }).then(res => {
             const embed = new discord.MessageEmbed()
                 .setDescription(res.text)
                 .setColor("ORANGE")
-            msg.channel.send({ embeds: [embed] });
+                message.channel.send({ embeds: [embed] });
         }).catch(err => {
-            msg.channel.send({ embeds: [pleasecorrectyourself] });
+            message.channel.send({ embeds: [pleasecorrectyourself] });
         });
     },
 };

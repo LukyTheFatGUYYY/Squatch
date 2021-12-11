@@ -8,7 +8,7 @@ module.exports = {
   category: 'ticket',
   clientPermissions: [],
   userPermissions: [],
-  run: async (client, message, data) => {
+  run: async (client, message, args, data) => {
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Error')

@@ -11,23 +11,23 @@ module.exports = {
   userPermissions: [],
   run: (client, msg, data) => {
     const { args } = data;
-    const server = msg.guild;
+    const server = message.guild;
     let member;
-    if (!args[0]) member = msg.member;
+    if (!args[0]) member = message.member;
     if (args[0]) {
       member = server.members.cache.get(args[0])
         || server.members.cache.find((m) => m.user.username.toLowerCase() == args[0].toLowerCase())
         || server.members.cache.find((m) => m.user.tag.toLowerCase() == args[0].toLowerCase())
         || server.members.cache.find((m) => m.displayName.toLowerCase() == args[0].toLowerCase())
-        || msg.mentions.members.first() || msg.member;
+        || message.mentions.members.first() || message.member;
     }
     const em = new MessageEmbed()
       .setColor('GREEN')
       .setTitle(`Showing ${member.displayName}'s avatar`)
       .setImage(member.user.displayAvatarURL({ format: 'png', dynamic: true }));
-    if (msg.member.id != member.id) {
-      em.setFooter(`Requested by ${msg.member.displayName}`);
+    if (message.member.id != member.id) {
+      em.setFooter(`Requested by ${message.member.displayName}`);
     }
-    msg.channel.send({ embeds: [em] });
+    message.channel.send({ embeds: [em] });
   },
 };

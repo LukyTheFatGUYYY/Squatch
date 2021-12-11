@@ -13,16 +13,16 @@ module.exports = {
       .setTitle("Error")
       .addField(`Please enter something to search for`)
       .setColor("RED");
-    if (!msg) {
-      return msg.channel.send({ embeds: [error] });
+    if (!message) {
+      return message.channel.send({ embeds: [error] });
     }
     const link = `https://www.wikipedia.org/w/index.php?search=${search}&ns0=1`;
     const embed = new Discord.MessageEmbed()
       .setTitle("Wikipedia Search")
-      .addField(`You Searched for:`, `${msg}`)
+      .addField(`You Searched for:`, `${message}`)
       .addField(`Results:`, `[Link to the article](${link})`)
       .setColor("GREEN");
 
-    msg.channel.send({ embeds: [embed] });
+      message.channel.send({ embeds: [embed] });
   },
 };

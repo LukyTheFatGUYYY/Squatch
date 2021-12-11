@@ -14,8 +14,8 @@ module.exports = {
   aliases: [],
   usage: '<User ID/@mention> <reason>',
   description: 'Warn a member',
-  run: async (client, msg, args) => {
-    msg.delete({timeout: 3000});
+  run: async (client, message, args, data) => {
+    message.delete({timeout: 3000});
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()
@@ -41,40 +41,40 @@ module.exports = {
       .setTitle('Error')
       .setDescription('You can\'t warn that user due to role hierarchy');
     const server = client.guilds.cache.get(serverID);
-    if (!msg.member.roles.cache.has(staffrole)) {
-      return msg
+    if (!message.member.roles.cache.has(staffrole)) {
+      return message
         .reply(Prohibited);
     }
-    if (!msg.mentions.members && !client.users.cache.get(args[0])) {
+    if (!message.mentions.members && !client.users.cache.get(args[0])) {
       await client.users.fetch(args[0]);
     }
-    const toWarn = msg.mentions.members.first() || msg.guild.members.cache.get(args[0]);
-    const moderator = msg.member;
+    const toWarn = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    const moderator = message.member;
     if (!toWarn) {
-      return msg
+      return message
         .reply(validuser);
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
     let reason = args.join(' ').replace(args[0], '').trim();
     if (!reason) {
-      return msg
+      return message
         .reply(stateareason);
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return msg.reply(cantwarnyourself);
+    if (moderator.id == toWarn.id) return message.reply(cantwarnyourself);
     if (
       server.member(moderator.id).roles.highest.rawPosition
       <= (server.member(toWarn.id)
         ? server.member(toWarn.id).roles.highest.rawPosition
         : 0)
     ) {
-      return msg
+      return message
         .reply(samerankorhigher);
     }
     const warnLogs = server.channels.cache.get(channelLog);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
     const caseID = nanoid();
-    const Server = msg.member.guild.name;
+    const Server = message.member.guild.name;
     const em = new MessageEmbed()
       .setTitle(`Case - ${caseID}`)
       .setColor('GREEN')
@@ -93,7 +93,7 @@ module.exports = {
     const emChan = new MessageEmbed()
       .setDescription(`You have succesfully warned **${toWarn.user.tag}**.`)
       .setColor('GREEN');
-    await msg.channel
+    await message.channel
       .send({ embeds: [emChan] });
     warnsDB.set(
       toWarn.id,

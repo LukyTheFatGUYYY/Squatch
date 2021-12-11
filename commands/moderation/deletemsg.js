@@ -10,7 +10,7 @@ module.exports = {
   aliases: ['delmsg'],
   usage: '<message link>',
   description: 'Delete a message',
-  run: async (client, message, args) => {
+  run: async (client, message, args, data) => {
     message.delete({timeout: 3000});
     const server = client.guilds.cache.get(serverID);
     const warnLogs = server.channels.cache.get(channelLog);
@@ -41,8 +41,8 @@ module.exports = {
       .then((channel) => {
         channel.messages
           .fetch(data[2])
-          .then((msg) => {
-            msg.delete().then(() => {
+          .then((message) => {
+            message.delete().then(() => {
               message.channel
                 .send({ embeds: [successfullydeleted] });
             });

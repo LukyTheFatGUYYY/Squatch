@@ -9,7 +9,7 @@ module.exports = {
   category: 'leveling',
   clientPermissions: [],
   userPermissions: [],
-  run: async (_client, message, data) => {
+  run: async (client, message, args, data) => {
     message.delete({timeout: 3000});
     const currentPage = parseInt(args[0]) || 1;
     const top10 = sql.prepare("SELECT * FROM levels WHERE guild = ? ORDER BY totalXP DESC;").all(message.guild.id);

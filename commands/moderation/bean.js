@@ -14,8 +14,8 @@ module.exports = {
   category: 'moderation',
   clientPermissions: [],
   userPermissions: [],
-  run: async (client, msg, args) => {
-    msg.delete({timeout: 3000});
+  run: async (client, message, args, data) => {
+    message.delete({timeout: 3000});
     const warnsDB = new Enmap({ name: 'warns' });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
@@ -31,24 +31,24 @@ module.exports = {
       .setDescription('Mention a valid reason to ban the user');
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const server = client.guilds.cache.get(serverID);
-    if (!msg.member.roles.cache.has(staffrole)) {
-      return msg
+    if (!message.member.roles.cache.has(staffrole)) {
+      return message
         .reply(Prohibited);
     }
-    if (!msg.mentions.members && !client.users.cache.get(args[0])) {
+    if (!message.mentions.members && !client.users.cache.get(args[0])) {
       await client.users.fetch(args[0]);
     }
-    const toWarn = msg.mentions.users.first() || client.users.cache.get(args[0]);
-    const moderator = msg.member;
-    const Server = msg.member.guild.name;
+    const toWarn = message.mentions.users.first() || client.users.cache.get(args[0]);
+    const moderator = message.member;
+    const Server = message.member.guild.name;
     if (!toWarn) {
-      return msg
+      return message
         .reply(validuser);
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
     let reason = args.join(' ').replace(args[0], '').trim();
     if (!reason) {
-      return msg
+      return message
         .reply(stateareason);
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
@@ -66,7 +66,7 @@ module.exports = {
     const emChan = new MessageEmbed()
       .setDescription(`You have succesfully beaned **${toWarn.tag}**.`)
       .setColor('GREEN');
-    return await msg.channel
+    return await message.channel
       .send({ embeds: [emChan] });
   },
 };

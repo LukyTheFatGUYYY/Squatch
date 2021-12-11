@@ -10,6 +10,6 @@ module.exports = {
   userPermissions: [],
   run: (msg, data) => {
     const topic = randomTopic(7, 'Summer', 'Vacation', 'Family', 'Time', 'People', 'Favorite', 'Memories');
-    return msg.channel.send(topic);
+    return message.channel.send(topic);
   },
 };

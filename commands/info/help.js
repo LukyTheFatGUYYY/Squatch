@@ -8,7 +8,7 @@ module.exports = {
   category: 'info',
   clientPermissions: [],
   userPermissions: [],
-  run: (client, msg, data) => {
+  run: (client, message, args, data) => {
     const { args } = data;
 
     msg.delete();

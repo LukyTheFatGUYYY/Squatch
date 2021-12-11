@@ -7,7 +7,7 @@ module.exports = {
   category: 'moderation',
   clientPermissions: [],
   userPermissions: [],
-  run: async (_client, message, args) => {
+  run: async (client, message, args, data) => {
     message.delete({timeout: 3000});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')

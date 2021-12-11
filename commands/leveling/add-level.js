@@ -9,7 +9,7 @@ module.exports = {
     category: 'leveling',
     clientPermissions: [],
     userPermissions: [],
-    run: async (client, message, data) => {
+    run: async (client, message, args, data) => {
         message.delete({ timeout: 3000 });
         let userArray = message.content.split(" ");
         let userArgs = userArray.slice(1);

@@ -13,11 +13,11 @@ module.exports = {
   userPermissions: [],
   run: (client, msg, data) => {
     const { args } = data;
-    msg.delete();
+    message.delete();
     const fakeprofile = new Discord.MessageEmbed()
       .setColor('PURPLE')
       .setTitle('Fake profile')
       .addFields(``);
-    msg.channel.send({ embeds: [fakeprofile] });
+      message.channel.send({ embeds: [fakeprofile] });
   },
 };
