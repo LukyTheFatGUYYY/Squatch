@@ -24,7 +24,7 @@ module.exports = {
       return setTimeout(() => m.delete(), 5000);
     }
 
-    if (message.channel.parentID !== ticketCategory) {
+    if (message.channel.parentId !== ticketCategory) {
       const m = await message.channel.send(':x: You can\'t do that here!');
       return setTimeout(() => m.delete(), 5000);
     }

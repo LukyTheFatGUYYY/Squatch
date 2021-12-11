@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { ticketCategory } = require('../../config/constants/channel.json');
+const { ticketsupportrole } = require('../../config/constants/roles.json');
 
 module.exports = {
   name: 'ticket',

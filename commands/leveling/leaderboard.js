@@ -10,7 +10,7 @@ module.exports = {
   clientPermissions: [],
   userPermissions: [],
   run: async (client, message, args, data) => {
-    message.delete({timeout: 3000});
+    message.delete();
     const currentPage = parseInt(args[0]) || 1;
     const top10 = sql.prepare("SELECT * FROM levels WHERE guild = ? ORDER BY totalXP DESC;").all(message.guild.id);
     if (parseFloat(args[0]) > Math.ceil(top10.length / 10)) {

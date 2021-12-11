@@ -10,7 +10,7 @@ module.exports = {
     clientPermissions: [],
     userPermissions: [],
     run: async (client, message, args, data) => {
-        message.delete({ timeout: 3000 });
+        message.delete();
         let userArray = message.content.split(" ");
         let userArgs = userArray.slice(1);
         const Notenoughpermission = new Discord.MessageEmbed()

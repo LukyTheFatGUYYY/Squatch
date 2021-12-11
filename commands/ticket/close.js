@@ -15,7 +15,7 @@ module.exports = {
       .setColor('RED')
       .setTitle('Deletion')
       .setDescription('The ticket will be deleted in 5 seconds');
-    if (message.channel.parentID !== ticketCategory) {
+    if (message.channel.parentId !== ticketCategory) {
       const m = await message.channel.send({ embeds: [delete1] });
       return setTimeout(() => m.delete(), 5000);
     }
