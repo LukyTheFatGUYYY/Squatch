@@ -1,5 +1,7 @@
 const moment = require('moment');
+const { MessageEmbed } = require('discord.js');
 require('moment-duration-format');
+const { discordlink } = require('../../config/main.json');
 const { adminrole, staffrole } = require('../../config/constants/roles.json');
 
 module.exports = {
@@ -17,8 +19,7 @@ module.exports = {
     const boosterEmoji = '<:diamonds:>';
     const boostersCount = server.premiumSubscriptionCount;
     const boosterLevel = server.premiumTier;
-    const serverOptions = server.features.join(', ').replace(/_/g, ' ').split(', ').join(' | ')
-      .toProperCase();
+    const serverOptions = server.features.join(', ').replace(/_/g, ' ').split(', ').join(' | ');
     const memberCount = server.memberCount.toLocaleString();
     const staffCount = server.members.cache.filter((m) => m.roles.cache.has(staffrole)).size.toLocaleString();
     const managerCount = server.members.cache.filter((m) => m.roles.cache.has(adminrole)).size.toLocaleString();
@@ -32,8 +33,8 @@ module.exports = {
       .setTitle(server.name)
       .setThumbnail(server.iconURL({ format: 'png', dynamic: true }))
       .setColor("PURPLE")
-      .addField('Owner', server.owner.user.tag)
-      .addField('ID', server.id)
+      .addField('Owner', `<@${server.ownerId}>`)
+      .addField('Server ID', server.id)
       .addField('Staff Count', staffCount)
       .addField('Manager Count', managerCount)
       .addField('Role Count', roleCount)
@@ -41,7 +42,7 @@ module.exports = {
       .addField(`Boosters [${boostersCount}]`, `${boosterEmoji} Level ${boosterLevel}`)
       .addField(`Members [${memberCount}]`, `👤 ${humanCount} | 🤖 ${botsCount}`)
       .addField(`Channels [${server.channels.cache.size.toLocaleString()}]`, `⌨️ ${textChannels} | 🗣️ ${voiceChannels} | 📂 ${categories}`)
-      .addField('Options', server.features.length > 0 ? serverOptions : 'None');
+      .addField('Server invite', `${discordlink}`);
       message.channel.send({ embeds: [em] });
   },
 };

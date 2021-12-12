@@ -26,6 +26,7 @@ If you found any issues that are related to the bot, then you can create an [iss
 # Currently Known Issues
 * Help doesnt fully work
 * Most of the bot needs to be updated to V13
+* userinfo presence doesnt work
 * Leveling usually bugs out
 
 
