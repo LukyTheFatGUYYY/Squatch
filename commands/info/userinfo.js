@@ -46,9 +46,9 @@ module.exports = {
         .addField('Tag', member.user.tag, true)
         .addField(`Created At [${moment(member.user.createdTimestamp).fromNow()}]`, moment(member.user.createdTimestamp).format('LLL'))
         .addField(`Joined Server At [${moment(member.joinedTimestamp).fromNow()}]`, moment(member.joinedTimestamp).format('LLL'))
-        .addField('Status', `${statusMoji[member.Members.presence.status]} ${statusName[member.Members.presence.status]}`, true)
-        .addField('Main Device', `${device[Object.keys(member.user.presence.clientStatus)[0]]} ${Object.keys(member.user.presence.clientStatus)[0].toProperCase()}`, true);
-      if (member.user.presence.activities[0] && member.user.presence.activities[0].name !== 'Custom Status') em.addField('Activity', `${member.user.presence.activities[0].type.toProperCase()} ${member.user.presence.activities[0].name}`);
+        .addField('Status', `${statusMoji[member.presence.status]} ${statusName[member.presence.status]}`, true)
+        .addField('Main Device', `${device[Object.keys(member.presence.clientStatus)[0]]} ${Object.keys(member.presence.clientStatus)[0]}`, true);
+      if (member.presence.activities[0] && member.presence.activities[0].name !== 'Custom Status') em.addField('Activity', `${member.presence.activities[0].type} ${member.user.presence.activities[0].name}`);
       if (message.member.id != member.id) {
         em.setFooter(`Requested by ${message.member.displayName}`);
       }
