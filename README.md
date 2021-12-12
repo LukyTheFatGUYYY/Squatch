@@ -23,6 +23,12 @@ If you decided to help out with the bot and you found a few lines of code that c
 # [Issues](https://github.com/MrXez/Squatch/issues)
 If you found any issues that are related to the bot, then you can create an [issue](https://github.com/MrXez/Squatch/issues).
 
+# Currently Known Issues
+* Help doesnt fully work
+* Most of the bot needs to be updated to V13
+* Leveling usually bugs out
+
+
 # How to install the bot
 * If you don't have [**Node.js**](https://nodejs.org/en/) then install node first.
 
@@ -38,12 +44,6 @@ If you found any issues that are related to the bot, then you can create an [iss
 
 # If you use git then run these following commands.
 
-
-
-# Currently Known Issues
-* Help doesnt fully work
-* Most of the bot needs to be updated to V13
-* Leveling usually bugs out
 ```
 git clone https://github.com/MrXez/Squatch
 
