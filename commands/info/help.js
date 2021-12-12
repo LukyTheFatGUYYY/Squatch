@@ -72,45 +72,45 @@ module.exports = {
     }
 
     if (args[0].toLowerCase() === 'management') {
-      return message.channel.send(managementembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [managementembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Management') {
-      return message.channel.send(managementembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [managementembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'misc') {
-      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [miscembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Misc') {
-      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [miscembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'miscellaneous') {
-      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [miscembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Miscellaneous') {
-      return message.channel.send(miscembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [miscembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'moderation') {
-      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [modembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Moderation') {
-      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [modembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'mod') {
-      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [modembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Mod') {
-      return message.channel.send(modembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [modembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'Utility') {
-      return message.channel.send(utilityembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [utilityembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
     if (args[0].toLowerCase() === 'utility') {
-      return message.channel.send(utilityembed).then((message) => message.delete({ timeout: 50000 }));
+      return message.channel.send({ embeds: [utilityembed] }).then((message) => message.delete({ timeout: 50000 }));
     }
 
     const cmd = client.commands.get(args[0].toLowerCase()) || client.commands.get(client.aliases.get(args[0].toLowerCase()));
 
-    if (!cmd) return message.channel.send(embedhelp).then((message) => message.delete({ timeout: 50000 }));
+    if (!cmd) return message.channel.send({ embeds: [embedhelp] }).then((message) => message.delete({ timeout: 50000 }));
 
     if (cmd.aliases === null) cmd.aliases = '';
     if (cmd.description.length === 0) cmd.description = 'N/A';
