@@ -38,6 +38,12 @@ If you found any issues that are related to the bot, then you can create an [iss
 
 # If you use git then run these following commands.
 
+
+
+# Currently Known Issues
+* Help doesnt fully work
+* Most of the bot needs to be updated to V13
+* Leveling usually bugs out
 ```
 git clone https://github.com/MrXez/Squatch
 
