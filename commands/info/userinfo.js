@@ -48,7 +48,6 @@ module.exports = {
         .addField(`Joined Server At [${moment(member.joinedTimestamp).fromNow()}]`, moment(member.joinedTimestamp).format('LLL'))
         .addField('Status', `${statusMoji[member.presence.status]} ${statusName[member.presence.status]}`, true)
         .addField('Main Device', `${device[Object.keys(member.presence.clientStatus)[0]]} ${Object.keys(member.presence.clientStatus)[0]}`, true);
-      if (member.presence.activities[0] && member.presence.activities[0].name !== 'Custom Status') em.addField('Activity', `${member.presence.activities[0].type} ${member.user.presence.activities[0].name}`);
       if (message.member.id != member.id) {
         em.setFooter(`Requested by ${message.member.displayName}`);
       }
