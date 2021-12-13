@@ -12,10 +12,10 @@ module.exports = {
   run: (client, message, args, data) => {
     const server = message.guild;
     const statusMoji = {
-      dnd: '<:red_circle:>',
-      offline: '<:black_circle:>',
-      online: '<:green_circle:>',
-      idle: '<:yellow_circle:>',
+      dnd: ':red_circle:',
+      offline: ':black_circle:',
+      online: ':green_circle:',
+      idle: ':yellow_circle:',
     };
     const statusName = {
       dnd: 'Do not Disturb',
@@ -24,9 +24,9 @@ module.exports = {
       idle: 'Idle',
     };
     const device = {
-      mobile: '<:telephone:>',
-      browser: '<:computer:>',
-      desktop: '<:desktop:>',
+      mobile: ':telephone:',
+      browser: ':computer:',
+      desktop: ':desktop:',
     };
     let member;
     if (args[0]) {

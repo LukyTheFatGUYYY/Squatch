@@ -6,9 +6,6 @@ require('dotenv').config({ path: './config/credentials.env' });
 const Discord = require('discord.js');
 const SQLite = require("better-sqlite3")
 const sql = new SQLite('./mainDB.sqlite')
-const { join } = require("path")
-const { readdirSync } = require("fs");
-
 
 const client = new Discord.Client({
   intents: 32767, // every intents
@@ -24,7 +21,8 @@ client.events = new Discord.Collection();
 const talkedRecently = new Map();
 require('./events/_loader')(client).then(() => client.emit('commandsAndEventsLoaded', 1)); //Event Handler
 require('./commands/_loader')(client.commands).then(() => client.emit('commandsAndEventsLoaded', 0));//Command handler
-//Command Handler
+
+//on every message thats sent
 client.on('messageCreate', async (message) => {
   if (
     !message.content.startsWith(config.prefix)
