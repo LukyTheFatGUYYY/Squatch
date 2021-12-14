@@ -10,8 +10,8 @@ module.exports = (client) => {
       .setDescription('A new member joined the server.')
       .addField('User', member.user.tag, true)
       .addField('User ID', member.id, true)
-      .addField('User Joined At', member.joined, true)
-      .addField('User Account Registered At', member.user.createdAt, true)
+      .addField('User Joined At', member.joinedAt.toLocaleDateString(), true)
+      .addField('User Account Registered At', member.user.createdAt.toLocaleDateString(), true)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
     return logs.send({ embeds: [embed] });
   });
