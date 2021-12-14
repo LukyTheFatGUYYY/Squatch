@@ -24,10 +24,10 @@ If you decided to help out with the bot and you found a few lines of code that c
 If you found any issues that are related to the bot, then you can create an [issue](https://github.com/MrXez/Squatch/issues).
 
 # Currently Known Issues
-* Help doesnt fully work
-* Announcement doesnt work
+* Help doesnt list the commands in the selected category
+* the management commands doesnt fully work
 * Most of the bot needs to be updated to V13
-* Leveling usually bugs out
+* Leveling doesnt work
 
 
 # How to install the bot
