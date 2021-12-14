@@ -9,9 +9,9 @@ module.exports = (client) => {
       .setColor('GREEN')
       .addField('Invite Code', invite.code, true)
       .addField('Invite URL', invite.url, true)
-      .addField('Invite Channel', invite.channel);
+      .addField('Invite Channel', invite.channel.toString())
     if (invite.expiresAt) {
-      embed.addField('Invite Expires At', invite.expiresAt);
+      embed.addField('Invite Expires At', invite.expiresAt.toString());
     }
     if (invite.inviter) {
       embed.addField('Inviter', `${invite.inviter.tag} | ${invite.inviter.id}`);
