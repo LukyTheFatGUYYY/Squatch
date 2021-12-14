@@ -9,7 +9,7 @@ module.exports = (client) => {
       .setColor('GREEN')
       .addField('Invite Code', invite.code, true)
       .addField('Invite URL', invite.url, true)
-      .addField('Invite Channel', invite.channel);
+      .addField('Invite Channel', invite.channel.toString());
     if (invite.uses) {
       embed.addField('Invite Uses', invite.uses);
     }
