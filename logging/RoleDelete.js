@@ -10,9 +10,9 @@ module.exports = (client) => {
       .addField('Role Name', role.name, true)
       .addField('Role ID', role.id, true)
       .addField('Role Hex Color', role.hexColor)
-      .addField('Role Was Hoisted?', role.hoist)
-      .addField('Role Was Mentionable By Everyone?', role.mentionable)
-      .addField('Role Position', role.position);
+      .addField('Role Was Hoisted?', role.hoist.toString())
+      .addField('Role Was Mentionable By Everyone?', role.mentionable.toString())
+      .addField('Role Position', role.position.toString());
     return logs.send({ embeds: [embed] });
   });
 };
