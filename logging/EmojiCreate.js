@@ -9,8 +9,8 @@ module.exports = (client) => {
       .setColor('GREEN')
       .setDescription('A custom emoji was added to the server.')
       .addField('Emoji Name', emoji.name, true)
-      .addField('Emoji ID', emoji.id, true)
-      .addField('Animted Emoji?', emoji.animated);
+      .addField('Emoji ID', emoji.id.toString(), true)
+      .addField('Animted Emoji?', emoji.animated.toString());
     emoji.author ? embed.addField('Added By', emoji.author.tag) : null;
     return logs.send({ embeds: [embed] });
   });
