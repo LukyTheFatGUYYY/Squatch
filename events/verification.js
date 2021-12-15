@@ -1,11 +1,8 @@
-const fs = require('fs');
-const Canvas = require('canvas');
 const Discord = require('discord.js');
-const path = require('path');
 const Captcha = require('@haileybot/captcha-generator');
 const { roleID } = require('../config/constants/roles.json');
-const { welcomeleave, verificationchannel, captchalogchannel } = require('../config/constants/channel.json');
-const { Version, xEmoji, prefix } = require('../config/main.json');
+const { verificationchannel, captchalogchannel } = require('../config/constants/channel.json');
+const { xEmoji, prefix } = require('../config/main.json');
 
 module.exports = {
   name: 'guildMemberAdd',
@@ -15,13 +12,13 @@ module.exports = {
     async function verification() {
       const captcha = new Captcha(); // send it to a discord channel so it doesnt get deleted or something.
       if (!captchachannel) {
-        console.log(args[0], args);
+        console.log("Check if you entered everything correct, Example is the channel or role ids");
         return args[0].send(`${xEmoji} Sorry, the verification system failed. Please contact a Bot Developer ASAP.`);
       }
-      const captchaImage = (await captchachannel.send({ files: [new Discord.MessageAttachment(captcha.JPEGStream, 'captcha.jpeg')] }
-      ).attachments.first());
+      const captchaImage = new Discord.MessageAttachment(captcha.JPEGStream, 'captcha.jpeg');
+      await captchachannel.send({ files: [captchaImage] });
       const Server = args[0].guild.name;
-      const e0 = new Discord.MessageEmbed().setTitle('Verification').setDescription().setFooter(`${Version}`);
+      const e0 = new Discord.MessageEmbed().setTitle('Verification').setFooter(`Made by [Xez#6207](https://github.com/MrXez)`);
       const e1 = new Discord.MessageEmbed(e0).setDescription(`Welcome To **${Server}**\nPlease enter the captcha code below correctly to get verified in **${Server}**`).addField('**Why did you recieve this?**', 'You recieved this captcha because we would to verify that you aren\'t an automated bot and to protect the server from malicious attacks\nMake sure you type the captcha code in this conversation').addField('Error', `If youre unable to read the image, then you can go to the verification channel selected by the server administrators, then you can run the command ${prefix}verify`);
       const e2 = new Discord.MessageEmbed(e0).setDescription('You\'ve entered the captcha incorrectly.');
       const e3 = new Discord.MessageEmbed(e0).setDescription(`You have verified yourself in **${Server}**! and you successfully recieved a role! You now have access to the server`);
@@ -43,9 +40,10 @@ module.exports = {
             const enableDMEmb = new Discord.MessageEmbed()
               .setTitle('Enable DM\'s')
               .setDescription(`please enable DMs then run the command ${prefix}verify`)
+              .addField("Look at the image to learn how to enable your dm's", "Not doing so will disable your access to the server")
               .setImage('https://i.imgur.com/sEkQOCf.png');
-
-            vchannel.send({ content: `<@!${args[0].user.id}>`, embeds: enableDMEmb }).then((message) => message.delete({ timeout: 20000 }));
+            ;  
+            vchannel.send({ content: `<@!${args[0].user.id}>`, embeds: [enableDMEmb] }).then((message) => message.delete({ timeout: 20000 }));
           });
         } catch (err) {
           console.log(err);
@@ -80,8 +78,6 @@ module.exports = {
             // if the new member joins and enters captcha code correctly, the log will go to the specific channel set by the server owner
             const joinedServer = args[0].guild.members.cache.get(args[0].user.id).joinedAt.toDateString();
             const userCreationDate = args[0].user.createdAt.toDateString();
-            const JoinedServer = args[0].guild.members.cache.get(args[0].user.id).joinedAt.toDateString();
-            const userCreationDate1 = args[0].user.createdAt.toDateString();
             var roleObj = args[0].guild.roles.cache.get(roleID);
             const CaptchaLog = new Discord.MessageEmbed()
               .setTitle('New Member')

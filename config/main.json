@@ -2,7 +2,6 @@
 	"prefix": "!",
 	"unknownCommandMessage": ":x: That command doesn't exist!",
 	"OwnerID": "",
-    "Version": "1.0.0",
 	"xEmoji": ":x:",
 	"serverID": "",
 	"Appealserver": ""
