@@ -42,7 +42,7 @@ module.exports = {
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const server = client.guilds.cache.get(serverID);
-    if (!message.member.roles.cache.has(staffrole)) return message.reply(Prohibited);
+    if (!message.member.roles.cache.has(staffrole)) return message.reply({ embeds: [Prohibited] });
     if (!message.mentions.members && !client.users.cache.get(args[0])) {
       await client.users.fetch(args[0]);
     }
@@ -57,7 +57,7 @@ module.exports = {
       );
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return message.reply(cantbanyourself);
+    if (moderator.id == toWarn.id) return message.reply({ embeds: [cantbanyourself] });
     if (
       server.members.cache.get(moderator.id).roles.highest.rawPosition
       <= (server.members.cache.get(toWarn.id)

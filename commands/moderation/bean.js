@@ -43,7 +43,7 @@ module.exports = {
     const Server = message.member.guild.name;
     if (!toWarn) {
       return message
-        .reply(validuser);
+        .reply({ embeds: [validuser] });
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
     let reason = args.join(' ').replace(args[0], '').trim();
