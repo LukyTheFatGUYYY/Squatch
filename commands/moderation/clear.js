@@ -12,8 +12,7 @@ module.exports = {
   usage: 'Clear <Amounts Of Messages>',
   run: async (client, message, args, data) => {
     message.delete({timeout: 3000});
-    const server = client.guilds.cache.get(serverID);
-    const warnLogs = server.channels.cache.get(channelLog);
+    const logs = await client.channels.cache.get(channelLog);
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
@@ -42,9 +41,9 @@ module.exports = {
           '**Moderator**',
           `${message.author.tag} (${message.author.id})`,
         )
-        .addField('**Messages Deleted**', Amount.size)
+        .addField('**Messages Deleted**', Amount.size.toString())
         .addField('**In Channel**', `<#${message.channel.id}>`);
-      warnLogs.send({ embeds: [Embed] });
+        logs.send({ embeds: [Embed] });
       return message.channel
         .send({ embeds: [Embed] });
     });
