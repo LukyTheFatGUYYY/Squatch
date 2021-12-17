@@ -4,13 +4,12 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   name: 'avatar',
-  description: 'lists a members avater',
+  description: 'lists a users avater',
   aliases: [],
   category: 'utility',
   clientPermissions: [],
   userPermissions: [],
-  run: (client, msg, data) => {
-    const { args } = data;
+  run: async (client, message, args, data) => {
     const server = message.guild;
     let member;
     if (!args[0]) member = message.member;
