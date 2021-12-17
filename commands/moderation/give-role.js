@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
+const { staffrole } = require('../../config/constants/roles.json');
+const { channelLog } = require('../../config/constants/channel.json');
 
 module.exports = {
   name: 'giverole',
-  description: 'description',
+  description: 'allows staff to give the selected user a certain role',
   aliases: [],
   category: 'moderation',
   clientPermissions: [],
@@ -28,8 +30,6 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription('Role doesnt exist');
-
-		message.delete();
 
      if (!message.member.roles.cache.has(staffrole)) return message.reply({ embeds: [Prohibited] });
     if (!args[1]) return message.channel.send({ embeds: [Error] }); // If there is args[1], there must be args[0]
@@ -64,13 +64,13 @@ module.exports = {
           .then((message) => message.delete({ timeout: 5000 }));
       }
 
-      const embed = new Discord.MessageEmbed()
+      const wowitworked = new Discord.MessageEmbed()
         .setTitle('Role successfully recieved')
         .setColor("GREEN")
         .setDescription(
           `**Moderator:** ${message.author}\n**Role Recieved:** ${roleName}\n**Member:** ${member.user}`,
         );
-      return member.roles.add(roleName).then(() => message.channel.send({ embeds: [embed] }));
+      return member.roles.add(roleName).then(() => message.channel.send({ embeds: [wowitworked] }));
     } catch (e) {
 			console.error(e);
       return message.channel.send({ embeds: [RoleError] });
