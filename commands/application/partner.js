@@ -36,19 +36,19 @@ module.exports = {
         "You successfully submitted your application\nIf you don't recieve a response then most likely you have been denied",
       );
     const questions = [
-      'How many members does your server have?',
-      'How many Bots does your server have?',
-      'Is your server NSFW?',
-      "Does your server break discord's TOS in any way?",
-      'Does your server name or image contain vulgar or inappropriate terms/images',
-      'Is your server meme orientated?',
-      'Does your server promote anything illegal?',
-      'How active is the owner of the server?',
-      'What is your server about?',
-      'How old is your server?',
-      'Send a permanent invite link to your server',
-      'How visible is your partnership channel',
-      'If you would like to say something else you can type it here',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
     ];
 
     const questionEmbed = new Discord.MessageEmbed();

@@ -38,7 +38,7 @@ module.exports = {
             : 'You have not been warned before'
           }\``,
         );
-      await message.author.send({ embeds: [em] }).catch((err) => message.reply(enabledms));
+      await message.author.send({ embeds: [em] }).catch((err) => message.reply({ embeds: [enabledms] }));
       await message.channel.send({
         embeds: [
           new Discord.MessageEmbed()
@@ -49,7 +49,7 @@ module.exports = {
         ],
       });
     } else {
-      if (!message.member.roles.cache.has(staffrole)) return message.reply(Prohibited);
+      if (!message.member.roles.cache.has(staffrole)) return message.reply({ embeds: [Prohibited] });
       const em = new Discord.MessageEmbed()
         .setTitle('Warnings')
         .setColor('GREEN')
@@ -59,7 +59,7 @@ module.exports = {
             : 'User has not been warned before'
           }\``,
         );
-      await message.member.send(em).catch((err) => message.reply(enabledms));
+      await message.member.send({ embeds: [em] }).catch((err) => message.reply({ embeds: [enabledms] }));
       await message.channel.send({
         embeds: [
           new MessageEmbed().setColor('RED').setDescription(warninginfo),

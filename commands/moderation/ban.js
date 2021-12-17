@@ -6,7 +6,7 @@ const { customAlphabet } = require('nanoid')
 require('moment-duration-format');
 const { staffrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
-const { serverID, Appealserver } = require('../../config/main.json');
+const { serverID, appeallink } = require('../../config/main.json');
 
 module.exports = {
   name: 'ban',
@@ -84,7 +84,7 @@ module.exports = {
       .setAuthor('https://i.imgur.com/BSzzbNJ.jpg')
       .setDescription(`You were banned from **${server}** for ${reason}!`)
       .addField('Case ID', `\`${caseID}\``)
-      .addField('Ban Appeal Server', `[Join Me](${Appealserver})`);
+      .addField('Ban Appeal Server', `[Join Me](${appeallink})`);
     await toWarn.send({ embeds: [emUser] }).catch((err) => err);
     const emChan = new MessageEmbed()
       .setDescription(`You have succesfully banned **${toWarn.tag}**.`)

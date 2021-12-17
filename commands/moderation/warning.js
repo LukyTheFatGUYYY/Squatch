@@ -36,14 +36,14 @@ module.exports = {
     const user = client.users.cache.get(args[1]) || message.member;
     warnsDB.ensure(user.id, { points: 0, warns: {} });
     const caseID = args[0];
-    if (!warnsDB.get(user.id).warns[caseID]) return message.reply(caseidincorrect);
+    if (!warnsDB.get(user.id).warns[caseID]) return message.reply({ embeds: [caseidincorrect] });
     if (user.id == message.member.id) {
       const em = new Discord.MessageEmbed()
         .setTitle(caseID)
         .setColor('GREEN')
         .addField('Reason', warnsDB.get(user.id).warns[caseID].reason)
         .addField('Date', warnsDB.get(user.id).warns[caseID].date);
-      await message.member.send(em).catch((err) => message.reply(enabledms));
+      await message.member.send({ embeds: [em] }).catch((err) => message.reply({ embeds: [enabledms] }));
       await message.channel.send({
         embeds: [
           new Discord.MessageEmbed()
@@ -54,17 +54,17 @@ module.exports = {
         ],
       });
     } else {
-      if (!message.member.roles.cache.has(staffrole)) return message.reply(Prohibited);
+      if (!message.member.roles.cache.has(staffrole)) return message.reply({ embeds: [Prohibited] });
       const em = new Discord.MessageEmbed()
         .setTitle(caseID)
         .setColor("ORANGE")
         .addField('Reason', warnsDB.get(user.id).warns[caseID].reason)
         .addField('Moderator ID', warnsDB.get(user.id).warns[caseID].moderator)
         .addField('Date', warnsDB.get(user.id).warns[caseID].date);
-      await message.member.send(em).catch((err) => message.reply(enabledms));
+      await message.member.send({ embeds: [em] }).catch((err) => message.reply({ embeds: [enabledms] }));
       await message.channel.send({
         embeds: [
-          new MessageEmbed().setColor("GREEN").setDescription(warninginfo),
+          new Discord.MessageEmbed().setColor("GREEN").setDescription(warninginfo),
         ],
       });
     }

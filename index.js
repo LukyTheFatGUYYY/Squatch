@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const connection = mongoose.connect('', {useNewUrlParser: true, useUnifiedTopology: true})
+// const connection = mongoose.connect('link', {useNewUrlParser: true, useUnifiedTopology: true})
 // Load environment variables (tokens, passwords, etc.)
 require('dotenv').config({ path: './config/credentials.env' });
 // Discord bot stuff
