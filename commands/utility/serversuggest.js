@@ -3,9 +3,9 @@ const Discord = require('discord.js');
 const { suggestchannel } = require('../../config/constants/channel.json');
 
 module.exports = {
-  name: 'serversuggest',
+  name: 'suggest',
   description: 'server suggestions!',
-  aliases: ["suggest"],
+  aliases: ["suggestion"],
   category: 'utility',
   clientPermissions: [],
   userPermissions: [],
