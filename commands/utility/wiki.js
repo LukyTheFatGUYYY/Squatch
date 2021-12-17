@@ -7,11 +7,11 @@ module.exports = {
     category: 'utility',
     clientPermissions: [],
     userPermissions: [],
-    run: (client, msg, args) => {
+    run: async (client, message, args, data) => {
     const search = args.join("_");
     const error = new Discord.MessageEmbed()
       .setTitle("Error")
-      .addField(`Please enter something to search for`)
+      .addField(`Please enter something to search for`, 'You will get a link to the correct wikipedia article')
       .setColor("RED");
     if (!message) {
       return message.channel.send({ embeds: [error] });
