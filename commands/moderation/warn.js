@@ -43,43 +43,43 @@ module.exports = {
     const server = client.guilds.cache.get(serverID);
     if (!message.member.roles.cache.has(staffrole)) {
       return message
-        .reply(Prohibited);
+        .reply({ embeds: [Prohibited] });
     }
     if (!message.mentions.members && !client.users.cache.get(args[0])) {
       await client.users.fetch(args[0]);
     }
     const toWarn = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-    const moderator = message.member;
+    const moderator = message.author;
     if (!toWarn) {
       return message
-        .reply(validuser);
+        .reply({ embeds: [validuser] });
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
     let reason = args.join(' ').replace(args[0], '').trim();
     if (!reason) {
       return message
-        .reply(stateareason);
+        .reply({ embeds: [stateareason] });
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return message.reply(cantwarnyourself);
+    if (moderator.id == toWarn.id) return message.reply({ embeds: [cantwarnyourself] });
     if (
-      server.member(moderator.id).roles.highest.rawPosition
-      <= (server.member(toWarn.id)
-        ? server.member(toWarn.id).roles.highest.rawPosition
+      server.members.cache.get(moderator.id).roles.highest.rawPosition
+      <= (await server.members.fetch(toWarn.id)
+        ? (await server.members.fetch(toWarn.id)).roles.highest.rawPosition
         : 0)
     ) {
       return message
-        .reply(samerankorhigher);
+        .reply({ embeds: [samerankorhigher] });
     }
     const warnLogs = server.channels.cache.get(channelLog);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
     const caseID = nanoid();
-    const Server = message.member.guild.name;
+    const Server = message.guild;
     const em = new MessageEmbed()
       .setTitle(`Case - ${caseID}`)
       .setColor('GREEN')
       .addField('Member', `${toWarn.user.tag} (${toWarn.id})`)
-      .addField('Moderator', `${moderator.user.tag} (${moderator.id})`)
+      .addField('Moderator', `${moderator.tag} (${moderator.id})`)
       .addField('Reason', `\`(warned) - ${reason}\``)
     await warnLogs.send({ embeds: [em] });
     const emUser = new MessageEmbed()
