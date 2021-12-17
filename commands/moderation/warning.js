@@ -62,11 +62,7 @@ module.exports = {
         .addField('Moderator ID', warnsDB.get(user.id).warns[caseID].moderator)
         .addField('Date', warnsDB.get(user.id).warns[caseID].date);
       await message.member.send({ embeds: [em] }).catch((err) => message.reply({ embeds: [enabledms] }));
-      await message.channel.send({
-        embeds: [
-          new Discord.MessageEmbed().setColor("GREEN").setDescription(warninginfo),
-        ],
-      });
+      await message.channel.send({ embeds: [warninginfo] });
     }
   },
 };

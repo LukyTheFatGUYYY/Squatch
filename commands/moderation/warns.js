@@ -60,11 +60,7 @@ module.exports = {
           }\``,
         );
       await message.member.send({ embeds: [em] }).catch((err) => message.reply({ embeds: [enabledms] }));
-      await message.channel.send({
-        embeds: [
-          new MessageEmbed().setColor('RED').setDescription(warninginfo),
-        ],
-      });
+      await message.channel.send({ embeds: [warninginfo] });
     }
   },
 };
