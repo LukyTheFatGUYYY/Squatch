@@ -6,7 +6,7 @@ const { xEmoji, prefix } = require('../config/main.json');
 
 module.exports = {
   name: 'guildMemberAdd',
-  call: (client, args) => { // first and only arg in array: member added
+  call: (client, args) => {
     const userCaptchaData = {};
     const captchachannel = client.channels.cache.get(captchalogchannel);
     async function verification() {
@@ -34,16 +34,16 @@ module.exports = {
           return;
         }
         try {
-          channel.send({ embeds: [e1.setImage(captchaImage)] }
-          ).catch(async () => {
-            vchannel = client.channels.cache.get(verificationchannel);
+          channel.send({ embeds: [e1.setImage("attachment://captcha.jpeg")] }
+          ).catch(async()  => {
+            const vchannel = client.channels.cache.get(verificationchannel);
             const enableDMEmb = new Discord.MessageEmbed()
               .setTitle('Enable DM\'s')
               .setDescription(`please enable DMs then run the command ${prefix}verify`)
               .addField("Look at the image to learn how to enable your dm's", "Not doing so will disable your access to the server")
               .setImage('https://i.imgur.com/sEkQOCf.png');
             ;  
-            vchannel.send({ content: `<@!${args[0].user.id}>`, embeds: [enableDMEmb] }).then((message) => message.delete({ timeout: 20000 }));
+            await vchannel.send({ content: `<@!${args[0].user.id}>`, embeds: [enableDMEmb] })
           });
         } catch (err) {
           console.log(err);
@@ -68,7 +68,7 @@ module.exports = {
           try {
             if (response && captcha.value == userCaptchaData[args[0].id].captchaValue) {
               console.log(captcha.value);
-              vchannel = client.channels.cache.get(verificationchannel);
+              const vchannel = client.channels.cache.get(verificationchannel);
               var roleObj = args[0].guild.roles.cache.get(roleID);
               if (roleObj) {
                 await channel.send({embeds: [e3]});
