@@ -34,7 +34,7 @@ module.exports = {
           return;
         }
         try {
-          channel.send({ embeds: [e1.setImage("attachment://captcha.jpeg")] }
+          channel.send({ embeds: [e1.setImage("attachment://captcha.jpeg")], files: [captchaImage] }
           ).catch(async()  => {
             const vchannel = client.channels.cache.get(verificationchannel);
             const enableDMEmb = new Discord.MessageEmbed()
