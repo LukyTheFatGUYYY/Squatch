@@ -8,7 +8,7 @@ module.exports = {
         if (message.member.hasPermission('ADMINISTRATOR')) return;
         if (message.webhookID) return;
 
-        var noWords = JSON.parse(fs.readFileSync("../misc/bannedwords.txt"));
+        var noWords = JSON.parse(fs.readFileSync("../files/other/filter.txt"));
         // Check if CAPS or cApS are
         var msg = message.content.toLowerCase().split(" ");
         // Check the blockedWords, and if so remove the message 
