@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Captcha = require('@haileybot/captcha-generator');
 const { roleID } = require('../config/constants/roles.json');
-const { verificationchannel, captchalogchannel } = require('../config/constants/channel.json');
+const { verificationchannel, channelLog, captchalogchannel } = require('../config/constants/channel.json');
 const { xEmoji, prefix } = require('../config/main.json');
 
 module.exports = {
@@ -60,7 +60,9 @@ module.exports = {
           m.channel.send({ embeds: [e2] }); // captcha is incorrect and messages the user it is incorrect
           return false;
         };
-        channel.awaitMessages(filter, {
+        channel.awaitMessages(
+          {
+          filter: filter,
           max: 1,
           time: 600000,
           errors: ['time'],
@@ -87,7 +89,7 @@ module.exports = {
               .addField('**Account Creation:**', `${userCreationDate}`)
               .addField('**Captcha Code:**', `${userCaptchaData[args[0].id].captchaValue}`)
               .addField('**Role Given:**', `${roleObj}`)
-              .setColor("Purple");
+              .setColor("PURPLE");
             if (channelLog) args[0].guild.channels.cache.get(channelLog).send({ embeds: [CaptchaLog] });
           } catch (err) {
             console.log(err);
