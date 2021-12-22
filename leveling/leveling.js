@@ -1,3 +1,7 @@
+const SQLite = require("better-sqlite3")
+const sql = new SQLite('./mainDB.sqlite')
+const talkedRecently = new Map();
+
 const levelTable = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'levels';").get();
 if (!levelTable['count(*)']) {
   sql.prepare("CREATE TABLE levels (id TEXT PRIMARY KEY, user TEXT, guild TEXT, xp INTEGER, level INTEGER, totalXP INTEGER);").run();

@@ -1,41 +1,33 @@
-const mongoose = require('mongoose');
-// const connection = mongoose.connect('link', {useNewUrlParser: true, useUnifiedTopology: true})
-// Load environment variables (tokens, passwords, etc.)
 require('dotenv').config({ path: './config/credentials.env' });
-// Discord bot stuff
 const Discord = require('discord.js');
-const SQLite = require("better-sqlite3")
-const sql = new SQLite('./mainDB.sqlite')
+const fs = require('fs');
+client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
 
 const client = new Discord.Client({
   intents: 32767, // every intents
 });
+
+
+//Dont touch these
 const config = require('./config/main.json');
-
-client.on("ready", () => {
-  client.user.setActivity(`The Server`, {type: 'WATCHING'});
-});
-
-client.commands = new Discord.Collection();
-client.events = new Discord.Collection();
-const talkedRecently = new Map();
-require('./events/_loader')(client).then(() => client.emit('commandsAndEventsLoaded', 1)); //Event Handler
 require('./commands/_loader')(client.commands).then(() => client.emit('commandsAndEventsLoaded', 0));//Command handler
 
-//Below is for the new slash command handler coming soon
 
+require('./events/_loader')(client).then(() => client.emit('commandsAndEventsLoaded', 1)); //Event Handler
 //const handler = fs.readdirSync("./handler").filter(file => file.endsWith('.js'));
-//const eventsfiles = fs.readdirSync("./events").filter(file => file.endsWith('.js'));
-//const commandFolders = fs.readdirSync("./src/commands");
+//const functions = fs.readdirSync("./functions").filter(file => file.endsWith('.js'));
+//const commandFolders = fs.readdirSync("./commands");
 //(async () => {
-	//for (file of functions) {
-		//require(`./functions/'${file}`)(client);
-//}
-//client.handleEvents(eventsfiles, "./events");
-//client.handleCommands(commandFolders, "./commands");
+	//for (file of handler) {
+		//require(`./handler/${file}`)(client);
+	//}
+	//client.handleEvents(functions, "./functions");
+	//client.handleCommands(commandFolders, "./commands");
 
+//})();
 
-//on every message thats sent
+//Dont touch this
 client.on('messageCreate', async (message) => {
   if (
     !message.content.startsWith(config.prefix)
