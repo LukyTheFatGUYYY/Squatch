@@ -27,7 +27,7 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription('The limit of messages you can delete at once is 100');
-    if (!message.member.roles.cache.has(staffrole)) return message.channel.send(Prohibited);
+    if (!message.member.roles.cache.has(staffrole)) return message.channel.send({ embeds: [Prohibited] });
 
     if (!args[0]) return message.channel.send({ embeds: [MessageDeletion] });
 
