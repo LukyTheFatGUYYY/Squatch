@@ -1,12 +1,22 @@
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const {
+	REST
+} = require('@discordjs/rest');
+const {
+	Routes
+} = require('discord-api-types/v9');
 const fs = require('fs');
-require('dotenv').config({ path: './config/credentials.env' });
+require('dotenv').config({
+	path: './config/credentials.env'
+});
+const {
+	botID,
+	serverID
+} = require('../../config/main.json');
 
 
 // Place your client and guild ids here
-const clientId = ''; //Bota ID
-const guildId = '';
+const clientId = botID;
+const guildId = serverID;
 
 
 module.exports = (client) => {
@@ -21,15 +31,18 @@ module.exports = (client) => {
 			}
 		}
 
-		const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
+		const rest = new REST({
+			version: '9'
+		}).setToken(process.env.TOKEN);
 
 		(async () => {
 			try {
 				console.log('Started refreshing application (/) commands.');
 
 				await rest.put(
-					Routes.applicationGuildCommands(clientId, guildId),
-					{ body: client.commandArray },
+					Routes.applicationGuildCommands(clientId, guildId), {
+						body: client.commandArray
+					},
 				);
 
 				console.log('Successfully reloaded application (/) commands.');
