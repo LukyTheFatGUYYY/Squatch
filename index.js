@@ -1,13 +1,13 @@
 require('dotenv').config({ path: './config/credentials.env' });
 const Discord = require('discord.js');
 const fs = require('fs');
-client.commands = new Discord.Collection();
-client.events = new Discord.Collection();
 
 const client = new Discord.Client({
   intents: 32767, // every intents
 });
 
+client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
 
 //Dont touch these
 const config = require('./config/main.json');
