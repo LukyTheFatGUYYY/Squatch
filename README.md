@@ -66,3 +66,13 @@ npm install
 
 npm start
 ```
+
+
+
+# How to invite the bot to your discord server
+
+* https://discord.com/oauth2/authorize?client_id={PUT YOUR BOTS CLIENT ID HERE}&permissions={ permission level}&scope=bot
+
+* use [This website](https://discordapi.com/permissions.html) to caculate the permission needed - i usually use 8 (administrator perms)
+
+* please make sure you put your bots client id and the permission level in the correct places, and remove the {}
