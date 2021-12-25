@@ -7,10 +7,10 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('handle')
-  .setDescription('allows a moderator to handle a specific ticket'),
-async execute(interaction, client) {
-  await interaction.deferReply();
+    .setName('handle')
+    .setDescription('allows a moderator to handle a specific ticket'),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Error')

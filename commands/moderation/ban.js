@@ -57,16 +57,16 @@ module.exports = {
     });
     const server = interaction.guild
     if (!interaction.member.roles.cache.has(staffrole)) {
-    interaction.editReply({
-      embeds: [Prohibited]
-    });
-  }
+      interaction.editReply({
+        embeds: [Prohibited]
+      });
+    }
     const toWarn = interaction.options.getUser('user')
     const moderator = interaction.member;
-    if (!toWarn) 
-    interaction.editReply({
-      embeds: [validuser]
-    });
+    if (!toWarn)
+      interaction.editReply({
+        embeds: [validuser]
+      });
     warnsDB.ensure(toWarn.id, {
       warns: {}
     });
@@ -78,9 +78,9 @@ module.exports = {
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
     if (moderator.id == toWarn.id)
-    interaction.editReply({
-      embeds: [cantbanyourself]
-    });
+      interaction.editReply({
+        embeds: [cantbanyourself]
+      });
     if (
       server.members.cache.get(moderator.id).roles.highest.rawPosition <=
       (server.members.cache.get(toWarn.id) ?
@@ -89,7 +89,7 @@ module.exports = {
     ) {
       interaction.editReply(({
         embeds: [samerankorhigher]
-      }), );
+      }));
     }
     const warnLogs = server.channels.cache.get(channelLog);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
@@ -121,10 +121,10 @@ module.exports = {
     });
     warnsDB.set(
       toWarn.id, {
-        moderator: moderator.id,
-        reason: `(banned) - ${reason}`,
-        date: moment(Date.now()).format('LL'),
-      },
+      moderator: moderator.id,
+      reason: `(banned) - ${reason}`,
+      date: moment(Date.now()).format('LL'),
+    },
       `warns.${caseID}`,
     );
     return client.guilds.cache

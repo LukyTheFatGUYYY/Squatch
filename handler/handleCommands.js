@@ -41,8 +41,8 @@ module.exports = (client) => {
 
 				await rest.put(
 					Routes.applicationGuildCommands(clientId, guildId), {
-						body: client.commandArray
-					},
+					body: client.commandArray
+				},
 				);
 
 				console.log('Successfully reloaded application (/) commands.');

@@ -17,6 +17,6 @@ module.exports = {
       .setColor('PURPLE')
       .setTitle('Fake profile')
       .addFields(``);
-      interaction.editReply({ embeds: [fakeprofile] });
+    interaction.editReply({ embeds: [fakeprofile] });
   },
 };

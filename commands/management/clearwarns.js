@@ -11,11 +11,11 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('clearwarns')
-  .setDescription('clear all specific warnings')
-  .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true)),
-async execute(interaction, client) {
-  await interaction.deferReply();
+    .setName('clearwarns')
+    .setDescription('clear all specific warnings')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
@@ -28,7 +28,7 @@ async execute(interaction, client) {
       );
     if (!interaction.member.roles.cache.has(adminrole)) return interaction.editReply({ embeds: [Prohibited] });
     const warnsDB = new Enmap({ name: 'warns' });
-    const user = interaction.options.getUser('user') 
+    const user = interaction.options.getUser('user')
     if (!user) return interaction.editReply({ embeds: [includeuser] });
     warnsDB.ensure(user.id, { points: 0, warns: {} });
     const userBanned = warnsDB.get(user.id).points >= 5;

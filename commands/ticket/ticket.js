@@ -8,10 +8,10 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('ticket')
-  .setDescription('Opens a ticket'),
-async execute(interaction, client) {
-  await interaction.deferReply();
+    .setName('ticket')
+    .setDescription('Opens a ticket'),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const welcome = new Discord.MessageEmbed()
       .setColor('GREEN')
       .setTitle(`Welcome ${interaction.username}`)
@@ -48,7 +48,7 @@ async execute(interaction, client) {
         .setTitle('Ticket')
         .setDescription(`You can view your ticket at <#${channel.id}>`);
 
-        interaction.channel.send({ embeds: [viewchannel] }).then((interaction));
+      interaction.channel.send({ embeds: [viewchannel] }).then((interaction));
       channel.send(welcome).then((message) => {
         message.react('<:envelope:>');
         const filter = (reaction, user) => user.id === interaction.author.id && reaction.emoji.name === ':envelope:';

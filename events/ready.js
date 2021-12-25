@@ -6,7 +6,7 @@ module.exports = {
     console.log('Successfully logged in!');
     eventLogger(client);
     client.on("ready", () => {
-      client.user.setActivity(`The Server`, {type: 'WATCHING'});
+      client.user.setActivity(`The Server`, { type: 'WATCHING' });
     });
   },
 };

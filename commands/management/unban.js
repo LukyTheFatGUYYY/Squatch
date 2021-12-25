@@ -9,10 +9,10 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('unban')
-  .setDescription('Unban a specific user'),
-async execute(interaction, client) {
-  await interaction.deferReply();
+    .setName('unban')
+    .setDescription('Unban a specific user'),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     if (!interaction.member.roles.cache.has(adminrole)) {
       return interaction.editReply(
         "I'm sorry but you have to be an administrator to use this command!",

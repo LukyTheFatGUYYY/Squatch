@@ -45,7 +45,7 @@ module.exports = {
         )
         .addField('**Messages Deleted**', Amount.size.toString())
         .addField('**In Channel**', `<#${interaction.channel.id}>`);
-        logs.send({ embeds: [Embed] });
+      logs.send({ embeds: [Embed] });
       return interaction.channel.send({ embeds: [Embed] });
     });
   },

@@ -3,14 +3,12 @@ const Discord = require('discord.js');
 const fs = require('fs');
 
 const client = new Discord.Client({
-  intents: 32767, // every intents
+	intents: 32767, // every intents
 });
 
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 
-//Dont touch these
-const config = require('./config/main.json');
 
 require('./events/_loader')(client).then(() => client.emit('commandsAndEventsLoaded', 1)); //Event Handler
 const handler = fs.readdirSync("./handler").filter(file => file.endsWith('.js'));

@@ -10,7 +10,7 @@ module.exports = {
     .addStringOption(option => option.setName('search').setDescription('please enter what you would like to search for').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply();
-    const search =  interaction.options.getString('search');
+    const search = interaction.options.getString('search');
     const error = new Discord.MessageEmbed()
       .setTitle("Error")
       .addField(`Please enter something to search for`, 'You will get a link to the correct wikipedia article')
@@ -25,6 +25,6 @@ module.exports = {
       .addField(`Results:`, `[Link to the article](${link})`)
       .setColor("GREEN");
 
-      interaction.editReply({ embeds: [embed] });
+    interaction.editReply({ embeds: [embed] });
   },
 };

@@ -55,7 +55,7 @@ module.exports = {
         .addField('Tag', user.tag, true)
         .addField(`Created At [${moment(user.createdTimestamp).fromNow()}]`, moment(user.createdTimestamp).format('LLL'))
         .setFooter(`Requested by ${interaction.member.displayName}`);
-        interaction.editReply({ embeds: [em] });
+      interaction.editReply({ embeds: [em] });
     }
   },
 };

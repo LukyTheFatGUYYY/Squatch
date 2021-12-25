@@ -15,7 +15,7 @@ module.exports = {
   usage: '<User ID/@mention> <reason>',
   description: 'Warn a member',
   run: async (client, message, args, data) => {
-    message.delete({timeout: 3000});
+    message.delete({ timeout: 3000 });
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()
@@ -105,7 +105,7 @@ module.exports = {
       `warns.${caseID}`,
     );
   },
-};const moment = require('moment');
+}; const moment = require('moment');
 const Enmap = require('enmap');
 require('moment-duration-format');
 const Discord = require('discord.js');

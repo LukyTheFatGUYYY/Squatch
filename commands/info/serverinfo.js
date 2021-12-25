@@ -41,6 +41,6 @@ module.exports = {
       .addField(`Members [${memberCount}]`, `👤 ${humanCount} | 🤖 ${botsCount}`)
       .addField(`Channels [${server.channels.cache.size.toLocaleString()}]`, `⌨️ ${textChannels} | 🗣️ ${voiceChannels} | 📂 ${categories}`)
       .addField('Server invite', `${discordlink}`);
-      interaction.editReply({ embeds: [em] });
+    interaction.editReply({ embeds: [em] });
   },
 };

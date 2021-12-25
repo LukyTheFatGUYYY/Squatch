@@ -10,12 +10,12 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('clearwarn')
-  .setDescription('clears a specific warning')
-  .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true))
-  .addStringOption(option => option.setName('caseid').setDescription('Please enter the Case ID').setRequired(true)),
-async execute(interaction, client) {
-  await interaction.deferReply();
+    .setName('clearwarn')
+    .setDescription('clears a specific warning')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true))
+    .addStringOption(option => option.setName('caseid').setDescription('Please enter the Case ID').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
@@ -38,7 +38,7 @@ async execute(interaction, client) {
       );
     if (!interaction.member.roles.cache.has(adminrole)) return interaction.editReply({ embeds: [Prohibited] });
     const warnsDB = new Enmap({ name: 'warns' });
-    const user = interaction.options.getUser('user') 
+    const user = interaction.options.getUser('user')
     if (!user) return interaction.editReply({ embeds: [includeuser] });
     warnsDB.ensure(user.id, { points: 0, warns: {} });
     const caseID = interaction.options.getString('caseid');
@@ -68,13 +68,13 @@ async execute(interaction, client) {
       .addField('Unbanned?', userBanned ? 'Yes' : 'No')
     await clearedWarnsLog.send({ embeds: [em] });
     return interaction.editReply({
-        embeds: [
-          new MessageEmbed()
-            .setColor('GREEN')
-            .setDescription(
-              `I have successfully cleared warning **${caseID}** from **${user.tag}**!`,
-            ),
-        ],
-      });
+      embeds: [
+        new MessageEmbed()
+          .setColor('GREEN')
+          .setDescription(
+            `I have successfully cleared warning **${caseID}** from **${user.tag}**!`,
+          ),
+      ],
+    });
   },
 };

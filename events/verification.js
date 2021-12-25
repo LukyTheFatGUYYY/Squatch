@@ -36,14 +36,14 @@ module.exports = {
         try {
           const embedImage = new Discord.MessageAttachment(captcha.JPEGStream, 'captcha.jpeg');
           channel.send({ embeds: [e1.setImage("attachment://captcha.jpeg")], files: [embedImage] }
-          ).catch(async()  => {
+          ).catch(async () => {
             const vchannel = client.channels.cache.get(verificationchannel);
             const enableDMEmb = new Discord.MessageEmbed()
               .setTitle('Enable DM\'s')
               .setDescription(`please enable DMs then run the command ${prefix}verify`)
               .addField("Look at the image to learn how to enable your dm's", "Not doing so will disable your access to the server")
               .setImage('https://i.imgur.com/sEkQOCf.png');
-            ;  
+            ;
             await vchannel.send({ content: `<@!${args[0].user.id}>`, embeds: [enableDMEmb] })
           });
         } catch (err) {
@@ -62,39 +62,39 @@ module.exports = {
         };
         channel.awaitMessages(
           {
-          filter: filter,
-          max: 1,
-          time: 600000,
-          errors: ['time'],
-        }).then(async (response) => {
-          // User entered a captcha code then bot checks if its correct or not and if it is, the bot gives the selected role set by the administrator
-          try {
-            if (response && captcha.value == userCaptchaData[args[0].id].captchaValue) {
-              console.log(captcha.value);
-              const vchannel = client.channels.cache.get(verificationchannel);
-              var roleObj = args[0].guild.roles.cache.get(roleID);
-              if (roleObj) {
-                await channel.send({embeds: [e3]});
-                await args[0].roles.add(roleObj);
+            filter: filter,
+            max: 1,
+            time: 600000,
+            errors: ['time'],
+          }).then(async (response) => {
+            // User entered a captcha code then bot checks if its correct or not and if it is, the bot gives the selected role set by the administrator
+            try {
+              if (response && captcha.value == userCaptchaData[args[0].id].captchaValue) {
+                console.log(captcha.value);
+                const vchannel = client.channels.cache.get(verificationchannel);
+                var roleObj = args[0].guild.roles.cache.get(roleID);
+                if (roleObj) {
+                  await channel.send({ embeds: [e3] });
+                  await args[0].roles.add(roleObj);
+                }
               }
+              // if the new member joins and enters captcha code correctly, the log will go to the specific channel set by the server owner
+              const joinedServer = args[0].guild.members.cache.get(args[0].user.id).joinedAt.toDateString();
+              const userCreationDate = args[0].user.createdAt.toDateString();
+              var roleObj = args[0].guild.roles.cache.get(roleID);
+              const CaptchaLog = new Discord.MessageEmbed()
+                .setTitle('New Member')
+                .addField('**User:**', `${args[0].user.tag}`)
+                .addField('**Joined Server at:**', `${joinedServer}`)
+                .addField('**Account Creation:**', `${userCreationDate}`)
+                .addField('**Captcha Code:**', `${userCaptchaData[args[0].id].captchaValue}`)
+                .addField('**Role Given:**', `${roleObj}`)
+                .setColor("PURPLE");
+              if (channelLog) args[0].guild.channels.cache.get(channelLog).send({ embeds: [CaptchaLog] });
+            } catch (err) {
+              console.log(err);
             }
-            // if the new member joins and enters captcha code correctly, the log will go to the specific channel set by the server owner
-            const joinedServer = args[0].guild.members.cache.get(args[0].user.id).joinedAt.toDateString();
-            const userCreationDate = args[0].user.createdAt.toDateString();
-            var roleObj = args[0].guild.roles.cache.get(roleID);
-            const CaptchaLog = new Discord.MessageEmbed()
-              .setTitle('New Member')
-              .addField('**User:**', `${args[0].user.tag}`)
-              .addField('**Joined Server at:**', `${joinedServer}`)
-              .addField('**Account Creation:**', `${userCreationDate}`)
-              .addField('**Captcha Code:**', `${userCaptchaData[args[0].id].captchaValue}`)
-              .addField('**Role Given:**', `${roleObj}`)
-              .setColor("PURPLE");
-            if (channelLog) args[0].guild.channels.cache.get(channelLog).send({ embeds: [CaptchaLog] });
-          } catch (err) {
-            console.log(err);
-          }
-        })
+          })
           .then(() => {
             // return verification();
           })

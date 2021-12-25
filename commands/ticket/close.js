@@ -8,10 +8,10 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('close')
-  .setDescription('closes the specific ticket'),
-async execute(interaction, client) {
-  await interaction.deferReply();
+    .setName('close')
+    .setDescription('closes the specific ticket'),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const delete1 = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Deletion')

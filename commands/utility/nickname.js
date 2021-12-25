@@ -17,11 +17,11 @@ module.exports = {
       .setTitle("Error")
       .setDescription(`Mention the user you want to change the nickname`)
       .setColor("RED");
-      const nicknamechange = new Discord.MessageEmbed()
+    const nicknamechange = new Discord.MessageEmbed()
       .setTitle("Error")
       .setDescription(`Input the new nickname for the user you mentioned`)
       .setColor("RED");
-      const cantchangeit = new Discord.MessageEmbed()
+    const cantchangeit = new Discord.MessageEmbed()
       .setTitle("Error")
       .setDescription(`Can't change nickname of this user, does he have a higher role? Is the server creator? Have I got the permission to change his nickname?`)
       .setColor("RED");

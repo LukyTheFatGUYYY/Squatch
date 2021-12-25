@@ -32,27 +32,27 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription('Role doesnt exist');
-      const member = interaction.options.getMember('user')
-     if (!interaction.member.roles.cache.has(staffrole)) return interaction.reply({ embeds: [Prohibited] });
+    const member = interaction.options.getMember('user')
+    if (!interaction.member.roles.cache.has(staffrole)) return interaction.reply({ embeds: [Prohibited] });
     if (!member) return interaction.editReply({ embeds: [Error] });
 
     try {
       const roleName = interaction.options.getRole('role');
 
-			if(!roleName) return interaction.editReply({ embeds: [RoleError] });
+      if (!roleName) return interaction.editReply({ embeds: [RoleError] });
 
       // get position of role - gives you integer
       const userRolePosition = interaction.member.roles.highest.position;
       const selectedRolePosition = roleName.position;
-      
-      if(userRolePosition < selectedRolePosition) {
+
+      if (userRolePosition < selectedRolePosition) {
         const embed = new Discord.MessageEmbed()
-              .setTitle("You don't have access to selected role.")
-              .setColor("RED")
-        
+          .setTitle("You don't have access to selected role.")
+          .setColor("RED")
+
         return interaction.editReply({ embeds: [embed] })
       }
-      
+
       const alreadyHasRole = await member.roles.cache.has(roleName.id);
 
       if (alreadyHasRole) {
@@ -68,7 +68,7 @@ module.exports = {
         );
       return member.roles.add(roleName).then(() => interaction.editReply({ embeds: [wowitworked] }));
     } catch (e) {
-			console.error(e);
+      console.error(e);
       return interaction.editReply({ embeds: [RoleError] });
     }
   }
