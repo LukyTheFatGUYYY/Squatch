@@ -1,18 +1,20 @@
 const Discord = require('discord.js');
 const { ticketCategory } = require('../../config/constants/channel.json');
 const { ticketsupportrole } = require('../../config/constants/roles.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
+
 
 module.exports = {
-  name: 'ticket',
-  description: 'creates a dedicated ticket',
-  aliases: [],
-  category: 'ticket',
-  clientPermissions: [],
-  userPermissions: [],
-  run: (client, message, args, data) => {
+  data: new SlashCommandBuilder()
+  .setName('ticket')
+  .setDescription('Opens a ticket'),
+async execute(interaction, client) {
+  await interaction.deferReply();
     const welcome = new Discord.MessageEmbed()
       .setColor('GREEN')
-      .setTitle(`Welcome ${message.author.username}`)
+      .setTitle(`Welcome ${interaction.username}`)
       .setDescription('Support will be with you shortly.\nTo close this ticket please react with <:envelope:>');
 
     const onechannel = new Discord.MessageEmbed()
@@ -20,23 +22,23 @@ module.exports = {
       .setTitle('Error')
       .setDescription('You already have a ticket open');
 
-    const ch = message.guild.channels.cache.find((ch) => ch.name === message.author.username);
-    if (ch) return message.channel.send({ embeds: [onechannel] });
+    const ch = interaction.guild.channels.cache.find((ch) => ch.name === interaction.username);
+    if (ch) return interaction.channel.send({ embeds: [onechannel] });
 
-    message.guild.channels.create(`${message.author.username}`, {
+    interaction.guild.channels.create(`${interaction.username}`, {
       type: 'text',
       parent: ticketCategory,
       permissionOverwrites: [
         {
-          id: message.guild.id,
+          id: interaction.guild.id,
           deny: ['VIEW_CHANNEL'],
         },
         {
-          id: message.author.id,
+          id: interaction.id,
           allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'ADD_REACTIONS', 'ATTACH_FILES'],
         },
         {
-          id: message.guild.roles.cache.find((role) => role.id === ticketsupportrole),
+          id: interaction.guild.roles.cache.find((role) => role.id === ticketsupportrole),
           allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
         },
       ],
@@ -46,10 +48,10 @@ module.exports = {
         .setTitle('Ticket')
         .setDescription(`You can view your ticket at <#${channel.id}>`);
 
-      message.channel.send({ embeds: [viewchannel] }).then((message) => message.delete({ timeout: 10000 }));
+        interaction.channel.send({ embeds: [viewchannel] }).then((interaction));
       channel.send(welcome).then((message) => {
         message.react('<:envelope:>');
-        const filter = (reaction, user) => user.id === message.author.id && reaction.emoji.name === ':envelope:';
+        const filter = (reaction, user) => user.id === interaction.author.id && reaction.emoji.name === ':envelope:';
         message.awaitReactions(filter, { max: 1 }).then(async (cls) => {
           const delete1 = new Discord.MessageEmbed()
             .setColor('RED')

@@ -1,15 +1,18 @@
 const Discord = require('discord.js');
 const { partnermanagerrole } = require('../../config/constants/roles.json');
 const { partnerChannel } = require('../../config/constants/channel.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
+
 
 module.exports = {
-  name: 'partner',
-  description: '',
-  category: 'application',
-  usage: '[accept|deny]',
-  run: async (client, message, args, data) => {
+  data: new SlashCommandBuilder()
+  .setName('partner')
+  .setDescription('apply for a server partnership'),
+async execute(interaction, client) {
+  await interaction.deferReply();
     if (message.channel.type !== 'DM') {
-      message.delete();
       const Application = new Discord.MessageEmbed()
         .setTitle('Application')
         .setDescription("Please check your DM's for the application");

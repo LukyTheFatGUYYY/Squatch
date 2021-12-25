@@ -1,32 +1,24 @@
 require('moment-duration-format');
 const Discord = require('discord.js');
-const { MessageEmbed } = require('discord.js');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-  name: 'avatar',
-  description: 'lists a users avater',
-  aliases: [],
-  category: 'utility',
-  clientPermissions: [],
-  userPermissions: [],
-  run: async (client, message, args, data) => {
-    const server = message.guild;
-    let member;
-    if (!args[0]) member = message.member;
-    if (args[0]) {
-      member = server.members.cache.get(args[0])
-        || server.members.cache.find((m) => m.user.username.toLowerCase() == args[0].toLowerCase())
-        || server.members.cache.find((m) => m.user.tag.toLowerCase() == args[0].toLowerCase())
-        || server.members.cache.find((m) => m.displayName.toLowerCase() == args[0].toLowerCase())
-        || message.mentions.members.first() || message.member;
-    }
-    const em = new MessageEmbed()
+  data: new SlashCommandBuilder()
+    .setName('avatar')
+    .setDescription('See either your own avatar or another users avatar')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban')),
+  async execute(interaction, client) {
+    await interaction.deferReply();
+    const member = interaction.options.getMember("user") ?? interaction.member
+    const em = new Discord.MessageEmbed()
       .setColor('GREEN')
-      .setTitle(`Showing ${member.displayName}'s avatar`)
+      .setTitle(`${member.user.tag}'s avatar`)
       .setImage(member.user.displayAvatarURL({ format: 'png', dynamic: true }));
-    if (message.member.id != member.id) {
-      em.setFooter(`Requested by ${message.member.displayName}`);
+    if (interaction.member.id != member.id) {
+      em.setFooter(`Requested by ${interaction.user.tag}`);
     }
-    message.channel.send({ embeds: [em] });
+    interaction.editReply({ embeds: [em] });
   },
 };

@@ -1,14 +1,16 @@
 const { supportrole } = require('../../config/constants/roles.json');
 const { ticketCategory } = require('../../config/constants/channel.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
+
 
 module.exports = {
-  name: 'mark',
-  description: 'allows a moderater to mark a certain ticket',
-  aliases: [],
-  category: 'ticket',
-  clientPermissions: [],
-  userPermissions: [],
-  run: async (client, message, args, data) => {
+  data: new SlashCommandBuilder()
+  .setName('handle')
+  .setDescription('allows a moderator to handle a specific ticket'),
+async execute(interaction, client) {
+  await interaction.deferReply();
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Error')

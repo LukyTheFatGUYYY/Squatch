@@ -1,22 +1,32 @@
 const moment = require('moment');
 const Enmap = require('enmap');
 const Discord = require('discord.js');
-const { MessageEmbed } = require('discord.js');
-const { customAlphabet } = require('nanoid')
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
+const {
+  customAlphabet
+} = require('nanoid')
 require('moment-duration-format');
-const { staffrole } = require('../../config/constants/roles.json');
-const { channelLog } = require('../../config/constants/channel.json');
-const { serverID, appeallink } = require('../../config/main.json');
+const {
+  staffrole
+} = require('../../config/constants/roles.json');
+const {
+  channelLog
+} = require('../../config/constants/channel.json');
+const {
+  serverID,
+  appeallink
+} = require('../../config/main.json');
 
 module.exports = {
-  name: 'ban',
-  description: '<User ID/@mention> <reason>',
-  aliases: [],
-  category: 'moderation',
-  clientPermissions: [],
-  userPermissions: [],
-  run: async (client, message, args, data) => {
-    message.delete({timeout: 3000});
+  data: new SlashCommandBuilder()
+    .setName('ban')
+    .setDescription('bans the selected user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to ban them').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
@@ -39,60 +49,78 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription('You can\'t ban that user due to role hierarchy');
-    const warnsDB = new Enmap({ name: 'warns' });
-    const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
-    const server = client.guilds.cache.get(serverID);
-    if (!message.member.roles.cache.has(staffrole)) return message.reply({ embeds: [Prohibited] });
-    if (!message.mentions.members && !client.users.cache.get(args[0])) {
-      await client.users.fetch(args[0]);
-    }
-    const toWarn = message.mentions.users.first() || client.users.cache.get(args[0]);
-    const moderator = message.member;
-    if (!toWarn) return message.reply({ embeds: [validuser] });
-    warnsDB.ensure(toWarn.id, { warns: {} });
-    let reason = args.join(' ').replace(args[0], '').trim();
+    const warnsDB = new Enmap({
+      name: 'warns'
+    });
+    const cannedMsgs = new Enmap({
+      name: 'cannedMsgs'
+    });
+    const server = interaction.guild
+    if (!interaction.member.roles.cache.has(staffrole)) {
+    interaction.editReply({
+      embeds: [Prohibited]
+    });
+  }
+    const toWarn = interaction.options.getUser('user')
+    const moderator = interaction.member;
+    if (!toWarn) 
+    interaction.editReply({
+      embeds: [validuser]
+    });
+    warnsDB.ensure(toWarn.id, {
+      warns: {}
+    });
+    let reason = interaction.options.getString('reason');
     if (!reason) {
-      return message.reply(
-        stateareason,
-      );
+      interaction.editReply({
+        embeds: [stateareason]
+      });
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return message.reply({ embeds: [cantbanyourself] });
+    if (moderator.id == toWarn.id)
+    interaction.editReply({
+      embeds: [cantbanyourself]
+    });
     if (
-      server.members.cache.get(moderator.id).roles.highest.rawPosition
-      <= (server.members.cache.get(toWarn.id)
-        ? server.members.cache.get(toWarn.id).roles.highest.rawPosition
-        : 0)
+      server.members.cache.get(moderator.id).roles.highest.rawPosition <=
+      (server.members.cache.get(toWarn.id) ?
+        server.members.cache.get(toWarn.id).roles.highest.rawPosition :
+        0)
     ) {
-      return message.reply(
-        samerankorhigher,
-      );
+      interaction.editReply(({
+        embeds: [samerankorhigher]
+      }), );
     }
     const warnLogs = server.channels.cache.get(channelLog);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
     const caseID = nanoid();
-    const em = new MessageEmbed()
+    const em = new Discord.MessageEmbed()
       .setTitle(`Case - ${caseID}`)
       .setColor('GREEN')
       .addField('Member', `${toWarn.tag} (${toWarn.id})`)
       .addField('Moderator', `${moderator.user.tag} (${moderator.id})`)
       .addField('Reason', `\`(banned) - ${reason}\``)
-    await warnLogs.send({ embeds: [em] });
-    const emUser = new MessageEmbed()
+    await warnLogs.send({
+      embeds: [em]
+    });
+    const emUser = new Discord.MessageEmbed()
       .setTitle('Banned')
       .setColor('GREEN')
       .setAuthor('https://i.imgur.com/BSzzbNJ.jpg')
       .setDescription(`You were banned from **${server}** for ${reason}!`)
       .addField('Case ID', `\`${caseID}\``)
       .addField('Ban Appeal Server', `[Join Me](${appeallink})`);
-    await toWarn.send({ embeds: [emUser] }).catch((err) => err);
-    const emChan = new MessageEmbed()
+    await toWarn.send({
+      embeds: [emUser]
+    }).catch((err) => err);
+    const emChan = new Discord.MessageEmbed()
       .setDescription(`You have succesfully banned **${toWarn.tag}**.`)
       .setColor('GREEN');
-    await message.channel.send({ embeds: [emChan] });
+    await interaction.editReply({
+      embeds: [emChan]
+    });
     warnsDB.set(
-      toWarn.id,
-      {
+      toWarn.id, {
         moderator: moderator.id,
         reason: `(banned) - ${reason}`,
         date: moment(Date.now()).format('LL'),
@@ -101,6 +129,8 @@ module.exports = {
     );
     return client.guilds.cache
       .get(serverID)
-      .members.ban(toWarn, { reason });
-  },
+      .members.ban(toWarn, {
+        reason
+      });
+  }
 };

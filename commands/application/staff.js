@@ -5,25 +5,26 @@ const {
 const {
   staffmanagerrole
 } = require('../../config/constants/roles.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-  name: 'staff',
-  description: 'Apply for staff!',
-  usage: '[accept|deny]',
-  category: 'application',
-  guildOnly: false,
-  run: async (client, message, args, data) => {
-    if (message.channel.type !== 'DM') {
-      message.delete();
+  data: new SlashCommandBuilder()
+    .setName('staff')
+    .setDescription('apply for staff'),
+  async execute(interaction, client) {
+    await interaction.deferReply();
+    if (interaction.channel.type !== 'DM') {
       const Application = new Discord.MessageEmbed()
         .setTitle('Application')
         .setDescription("Please check your DM's for the application")
         .setColor('GREEN');
-      message.channel.send({
+        interaction.editReply({
         embeds: [Application]
       });
     }
-    const filter = (m) => m.author.id === message.author.id;
+    const filter = (userinput) => userinput.author.id === interaction.id;
     const cancel = new Discord.MessageEmbed()
       .setTitle('Cancelled')
       .setDescription('You have successfully cancelled this application')
@@ -71,17 +72,13 @@ module.exports = {
     responses = [];
     let exitFlag = false;
     const skip = responses.length > 0;
-    const {
-      author
-    } = message;
+    const author = interaction.user;
     for (i = 0; i < questions.length; i++) {
       if (skip) break;
       questionEmbed.setTitle(`Question ${i + 1}`);
       questionEmbed.setDescription(questions[i]);
-      const m = await author.send({
-        embeds: [questionEmbed]
-      });
-      await m.channel
+      const userinput = await author.send({embeds: [questionEmbed]});
+      await userinput.channel
         .awaitMessages({
           filter: filter,
           time: 5 * 60000,
@@ -105,7 +102,7 @@ module.exports = {
         })
         .catch((collected) => {
           if (collected.length) return;
-          message.channel.send({
+          interaction.author.send({
             embeds: [outoftime]
           });
           exitFlag = true;
@@ -113,13 +110,13 @@ module.exports = {
       if (exitFlag) return;
     }
     if (exitFlag) return;
-    message.author.send(({
+    interaction.author.send(({
       embeds: [success]
     })).then(async () => {
-      const dataEmbed = new Discord.MessageEmbed().setTitle(`Application Submitted by ${message.author.tag}`);
+      const dataEmbed = new Discord.MessageEmbed().setTitle(`Application Submitted by ${interaction.tag}`);
       body = '';
       for (i = 0; i < responses.length; i++) {
-        body += `\n**${questions[i]}**${responses[i]}\n`;
+        body += `\n**${questions[i]}**\n${responses[i]}\n`;
       }
       body = body.trim(); // remove extra whitespace (extra \n at the end)
       dataEmbed.setDescription(body)
@@ -134,14 +131,12 @@ module.exports = {
           .setLabel('Decline')
           .setStyle('DANGER'),
         );
-      message.client.channels.cache.get(staffapplicationChannel).send({
+        interaction.client.channels.cache.get(staffapplicationChannel).send({
         embeds: [dataEmbed],
         components: [buttonsRow]
       })
       if (buttonsRow.customId === 'accept') {
-        await buttonsRow.deferUpdate();
-        await wait(4000);
-        await buttonsRow.editReply({
+        await buttonsRow.Reply({
           content: 'You accepted the user',
           components: []
         });

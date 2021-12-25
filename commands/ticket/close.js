@@ -1,16 +1,17 @@
 const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const { ticketCategory } = require('../../config/constants/channel.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
+
 
 module.exports = {
-  name: 'close',
-  description: 'closes a ticket',
-  aliases: [],
-  category: 'ticket',
-  clientPermissions: [],
-  userPermissions: [],
-  run: async (client, message, args, data) => {
-    message.delete();
+  data: new SlashCommandBuilder()
+  .setName('close')
+  .setDescription('closes the specific ticket'),
+async execute(interaction, client) {
+  await interaction.deferReply();
     const delete1 = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Deletion')

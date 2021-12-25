@@ -1,40 +1,41 @@
 const Discord = require('discord.js');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-    name: 'nickname',
-    description: 'lets you change a users nickname',
-    aliases: ['nick'],
-    category: 'utility',
-    clientPermissions: [],
-    userPermissions: [],
-    run: (client, msg, args) => {
-    let mentionMember = message.mentions.members.first();
-    let newNickname = args.slice(1).join(" ");
+  data: new SlashCommandBuilder()
+    .setName('nick')
+    .setDescription('bans the selected user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
+    .addStringOption(option => option.setName('newnickname').setDescription('Please enter the reason why you want to ban them').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
+    let mentionMember = interaction.options.getMember('user')
+    let newNickname = interaction.options.getString('newnickname');
     const mentionuser = new Discord.MessageEmbed()
       .setTitle("Error")
-      .addField(`Mention the user you want to change the nickname`)
+      .setDescription(`Mention the user you want to change the nickname`)
       .setColor("RED");
       const nicknamechange = new Discord.MessageEmbed()
       .setTitle("Error")
-      .addField(`Input the new nickname for the user you mentioned`)
+      .setDescription(`Input the new nickname for the user you mentioned`)
       .setColor("RED");
       const cantchangeit = new Discord.MessageEmbed()
       .setTitle("Error")
-      .addField(`Can't change nickname of this user, does he have a higher role? Is the server creator? Have I got the permission to change his nickname?`)
+      .setDescription(`Can't change nickname of this user, does he have a higher role? Is the server creator? Have I got the permission to change his nickname?`)
       .setColor("RED");
     if (!mentionMember) {
-      return message.reply({ embeds: [mentionuser] });
+      return interaction.editReply({ embeds: [mentionuser] });
     }
     if (!newNickname) {
-      return message.reply({ embeds: [nicknamechange] });
+      return interaction.editReply({ embeds: [nicknamechange] });
     }
     try {
       mentionMember.setNickname(newNickname);
     } catch (error) {
-      message.reply({ embeds: [cantchangeit] });
+      interaction.editReply({ embeds: [cantchangeit] });
     }
-    message.channel.send(
-      `Changed nickname of ${mentionMember} to **${newNickname}**`
-    );
+    interaction.editReply(`Changed nickname of ${mentionMember} to **${newNickname}**`);
   },
 };

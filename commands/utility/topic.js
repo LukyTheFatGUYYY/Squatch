@@ -1,15 +1,18 @@
 const randomTopic = require('table-topic-generator');
 require('moment-duration-format');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
+
 
 module.exports = {
-  name: 'topic',
-  description: 'gives you a topic to talk about in chat',
-  aliases: [],
-  category: 'utility',
-  clientPermissions: [],
-  userPermissions: [],
-  run: (msg, data) => {
+  data: new SlashCommandBuilder()
+    .setName('topic')
+    .setDescription('bans the selected user'),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const topic = randomTopic(7, 'Summer', 'Vacation', 'Family', 'Time', 'People', 'Favorite', 'Memories');
-    return message.channel.send(topic);
+    interaction.editReply("New topic")
+    return interaction.channel.send(topic);
   },
 };

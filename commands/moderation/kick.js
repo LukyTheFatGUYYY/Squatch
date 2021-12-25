@@ -2,20 +2,20 @@ const moment = require('moment');
 const Enmap = require('enmap');
 require('moment-duration-format');
 const Discord = require('discord.js');
-const { MessageEmbed } = require('discord.js');
 const { customAlphabet } = require('nanoid')
 const { staffrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
 const { serverID } = require('../../config/main.json');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-  name: 'kick',
-  category: 'moderation',
-  aliases: [],
-  usage: '<User ID/@mention> <reason>',
-  description: 'Kick a member',
-  run: async (client, message, args, data) => {
-    message.delete({timeout: 3000});
+  data: new SlashCommandBuilder()
+    .setName('kick')
+    .setDescription('kicks the selected user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to kick').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to kick them').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply({ ephemeral: true });
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()
@@ -41,57 +41,62 @@ module.exports = {
       .setTitle('Error')
       .setDescription('You can\'t kick that user due to role hierarchy');
     const server = client.guilds.cache.get(serverID);
-    if (!message.member.roles.cache.has(staffrole)) {
-      return message
-        .reply(Prohibited);
+    if (!interaction.member.roles.cache.has(staffrole)) {
+      interaction.editReply({
+        embeds: [Prohibited]
+      });
     }
-    const toWarn = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-    const moderator = message.member;
+    const toWarn = interaction.options.getUser('user')
+    const moderator = interaction.member;
     if (!toWarn) {
-      return message
-        .reply(validuser);
+      interaction.editReply({
+        embeds: [validuser]
+      });
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
-    let reason = args.join(' ').replace(args[0], '').trim();
+    let reason = interaction.options.getString('reason');
     if (!reason) {
-      return message
-        .reply(stateareason);
+      interaction.editReply({
+        embeds: [stateareason]
+      });
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    if (moderator.id == toWarn.id) return message.reply(cantkickyourself);
+    if (moderator.id == toWarn.id) interaction.editReply({
+      embeds: [cantkickyourself]
+    });
     if (
       server.members.cache.get(moderator.id).roles.highest.rawPosition
       <= (server.members.cache.get(toWarn.id)
         ? server.members.cache.get(toWarn.id).roles.highest.rawPosition
         : 0)
     ) {
-      return message
-        .reply(samerankorhigher);
+      interaction.editReply({
+        embeds: [samerankorhigher]
+      });
     }
     const warnLogs = server.channels.cache.get(channelLog);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
     const caseID = nanoid();
-    const em = new MessageEmbed()
+    const em = new Discord.MessageEmbed()
       .setTitle(`Case - ${caseID}`)
       .setColor('GREEN')
       .setAuthor('https://i.imgur.com/3fxf41t.jpg')
-      .addField('Member', `${toWarn.user.tag} (${toWarn.id})`)
+      .addField('Member', `${toWarn.tag} (${toWarn.id})`)
       .addField('Moderator', `${moderator.user.tag} (${moderator.id})`)
       .addField('Reason', `\`(kicked) - ${reason}\``)
-    await warnLogs.send(em);
-    const Server = message.member.guild.name;
-    const emUser = new MessageEmbed()
+    await warnLogs.send({ embeds: [em] });
+    const emUser = new Discord.MessageEmbed()
       .setTitle('Kicked')
       .setColor('RED')
       .setDescription(
         `You were kicked from ${server} for ${reason}, please don't do it again!`,
       )
       .addField('Case ID', `\`${caseID}\``);
-    await toWarn.send(emUser).catch((err) => err);
-    const emChan = new MessageEmbed()
-      .setDescription(`You have succesfully kicked **${toWarn.user.tag}**.`)
+    await toWarn.send({ embeds: [emUser] }).catch((err) => err);
+    const emChan = new Discord.MessageEmbed()
+      .setDescription(`You have succesfully kicked **${toWarn.tag}**.`)
       .setColor("GREEN");
-    await message.channel
+    await interaction.channel
       .send({ embeds: [emChan] });
     warnsDB.set(
       toWarn.id,
@@ -102,6 +107,6 @@ module.exports = {
       },
       `warns.${caseID}`,
     );
-    return toWarn.kick(reason);
+    return interaction.guild.members.cache.get(toWarn.id).kick(reason);
   },
 };

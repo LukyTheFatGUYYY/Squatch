@@ -4,15 +4,14 @@ module.exports = {
         if (!interaction.isCommand()) return;
 
         const command = client.commands.get(interaction.commandName);
-        command.execute(interaction, client)
 
         if (!command) return;
 
         try {
-            await command.execute(interaction);
+            await command.execute(interaction, client);
         } catch (error) {
             console.error(error);
-            await interaction.reply({
+            await interaction.editReply({
                 content: 'There was an error while executing this command!',
                 ephemeral: true
             });

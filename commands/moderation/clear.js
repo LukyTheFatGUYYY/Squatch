@@ -1,17 +1,17 @@
 const Discord = require('discord.js');
-const { MessageEmbed } = require('discord.js');
 const { staffrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
-const { serverID } = require('../../config/main.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-  name: 'clear',
-  aliases: ['purge', 'Clear', 'Purge'],
-  category: 'moderation',
-  description: 'clear a certain amount of messages!',
-  usage: 'Clear <Amounts Of Messages>',
-  run: async (client, message, args, data) => {
-    message.delete({timeout: 3000});
+  data: new SlashCommandBuilder()
+    .setName('clear')
+    .setDescription('Clears a selected amount of messages')
+    .addIntegerOption(option => option.setName('clear').setDescription('Enter a number').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const logs = await client.channels.cache.get(channelLog);
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
@@ -27,25 +27,26 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription('The limit of messages you can delete at once is 100');
-    if (!message.member.roles.cache.has(staffrole)) return message.channel.send({ embeds: [Prohibited] });
+    if (!interaction.member.roles.cache.has(staffrole)) return interaction.editReply({ embeds: [Prohibited] });
 
-    if (!args[0]) return message.channel.send({ embeds: [MessageDeletion] });
+    const DeleteTotal = interaction.options.getInteger('clear')
 
-    if (args[0] > 100) return message.channel.send({ embeds: [MessageLimit] });
+    if (!DeleteTotal) return interaction.editReply({ embeds: [MessageDeletion] });
 
-    message.channel.bulkDelete(args[0], true).then((Amount) => {
+    if (DeleteTotal > 100) return interaction.editReply({ embeds: [MessageLimit] });
+
+    interaction.channel.bulkDelete(DeleteTotal, true).then((Amount) => {
       const Embed = new Discord.MessageEmbed()
         .setColor('GREEN')
         .setTitle('**Messages Deleted!**')
         .addField(
           '**Moderator**',
-          `${message.author.tag} (${message.author.id})`,
+          `${interaction.tag} (${interaction.id})`,
         )
         .addField('**Messages Deleted**', Amount.size.toString())
-        .addField('**In Channel**', `<#${message.channel.id}>`);
+        .addField('**In Channel**', `<#${interaction.channel.id}>`);
         logs.send({ embeds: [Embed] });
-      return message.channel
-        .send({ embeds: [Embed] });
+      return interaction.channel.send({ embeds: [Embed] });
     });
   },
 };

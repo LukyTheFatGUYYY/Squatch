@@ -1,32 +1,34 @@
 const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const { suggestchannel } = require('../../config/constants/channel.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-  name: 'suggest',
-  description: 'server suggestions!',
-  aliases: ["suggestion"],
-  category: 'utility',
-  clientPermissions: [],
-  userPermissions: [],
-  run: async (client, message, args, data) => {
-    message.delete();
-    const suggestmsg = args.join(' ');
+  data: new SlashCommandBuilder()
+    .setName('suggest')
+    .setDescription('give the server a suggestion!')
+    .addStringOption(option => option.setName('suggestion').setDescription('Please enter your suggestion').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
+    const suggestmsg = interaction.options.getString('suggestion');
     const noarg = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Error')
       .setDescription('Error')
-      .setFooter(`${message.author.username}`);
-    if (!suggestmsg) return message.channel.send({ embeds: [noarg] })
+      .setFooter(`${interaction.username}`);
+    ;
+    if (!suggestmsg) return interaction.editReply({ embeds: [noarg] })
     const suggestembed = new Discord.MessageEmbed()
       .setColor('GREEN')
       .setTitle('New Suggestion')
       .setDescription(`${suggestmsg}`)
-      .setFooter(`Suggested by ${message.author.username}!`);
+      .setFooter(`Suggested by ${interaction.username}!`);
     if (suggestchannel) {
-      message.member.guild.channels.cache.get(suggestchannel).send({ embeds: [suggestembed] }).then(async (message) => {
-        await message.react('👍');
-        await message.react('👎');
+      interaction.member.guild.channels.cache.get(suggestchannel).send({ embeds: [suggestembed] }).then(async (interaction) => {
+        await interaction.react('👍');
+        await interaction.react('👎');
       });
     }
   },

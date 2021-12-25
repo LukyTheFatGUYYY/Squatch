@@ -9,11 +9,7 @@
     "jointocreatechannel": "",
     "jointocreatecategory": "",
     "unverifiedchannel": "",
-    "pollschannel": "",
     "starboardchannel": "",
-    "queuechannel": "",
-    "requestbreak": "",
     "verificationchannel": "",
-    "captchalogchannel": "",
-    "serverchannelrules": ""
+    "captchalogchannel": ""
 }

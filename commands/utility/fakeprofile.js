@@ -1,23 +1,22 @@
 const Discord = require('discord.js');
 const Fakerator = require('fakerator');
-
 const fakerator = Fakerator();
-const { staffrole, adminrole, breakrole } = require('../../config/constants/roles.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-  name: 'fakeprofile',
-  description: 'generates a fake profile',
-  aliases: ['fakeinfo'],
-  category: 'utility',
-  clientPermissions: [],
-  userPermissions: [],
-  run: (client, msg, data) => {
-    const { args } = data;
-    message.delete();
+  data: new SlashCommandBuilder()
+    .setName('fakeprofile')
+    .setDescription('bans the selected user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to ban them').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const fakeprofile = new Discord.MessageEmbed()
       .setColor('PURPLE')
       .setTitle('Fake profile')
       .addFields(``);
-      message.channel.send({ embeds: [fakeprofile] });
+      interaction.editReply({ embeds: [fakeprofile] });
   },
 };

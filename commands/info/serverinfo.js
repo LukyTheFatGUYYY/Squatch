@@ -1,22 +1,20 @@
 const moment = require('moment');
-const { MessageEmbed } = require('discord.js');
+const Discord = require('discord.js');
 require('moment-duration-format');
 const { discordlink } = require('../../config/main.json');
 const { adminrole, staffrole } = require('../../config/constants/roles.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-  name: 'serverinfo',
-  description: 'lists information about the server',
-  aliases: ['sinfo', 'infoserver'],
-  category: 'info',
-  clientPermissions: [],
-  userPermissions: [],
-  run: (client, message, args, data) => {
-    const server = message.guild;
-    const regions = {
-
-    };
-    const boosterEmoji = '<:diamonds:>';
+  data: new SlashCommandBuilder()
+    .setName('serverinfo')
+    .setDescription('lists the current server information'),
+  async execute(interaction, client) {
+    await interaction.deferReply();
+    const server = interaction.guild;
+    const boosterEmoji = ':diamonds:';
     const boostersCount = server.premiumSubscriptionCount;
     const boosterLevel = server.premiumTier;
     const serverOptions = server.features.join(', ').replace(/_/g, ' ').split(', ').join(' | ');
@@ -29,8 +27,8 @@ module.exports = {
     const roleCount = server.roles.cache.size.toLocaleString();
     const humanCount = server.members.cache.filter((m) => !m.user.bot).size.toLocaleString();
     const botsCount = server.members.cache.filter((m) => m.user.bot).size.toLocaleString();
-    const em = new MessageEmbed()
-      .setTitle(server.name)
+    const em = new Discord.MessageEmbed()
+      .setTitle('information for ', server.name)
       .setThumbnail(server.iconURL({ format: 'png', dynamic: true }))
       .setColor("PURPLE")
       .addField('Owner', `<@${server.ownerId}>`)
@@ -43,6 +41,6 @@ module.exports = {
       .addField(`Members [${memberCount}]`, `👤 ${humanCount} | 🤖 ${botsCount}`)
       .addField(`Channels [${server.channels.cache.size.toLocaleString()}]`, `⌨️ ${textChannels} | 🗣️ ${voiceChannels} | 📂 ${categories}`)
       .addField('Server invite', `${discordlink}`);
-      message.channel.send({ embeds: [em] });
+      interaction.editReply({ embeds: [em] });
   },
 };

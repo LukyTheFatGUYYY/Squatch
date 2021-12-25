@@ -15,8 +15,8 @@ module.exports = (client) => {
         embed.addField('User Tag', Old.user.tag);
       }
       if (Old.displayName !== New.displayName) {
-        embed.addField('Old Nickname', Old.nickname.toString());
-        embed.addField('New Nickname', New.nickname.toString());
+        embed.addField('Old Nickname', Old.nickname || "n/a");
+        embed.addField('New Nickname', New.nickname || "n/a");
       }
       if (Old.user.username !== New.user.username) {
         embed.addField('Old Username', Old.user.username);

@@ -11,7 +11,7 @@ require('dotenv').config({
 const {
 	botID,
 	serverID
-} = require('../../config/main.json');
+} = require('../config/main.json');
 
 
 // Place your client and guild ids here

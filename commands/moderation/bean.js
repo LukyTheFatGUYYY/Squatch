@@ -4,18 +4,18 @@ const { MessageEmbed } = require('discord.js');
 const { customAlphabet } = require('nanoid')
 require('moment-duration-format');
 const { staffrole } = require('../../config/constants/roles.json');
-const { channelLog } = require('../../config/constants/channel.json');
-const { serverID } = require('../../config/main.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-  name: 'bean',
-  description: '<User ID/@mention> <reason>',
-  aliases: [],
-  category: 'moderation',
-  clientPermissions: [],
-  userPermissions: [],
-  run: async (client, message, args, data) => {
-    message.delete({timeout: 3000});
+  data: new SlashCommandBuilder()
+    .setName('bean')
+    .setDescription('beans the selected user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to bean').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to bean them').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const warnsDB = new Enmap({ name: 'warns' });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
@@ -30,29 +30,20 @@ module.exports = {
       .setTitle('Error')
       .setDescription('Mention a valid reason to ban the user');
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
-    const server = client.guilds.cache.get(serverID);
-    if (!message.member.roles.cache.has(staffrole)) {
-      return message
-        .reply(Prohibited);
+    if (!interaction.member.roles.cache.has(staffrole)) {
+      return interaction.editReply({ embeds: [Prohibited] });
     }
-    if (!message.mentions.members && !client.users.cache.get(args[0])) {
-      await client.users.fetch(args[0]);
-    }
-    const toWarn = message.mentions.users.first() || client.users.cache.get(args[0]);
-    const moderator = message.member;
-    const Server = message.member.guild.name;
+    const toWarn = interaction.options.getUser('user')
+    const Server = interaction.member.guild.name;
     if (!toWarn) {
-      return message
-        .reply({ embeds: [validuser] });
+      return interaction.editReply({ embeds: [validuser] });
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
-    let reason = args.join(' ').replace(args[0], '').trim();
+    let reason = interaction.options.getString('reason');
     if (!reason) {
-      return message
-        .reply(stateareason);
+      return interaction.editReply({ embeds: [stateareason] });
     }
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
-    const warnLogs = server.channels.cache.get(channelLog);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
     const caseID = nanoid();
     const emUser = new MessageEmbed()
@@ -66,7 +57,6 @@ module.exports = {
     const emChan = new MessageEmbed()
       .setDescription(`You have succesfully beaned **${toWarn.tag}**.`)
       .setColor('GREEN');
-    return await message.channel
-      .send({ embeds: [emChan] });
+    return await interaction.editReply({ embeds: [emChan] });
   },
 };

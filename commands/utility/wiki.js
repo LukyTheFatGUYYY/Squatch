@@ -1,28 +1,30 @@
 const Discord = require('discord.js');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
 
 module.exports = {
-    name: 'wiki',
-    description: 'lets you find a wikipedia article',
-    aliases: [],
-    category: 'utility',
-    clientPermissions: [],
-    userPermissions: [],
-    run: async (client, message, args, data) => {
-    const search = args.join("_");
+  data: new SlashCommandBuilder()
+    .setName('wiki')
+    .setDescription('bans the selected user')
+    .addStringOption(option => option.setName('search').setDescription('please enter what you would like to search for').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
+    const search =  interaction.options.getString('search');
     const error = new Discord.MessageEmbed()
       .setTitle("Error")
       .addField(`Please enter something to search for`, 'You will get a link to the correct wikipedia article')
       .setColor("RED");
-    if (!message) {
-      return message.channel.send({ embeds: [error] });
+    if (!interaction) {
+      return interaction.editReply({ embeds: [error] });
     }
     const link = `https://www.wikipedia.org/w/index.php?search=${search}&ns0=1`;
     const embed = new Discord.MessageEmbed()
       .setTitle("Wikipedia Search")
-      .addField(`You Searched for:`, `${message}`)
+      .addField(`You Searched for:`, `${interaction}`)
       .addField(`Results:`, `[Link to the article](${link})`)
       .setColor("GREEN");
 
-      message.channel.send({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
   },
 };
