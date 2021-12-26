@@ -10,7 +10,8 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('unban')
-    .setDescription('Unban a specific user'),
+    .setDescription('Unban a specific user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to unban').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply();
     if (!interaction.member.roles.cache.has(adminrole)) {
@@ -19,10 +20,7 @@ module.exports = {
       );
     }
     const warnsDB = new Enmap({ name: 'warns' });
-    if (args[0] && !client.users.cache.get(args[0])) {
-      await client.users.fetch(args[0]).catch((err) => err);
-    }
-    const user = client.users.cache.get(args[0]);
+    const user = interaction.options.getUser('user')
     if (!user) return interaction.editReply('Please insert the user you want to unban.');
     warnsDB.ensure(user.id, { points: 0, warns: {} });
     client.guilds.cache
