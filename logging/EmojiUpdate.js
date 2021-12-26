@@ -9,10 +9,10 @@ module.exports = (client) => {
       .setColor('GREEN')
       .setDescription('A custom emoji was updated.');
     if (oldEmoji.name !== newEmoji.name) {
-      embed.addField('Old Emoji Name', oldEmoji.name, true);
-      embed.addField('New Emoji Name', newEmoji.name, true);
+      embed.addField('Old Emoji Name', oldEmoji.name);
+      embed.addField('New Emoji Name', newEmoji.name);
     }
-    embed.addField('Emoji ID', oldEmoji.id, true);
+    embed.addField('Emoji ID', oldEmoji.id);
     return logs.send({ embeds: [embed] });
   });
 };

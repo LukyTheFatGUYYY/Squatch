@@ -16,14 +16,6 @@ module.exports = {
                     ephemeral: true
                 });
             }
-        } else if (interaction.isButton()) {
-            if (interaction.customId === 'accept')
-                interaction.reply({
-                    content: `You Accepted ${interaction.user.tag}`
-                })
-        } else if (interaction.customId === 'decline')
-            interaction.reply({
-                content: `You Declined ${interaction.user.tag}`
-            })
+        }
     }
 }

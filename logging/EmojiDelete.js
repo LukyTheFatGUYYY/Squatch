@@ -8,8 +8,8 @@ module.exports = (client) => {
       .setTitle('Emoji Deleted')
       .setColor('GREEN')
       .setDescription('A custom emoji was deleted.')
-      .addField('Emoji Name', emoji.name, true)
-      .addField('Emoji ID', emoji.id.toString(), true)
+      .addField('Emoji Name', emoji.name)
+      .addField('Emoji ID', emoji.id.toString())
       .addField('Animted Emoji?', emoji.animated.toString());
     return logs.send({ embeds: [embed] });
   });

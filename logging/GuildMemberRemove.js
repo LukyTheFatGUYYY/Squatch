@@ -8,8 +8,8 @@ module.exports = (client) => {
       .setTitle('Member Left')
       .setColor('GREEN')
       .setDescription('A member left the server.')
-      .addField('User', member.user.tag, true)
-      .addField('User ID', member.id, true)
+      .addField('User', member.user.tag)
+      .addField('User ID', member.id)
       .addField('User Account Registered At', member.user.createdAt.toLocaleDateString())
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
     return logs.send({ embeds: [embed] });

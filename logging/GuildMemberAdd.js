@@ -8,10 +8,10 @@ module.exports = (client) => {
       .setTitle('Member Joined')
       .setColor('GREEN')
       .setDescription('A new member joined the server.')
-      .addField('User', member.user.tag, true)
-      .addField('User ID', member.id, true)
-      .addField('User Joined At', member.joinedAt.toLocaleDateString(), true)
-      .addField('User Account Registered At', member.user.createdAt.toLocaleDateString(), true)
+      .addField('User', member.user.tag)
+      .addField('User ID', member.id)
+      .addField('User Joined At', member.joinedAt.toLocaleDateString())
+      .addField('User Account Registered At', member.user.createdAt.toLocaleDateString())
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }));
     return logs.send({ embeds: [embed] });
   });

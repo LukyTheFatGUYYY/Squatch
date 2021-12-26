@@ -9,8 +9,8 @@ module.exports = (client) => {
         .setTitle('Channel Created')
         .setColor('GREEN')
         .setDescription('A new channel was created.')
-        .addField('Channel', channel.toString(), true)
-        .addField('Channel ID', channel.id.toString(), true);
+        .addField('Channel', channel.toString())
+        .addField('Channel ID', channel.id.toString());
       return logs.send({ embeds: [embed] });
     }
   });

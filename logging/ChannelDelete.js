@@ -9,8 +9,8 @@ module.exports = (client) => {
         .setTitle('Channel Deleted')
         .setColor('GREEN')
         .setDescription('A channel was deleted.')
-        .addField('Channel Name', channel.name, true)
-        .addField('Channel ID', channel.id.toString(), true);
+        .addField('Channel Name', channel.name)
+        .addField('Channel ID', channel.id.toString());
       if (channel.topic) {
         embed.addField('Channel Topic', channel.topic);
       }

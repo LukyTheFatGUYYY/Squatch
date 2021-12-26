@@ -7,8 +7,8 @@ module.exports = (client) => {
     const embed = new discord.MessageEmbed()
       .setTitle('New Invite Created')
       .setColor('GREEN')
-      .addField('Invite Code', invite.code, true)
-      .addField('Invite URL', invite.url, true)
+      .addField('Invite Code', invite.code)
+      .addField('Invite URL', invite.url)
       .addField('Invite Channel', invite.channel.toString())
     if (invite.expiresAt) {
       embed.addField('Invite Expires At', invite.expiresAt.toString());
