@@ -24,7 +24,6 @@ module.exports = {
         embeds: [Application]
       });
     }
-    const filter = (userinput) => userinput.author.id === interaction.id;
     const cancel = new Discord.MessageEmbed()
       .setTitle('Cancelled')
       .setDescription('You have successfully cancelled this application')
@@ -36,10 +35,6 @@ module.exports = {
     const tomanychars = new Discord.MessageEmbed()
       .setTitle('Error')
       .setDescription("Too many characters")
-      .setColor('RED');
-    const outoftime = new Discord.MessageEmbed()
-      .setTitle('Error')
-      .setDescription("Out of time")
       .setColor('RED');
     const questions = [
       '',
@@ -77,15 +72,15 @@ module.exports = {
       if (skip) break;
       questionEmbed.setTitle(`Question ${i + 1}`);
       questionEmbed.setDescription(questions[i]);
-      const userinput = await author.send({embeds: [questionEmbed]});
-      await userinput.channel
-        .awaitMessages({
+      const filter = (m) => m.author.id === interaction.user.id;
+      const m = await author.send({embeds: [questionEmbed]});
+      await m.channel.awaitMessages(
+        {
           filter: filter,
-          time: 5 * 60000,
           max: 1,
+          time: 600000,
           errors: ['time'],
-        })
-        .then((resp) => {
+        }).then((resp) => {
           if (resp.first().content.toLowerCase() === 'cancel') {
             author.send({
               embeds: [cancel]
@@ -100,28 +95,18 @@ module.exports = {
           }
           responses.push(resp.first());
         })
-        .catch((collected) => {
-          if (collected.length) return;
-          interaction.author.send({
-            embeds: [outoftime]
-          });
-          exitFlag = true;
-        });
       if (exitFlag) return;
     }
     if (exitFlag) return;
-    interaction.author.send(({
-      embeds: [success]
-    })).then(async () => {
-      const dataEmbed = new Discord.MessageEmbed().setTitle(`Application Submitted by ${interaction.tag}`);
+    interaction.editReply(({ content: `<@${interaction.user.id}>`, embeds: [success] })).then(async () => {
+      const dataEmbed = new Discord.MessageEmbed().setTitle(`Application Submitted by ${interaction.user.tag}`);
       body = '';
       for (i = 0; i < responses.length; i++) {
         body += `\n**${questions[i]}**\n${responses[i]}\n`;
       }
       body = body.trim(); // remove extra whitespace (extra \n at the end)
       dataEmbed.setDescription(body)
-      const buttonsRow = new Discord.MessageActionRow()
-        .addComponents(
+      const buttonsRow = new Discord.MessageActionRow().addComponents(
           new Discord.MessageButton()
           .setCustomId('accept')
           .setLabel('Accept')
@@ -135,12 +120,6 @@ module.exports = {
         embeds: [dataEmbed],
         components: [buttonsRow]
       })
-      if (buttonsRow.customId === 'accept') {
-        await buttonsRow.Reply({
-          content: 'You accepted the user',
-          components: []
-        });
-      }
     });
   },
 };

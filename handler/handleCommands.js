@@ -6,7 +6,7 @@ const {
 } = require('discord-api-types/v9');
 const fs = require('fs');
 require('dotenv').config({
-	path: './config/credentials.env'
+	path: '../config/credentials.env'
 });
 const {
 	botID,
