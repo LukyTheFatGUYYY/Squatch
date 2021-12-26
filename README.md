@@ -15,7 +15,6 @@ To add your bots token, you can add the token at [/config/credentials.env](https
 If you decided to help out with the bot and you found a few lines of code that could cause a problem or think you have a better way of doing something then you're more then welcome to create a pull request and show the code you would like to change and explain the difference.
 
 # To-Do
-* fix the application system
 
 * Fix the webscraping which can be found at /events/pcbuildhelp.js
 
@@ -33,7 +32,6 @@ If you decided to help out with the bot and you found a few lines of code that c
 If you found any issues that are related to the bot, then you can create an [issue](https://github.com/MrXez/Squatch/issues).
 
 # Currently Known Issues
-* both the staff and partner applications are broken
 * the images for all of the moderation commands are bugged out
 * im trying to figure out how to get deletemsg.js to work since it requires discord links to delete the messages
 * ticket doesnt work, plan to rewrite it after i finished most of the other things
