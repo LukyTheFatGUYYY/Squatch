@@ -106,7 +106,7 @@ module.exports = {
     const emUser = new Discord.MessageEmbed()
       .setTitle('Banned')
       .setColor('GREEN')
-      .setAuthor('https://i.imgur.com/BSzzbNJ.jpg')
+      .setImage('https://i.imgur.com/BSzzbNJ.jpg')
       .setDescription(`You were banned from **${server}** for ${reason}!`)
       .addField('Case ID', `\`${caseID}\``)
       .addField('Ban Appeal Server', `[Join Me](${appeallink})`);

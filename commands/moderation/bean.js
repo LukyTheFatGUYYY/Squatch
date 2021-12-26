@@ -1,6 +1,5 @@
 const Enmap = require('enmap');
 const Discord = require('discord.js');
-const { MessageEmbed } = require('discord.js');
 const { customAlphabet } = require('nanoid')
 require('moment-duration-format');
 const { staffrole } = require('../../config/constants/roles.json');
@@ -46,15 +45,15 @@ module.exports = {
     if (cannedMsgs.has(reason)) reason = cannedMsgs.get(reason);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
     const caseID = nanoid();
-    const emUser = new MessageEmbed()
+    const emUser = new Discord.MessageEmbed()
       .setTitle('Beaned')
-      .setAuthor('https://i.imgur.com/BSzzbNJ.jpg')
+      .setImage('https://i.imgur.com/BSzzbNJ.jpg')
       .setColor('GREEN')
       .setDescription(`You were beaned from **${Server}** for ${reason}!`)
       .addField('Case ID', `\`${caseID}\``)
       .addField('Bean Appeal Link', '[Join Me]()');
     await toWarn.send({ embeds: [emUser] }).catch((err) => err);
-    const emChan = new MessageEmbed()
+    const emChan = new Discord.MessageEmbed()
       .setDescription(`You have succesfully beaned **${toWarn.tag}**.`)
       .setColor('GREEN');
     return await interaction.editReply({ embeds: [emChan] });

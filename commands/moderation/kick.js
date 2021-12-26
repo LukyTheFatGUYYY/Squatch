@@ -80,14 +80,14 @@ module.exports = {
     const em = new Discord.MessageEmbed()
       .setTitle(`Case - ${caseID}`)
       .setColor('GREEN')
-      .setAuthor('https://i.imgur.com/3fxf41t.jpg')
       .addField('Member', `${toWarn.tag} (${toWarn.id})`)
       .addField('Moderator', `${moderator.user.tag} (${moderator.id})`)
       .addField('Reason', `\`(kicked) - ${reason}\``)
     await warnLogs.send({ embeds: [em] });
     const emUser = new Discord.MessageEmbed()
-      .setTitle('Kicked')
+      .setTitle(`Case - ${caseID}`)
       .setColor('RED')
+      .setImage('https://i.imgur.com/3fxf41t.jpg')
       .setDescription(
         `You were kicked from ${server} for ${reason}, please don't do it again!`,
       )
@@ -96,8 +96,7 @@ module.exports = {
     const emChan = new Discord.MessageEmbed()
       .setDescription(`You have succesfully kicked **${toWarn.tag}**.`)
       .setColor("GREEN");
-    await interaction.channel
-      .send({ embeds: [emChan] });
+    await interaction.editReply({ embeds: [emChan] });
     warnsDB.set(
       toWarn.id,
       {
