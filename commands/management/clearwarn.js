@@ -15,7 +15,7 @@ module.exports = {
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true))
     .addStringOption(option => option.setName('caseid').setDescription('Please enter the Case ID').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

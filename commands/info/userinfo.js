@@ -11,7 +11,7 @@ module.exports = {
     .setDescription('lists information about yourself or another user')
     .addUserOption(option => option.setName('user').setDescription('Please mention a user you would like the information for')),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const statusMoji = {
       dnd: ':red_circle:',
       offline: ':black_circle:',

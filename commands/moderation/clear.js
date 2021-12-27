@@ -11,7 +11,7 @@ module.exports = {
     .setDescription('Clears a selected amount of messages')
     .addIntegerOption(option => option.setName('clear').setDescription('Enter a number').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const logs = await client.channels.cache.get(channelLog);
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')

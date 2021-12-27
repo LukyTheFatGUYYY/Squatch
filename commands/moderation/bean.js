@@ -14,7 +14,7 @@ module.exports = {
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to bean').setRequired(true))
     .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to bean them').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const warnsDB = new Enmap({ name: 'warns' });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')

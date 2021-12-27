@@ -14,7 +14,7 @@ module.exports = {
     .setDescription('Unban a specific user')
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to unban').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

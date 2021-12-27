@@ -17,7 +17,7 @@ module.exports = {
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true))
     .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to warn them').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()

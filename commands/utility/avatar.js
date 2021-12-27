@@ -10,7 +10,7 @@ module.exports = {
     .setDescription('See either your own avatar or another users avatar')
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban')),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const member = interaction.options.getMember("user") ?? interaction.member
     const em = new Discord.MessageEmbed()
       .setColor('GREEN')

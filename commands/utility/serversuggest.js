@@ -11,7 +11,7 @@ module.exports = {
     .setDescription('give the server a suggestion!')
     .addStringOption(option => option.setName('suggestion').setDescription('Please enter your suggestion').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const suggestmsg = interaction.options.getString('suggestion');
     const noarg = new Discord.MessageEmbed()
       .setColor('RED')

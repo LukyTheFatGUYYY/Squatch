@@ -12,12 +12,11 @@ module.exports = {
     .setName('serverinfo')
     .setDescription('lists the current server information'),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const server = interaction.guild;
     const boosterEmoji = ':diamonds:';
     const boostersCount = server.premiumSubscriptionCount;
     const boosterLevel = server.premiumTier;
-    const serverOptions = server.features.join(', ').replace(/_/g, ' ').split(', ').join(' | ');
     const memberCount = server.memberCount.toLocaleString();
     const staffCount = server.members.cache.filter((m) => m.roles.cache.has(staffrole)).size.toLocaleString();
     const managerCount = server.members.cache.filter((m) => m.roles.cache.has(adminrole)).size.toLocaleString();

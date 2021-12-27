@@ -13,7 +13,7 @@ module.exports = {
     .addStringOption(option => option.setName('title').setDescription('Please enter a title of the announcement').setRequired(true))
     .addStringOption(option => option.setName('announce').setDescription('Please enter a message for the announcement').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
