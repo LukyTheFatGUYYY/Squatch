@@ -26,7 +26,7 @@ module.exports = {
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
     .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to ban them').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

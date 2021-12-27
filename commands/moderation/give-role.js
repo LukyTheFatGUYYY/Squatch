@@ -12,7 +12,7 @@ module.exports = {
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to kick').setRequired(true))
     .addRoleOption(option => option.setName('role').setDescription('Select a role').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')

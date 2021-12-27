@@ -12,16 +12,16 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('unban')
     .setDescription('Unban a specific user')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to unban').setRequired(true)),
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
       .setDescription('You have to be an administrator to use this command!')
       ;
     if (!interaction.member.roles.cache.has(adminrole)) {
-      return interaction.editReply({embeds: [Prohibited]});
+      return interaction.editReply({ embeds: [Prohibited] });
     }
     const warnsDB = new Enmap({ name: 'warns' });
     const user = interaction.options.getUser('user')
@@ -37,7 +37,7 @@ module.exports = {
       .setColor('GREEN')
       .addField('Manager', `${interaction.tag} (${interaction.id})`)
       .addField('User', `${user.tag} (${user.id})`);
-    await clearedWarnsLog.send({embeds: [em]});
+    await clearedWarnsLog.send({ embeds: [em] });
     return interaction.editReply({
       embeds: [
         new Discord.MessageEmbed()

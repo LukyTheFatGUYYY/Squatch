@@ -10,7 +10,7 @@ module.exports = {
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
     .addStringOption(option => option.setName('newnickname').setDescription('Please enter the reason why you want to ban them').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     let mentionMember = interaction.options.getMember('user')
     let newNickname = interaction.options.getString('newnickname');
     const mentionuser = new Discord.MessageEmbed()

@@ -15,7 +15,7 @@ module.exports = {
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to kick').setRequired(true))
     .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to kick them').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()

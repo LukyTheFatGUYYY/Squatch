@@ -13,7 +13,7 @@ module.exports = {
     .setDescription('Get a list of warnings for a user')
     .addUserOption(option => option.setName('user').setDescription('Please mention a valid user').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Prohibited User')
