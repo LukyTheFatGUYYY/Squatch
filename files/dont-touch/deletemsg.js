@@ -1,17 +1,25 @@
 const Discord = require('discord.js');
-const { MessageEmbed } = require('discord.js');
-const { staffrole } = require('../../config/constants/roles.json');
-const { channelLog } = require('../../config/constants/channel.json');
-const { serverID } = require('../../config/main.json');
+const {
+  staffrole
+} = require('../../config/constants/roles.json');
+const {
+  channelLog
+} = require('../../config/constants/channel.json');
+const {
+  serverID
+} = require('../../config/main.json');
+const {
+  SlashCommandBuilder
+} = require('@discordjs/builders');
+
 
 module.exports = {
-  name: 'deletemsg',
-  category: 'moderation',
-  aliases: ['delmsg'],
-  usage: '<message link>',
-  description: 'Delete a message',
-  run: async (client, message, args) => {
-    message.delete({timeout: 3000});
+  data: new SlashCommandBuilder()
+    .setName('deletemsg')
+    .setDescription('deleted the specified message')
+    .addStringOption(option => option.setName('messagelink').setDescription('Please enter the message you would like to delete').setRequired(true)),
+  async execute(interaction, client) {
+    await interaction.deferReply();
     const server = client.guilds.cache.get(serverID);
     const warnLogs = server.channels.cache.get(channelLog);
     const invalidlink = new Discord.MessageEmbed()
@@ -32,27 +40,33 @@ module.exports = {
     const cantfindthemessage = new Discord.MessageEmbed()
       .setColor('RED')
       .setDescription("I couldn't find that message");
-    if (!args[0].includes('https://discord.com/channels/')) return message.channel.send({ embeds: [invalidlink] });
-    if (args[0].includes('@me')) return message.channel.send({ embeds: [cantindmmessages] });
-    const data = args[0].slice(29).split('/'); // remove the beginning of the URL, and split it into the IDs (guild/channel/message)
-    if (data[0] !== message.guild.id) return message.channel.send({ embeds: [otherserverisbad] });
-    message.guild.channels
-      .fetch(data[1])
-      .then((channel) => {
-        channel.messages
-          .fetch(data[2])
-          .then((message) => {
-            message.delete().then(() => {
-              message.channel
-                .send({ embeds: [successfullydeleted] });
-            });
+    let msg = interaction.options.getString('messagelink');
+    if (!msg.includes('https://discord.com/channels/')) return interaction.editReply({
+      embeds: [invalidlink]
+    });
+    if (msg.includes('@me')) return interaction.editReply({
+      embeds: [cantindmmessages]
+    });
+    const data = msg.slice(29).split('/'); // remove the beginning of the URL, and split it into the IDs (guild/channel/message)
+    if (data[0] !== interaction.guild.id) return interaction.editReply({
+      embeds: [otherserverisbad]
+    });
+    interaction.guild.channels.fetch(data[1]).then((channel) => {
+      channel.interaction.fetch(data[2]).then((interaction) => {
+        interaction.delete().then(() => {
+          interaction.editReply({
+            embeds: [successfullydeleted]
           })
-          .catch((e) => {
-            message.channel.send({ embeds: [cantfindthemessage] });
-          });
+        });
+      }).catch((e) => {
+        interaction.editReply({
+          embeds: [cantfindthemessage]
+        })
       })
-      .catch((e) => {
-        message.channel.send({ embeds: [cantfindthechannel] });
-      });
+    }).catch((e) => {
+      interaction.editReply({
+        embeds: [cantfindthechannel]
+      })
+    });
   },
 };
