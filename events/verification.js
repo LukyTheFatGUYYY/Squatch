@@ -6,7 +6,9 @@ const { xEmoji, prefix } = require('../config/main.json');
 
 module.exports = {
   name: 'guildMemberAdd',
-  call: (client, args) => {
+  once: false,
+  execute: (client, args) => {
+
     const userCaptchaData = {};
     const captchachannel = client.channels.cache.get(captchalogchannel);
     async function verification() {

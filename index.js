@@ -10,7 +10,16 @@ client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 
 
-require('./events/_loader')(client).then(() => client.emit('commandsAndEventsLoaded', 1)); //Event Handler
+const eventFiles = fs.readdirSync(`${__dirname}/events`).filter(file => file.endsWith('.js'));
+for (const file of eventFiles) {
+	const event = require(`${__dirname}/events/${file}`);
+
+	if (event.once) client.once(event.name, (...args) => event.execute(client, args));
+	else client.on(event.name, (...args) => event.execute(client, args));
+}
+
+
+
 const handler = fs.readdirSync("./handler").filter(file => file.endsWith('.js'));
 const functions = fs.readdirSync("./functions").filter(file => file.endsWith('.js'));
 const commandFolders = fs.readdirSync("./commands");
