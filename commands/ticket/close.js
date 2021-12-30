@@ -1,5 +1,5 @@
 require('discord-reply');
-const configuration = require('../../config/misc/ticket.json')
+const configuration = require('../../config/ticket/ticket.json')
 const tickets = configuration.tickets
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js')
 

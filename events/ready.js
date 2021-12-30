@@ -6,6 +6,5 @@ module.exports = {
   execute: (client) => {
     eventLogger(client);
     client.user.setActivity(`The Server`, { type: 'WATCHING' });
-
   },
 };

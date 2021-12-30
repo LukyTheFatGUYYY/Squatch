@@ -1,9 +1,9 @@
 require('discord-reply');
 const Discord = require('discord.js')
 const { serverID } = require('../../config/main.json');
-const configuration = require('../../config/misc/ticket.json')
+const configuration = require('../../config/ticket/ticket.json')
 const tickets = configuration.tickets
-const sqlite = require('sqlite3').verbose();
+const sqlite = require('better-sqlite3')
 
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js')
 const {
