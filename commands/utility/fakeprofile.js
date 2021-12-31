@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
-const Fakerator = require('fakerator');
-const fakerator = Fakerator();
+const faker = require('faker');
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -8,15 +7,27 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('fakeprofile')
-    .setDescription('bans the selected user')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
-    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to ban them').setRequired(true)),
+    .setDescription('generates a fake profile'),
   async execute(interaction, client) {
     await interaction.deferReply({ephemeral: true});
+    var randomName = faker.name.findName()
+    var randomEmail = faker.internet.email();
+    var randomImage = faker.image.image();
+    var randomIP = faker.internet.ip();
+    var randomuserAgent = faker.internet.userAgent();
+    var randomIPv6 = faker.internet.ipv6();
+    var randomPassword = faker.internet.password();
     const fakeprofile = new Discord.MessageEmbed()
       .setColor('PURPLE')
+      .setThumbnail(`${randomImage}`)
       .setTitle('Fake profile')
-      .addFields(``);
+      .addField(`Name`, `${randomName}`)
+      .addField(`Email`, `${randomEmail}`)
+      .addField(`\u200B`, '\u200b')
+      .addField(`Internet Protocal`, `${randomIP}`)
+      .addField(`IPV6`, `${randomIPv6}`)
+      .addField(`User Agent`, `${randomuserAgent}`)
+      .addField(`Common Password`, `${randomPassword}`)
     interaction.editReply({ embeds: [fakeprofile] });
   },
 };
