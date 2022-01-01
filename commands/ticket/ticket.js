@@ -23,7 +23,7 @@ module.exports = {
 
     const category = interaction.guild.channels.cache.get(tickets.supportCategoryID);
 
-    const channel = await interaction.guild.channels.create(`ticket-${interaction.username}`, { 
+    const channel = await interaction.guild.channels.create(`ticket-${interaction.user.tag}`, { 
       type: 'text',
       parent: category 
     })
@@ -82,9 +82,9 @@ module.exports = {
       .setTitle(`🎟  New Ticket`)
       .setDescription(tickets.newTicketEmbed)
       .setTimestamp()
-      .setFooter(`Opened by ${interaction.tag}`, `${interaction.user.displayAvatarURL()}`)
+      .setFooter(`Opened by ${interaction.user.tag}`, `${interaction.user.displayAvatarURL()}`)
     channel.send({
-      content: `<@${interaction.id}>`, 
+      content: `<@${interaction.user.id}>`, 
       embeds: [embed],
       components: [menuRow, row]
     });
@@ -95,7 +95,7 @@ module.exports = {
 
     let guildId = serverID
 
-    let db = new sqlite.Database('./database/database.db', sqlite.OPEN_READWRITE);
+    let db = new sqlite('database/database.db', sqlite.OPEN_READWRITE);
 
     var query = `SELECT * FROM ticketDataExtra WHERE guildId = ?`;
     db.get(query, [guildId], (err, row) => {
@@ -120,7 +120,7 @@ module.exports = {
         let pad = "0000"
         let ticketId = pad.substring(0, pad.length - str.length) + str
 
-        let authorId = interaction.id
+        let authorId = interaction.user.id
 
         let channelName = channel.name
 
@@ -144,11 +144,11 @@ module.exports = {
 
         if (tickets.useNumberedTickets === 'true') {
           channel.setName(`ticket-${ticketId}`).then(c => {
-            c.setTopic(`Opened by **${interaction.tag}** - Ticket ID: **${ticketId}** - Category: **N/A**`)
+            c.setTopic(`Opened by **${interaction.user.tag}** - Ticket ID: **${ticketId}** - Category: **N/A**`)
             return;      
           });
         } else {
-          channel.setTopic(`Opened by **${interaction.tag}** - Ticket ID: **${ticketId}** - Category: **N/A**`)
+          channel.setTopic(`Opened by **${interaction.user.tag}** - Ticket ID: **${ticketId}** - Category: **N/A**`)
         }
       }
     });
