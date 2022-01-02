@@ -1,6 +1,7 @@
 require('discord-reply');
 const configuration = require('../../config/ticket/ticket.json')
 const tickets = configuration.tickets
+const Discord = require('discord.js');
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js')
 
 const {
@@ -15,12 +16,12 @@ module.exports = {
     await interaction.deferReply();
 
     if (!interaction.channel.name.startsWith('ticket-')) {
-      return new MsgError(`**${interaction.author.tag}**, you are not inside of a ticket.`)
+      return interaction.editReply(`**${interaction.user.tag}**, you are not inside of a ticket.`)
     }
 
 
 
-    if (tickets.onlySupportCanClose === 'true' && interaction.author.roles.includes(tickets.supportRoleID) === true || tickets.onlySupportCanClose === 'false' || client.author.includes(interactionid)) {
+    if (tickets.onlySupportCanClose === 'true' && interaction.user.roles.includes(tickets.supportRoleID) === true || tickets.onlySupportCanClose === 'false' || client.user.includes(interactionid)) {
 
       const embed = new MessageEmbed()
         .setColor("GREEN")
@@ -39,7 +40,7 @@ module.exports = {
           btnCancelClose
         )
 
-      await message.channel.send({
+      await message.editReply({
         embeds: [embed]
       });
         setTimeout(() => message.channel.delete(), 10000);
@@ -52,7 +53,7 @@ module.exports = {
         .setTitle('Insufficient Permission')
         .setDescription('You do not have permission to close this ticket.')
   
-      message.reply({
+      message.editReply({
         embeds: [embed]
       });
     }

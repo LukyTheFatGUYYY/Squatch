@@ -1,12 +1,17 @@
 require('discord-reply');
-const fs = require('fs');
 const configuration = require('../../config/ticket/ticket.json')
 const tickets = configuration.tickets
 const Discord = require('discord.js')
 const sqlite = require('sqlite3').verbose();
-const { serverID } = require('../../config/main.json');
+const {
+  serverID
+} = require('../../config/main.json');
 
-const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js')
+const {
+  MessageEmbed,
+  MessageButton,
+  MessageActionRow
+} = require('discord.js')
 
 const {
   SlashCommandBuilder
@@ -14,10 +19,12 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('ticket')
-  .setDescription('creates a ticket'),
-async execute(interaction, client) {
-  await interaction.deferReply({ephemeral: true});
+    .setName('ticket')
+    .setDescription('creates a ticket'),
+  async execute(interaction, client) {
+    await interaction.deferReply({
+      ephemeral: true
+    });
 
     const support = interaction.guild.roles.cache.get(tickets.supportRoleID)
 
@@ -25,9 +32,9 @@ async execute(interaction, client) {
 
     const category = interaction.guild.channels.cache.get(tickets.supportCategoryID);
 
-    const channel = await interaction.guild.channels.create(`ticket-${interaction.user.tag}`, { 
+    const channel = await interaction.guild.channels.create(`ticket-${interaction.user.tag}`, {
       type: 'text',
-      parent: category 
+      parent: category
     })
 
     channel.permissionOverwrites.edit(everyone, {
@@ -50,7 +57,7 @@ async execute(interaction, client) {
 
     var categories = []
 
-    tickets.ticketCategories.categories.forEach(function(i) {
+    tickets.ticketCategories.categories.forEach(function (i) {
       categories.push({
         label: i.displayName,
         description: i.categoryDescription,
@@ -73,7 +80,7 @@ async execute(interaction, client) {
       .addComponents(
         btnClose
       )
-    
+
     const menuRow = new MessageActionRow()
       .addComponents(
         menu
@@ -86,12 +93,12 @@ async execute(interaction, client) {
       .setTimestamp()
       .setFooter(`Opened by ${interaction.user.tag}`, `${interaction.user.avatarURL()}`)
     channel.send({
-      content: `<@${interaction.user.id}>`, 
+      content: `<@${interaction.user.id}>`,
       embeds: [embed],
       components: [menuRow, row]
     });
 
-    interaction.editReply({ 
+    interaction.editReply({
       content: `Your ticket has been opened in <#${channel.id}>.`
     });
 
@@ -100,15 +107,13 @@ async execute(interaction, client) {
     let db = new sqlite.Database('database/database.db', sqlite.OPEN_READWRITE);
 
     var query = `SELECT * FROM ticketData WHERE guildId = ?`;
-    var logged = db.exec(`SELECT * FROM ticketData LIMIT 1`)
-    console.log(logged)
     db.get(query, [guildId], (err, row) => {
       if (err) {
         console.log(err);
         return;
       }
       if (row === undefined) {
-        let insertdata = db.prepare(`INSERT INTO ticketData VALUES(?,?)`);
+        let insertdata = db.prepare(`INSERT INTO ticketData VALUES(?, ?, ?, ?, ?, ?, ?)`);
         insertdata.run(guildId, "0");
         insertdata.finalize();
         db.close();
@@ -119,13 +124,10 @@ async execute(interaction, client) {
 
 
         let channelId = channel.id
-
         let str = "" + ticketCount
         let pad = "0000"
         let ticketId = pad.substring(0, pad.length - str.length) + str
-
         let authorId = interaction.user.id
-
         let channelName = channel.name
 
         var query = `SELECT * FROM ticketData WHERE channelId = ?`;
@@ -135,9 +137,10 @@ async execute(interaction, client) {
             return;
           }
           if (row === undefined) {
-            let insertdata = db.prepare(`INSERT INTO ticketData VALUES(?,?,?,?,?,?)`);
+            let insertdata = db.prepare(`INSERT INTO ticketData VALUES(?,?,?,?,?,?,?)`);
             insertdata.run(channelId, channelName, ticketId, authorId, "not_set", "true");
             insertdata.finalize();
+            console.log(insertdata)
             db.close();
             return;
           } else {
@@ -148,7 +151,7 @@ async execute(interaction, client) {
         if (tickets.useNumberedTickets === 'true') {
           channel.setName(`ticket-${ticketId}`).then(c => {
             c.setTopic(`Opened by **${interaction.user.tag}** - Ticket ID: **${ticketId}** - Category: **N/A**`)
-            return;      
+            return;
           });
         } else {
           channel.setTopic(`Opened by **${interaction.user.tag}** - Ticket ID: **${ticketId}** - Category: **N/A**`)

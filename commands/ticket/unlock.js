@@ -1,5 +1,6 @@
 const configuration = require('../../config/ticket/ticket.json')
 const tickets = configuration.tickets
+const Discord = require('discord.js')
 
 const {
     SlashCommandBuilder
@@ -12,11 +13,11 @@ const {
     async execute(interaction, client) {
       await interaction.deferReply();
     if (!interaction.channel.name.startsWith('ticket-')) {
-      return new MsgError(`**${interaction.tag}**, you are not inside of a ticket.`)
+      return interaction.editReply(`**${interaction.tag}**, you are not inside of a ticket.`)
     }
 
     if (tickets.onlySupportCanAdd === 'true' && !interaction.member.roles.cache.has(tickets.supportRoleID)) {
-      return new MsgError(`**${interaction.tag}**, you do not have permission to unlock this ticket.`)
+      return interaction.editReply(`**${interaction.tag}**, you do not have permission to unlock this ticket.`)
     }
 
     interaction.channel.permissionOverwrites.cache.forEach(function(p) {
@@ -33,7 +34,7 @@ const {
       .setTitle('Ticket Unlocked  🔓')
       .setDescription(`The ticket has been successfully unlocked.`)
       .setColor("GREEN")
-      interaction.channel.send({ 
+      interaction.editReply({ 
       embeds: [embed]
     });
   }
