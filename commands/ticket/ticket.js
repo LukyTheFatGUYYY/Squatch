@@ -1,21 +1,23 @@
 require('discord-reply');
-const Discord = require('discord.js')
-const { serverID } = require('../../config/main.json');
+const fs = require('fs');
 const configuration = require('../../config/ticket/ticket.json')
 const tickets = configuration.tickets
-const sqlite = require('better-sqlite3')
+const Discord = require('discord.js')
+const sqlite = require('sqlite3').verbose();
+const { serverID } = require('../../config/main.json');
 
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js')
+
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('ticket')
-    .setDescription('creates a specific ticket'),
-  async execute(interaction, client) {
-    await interaction.deferReply();
+  .setName('ticket')
+  .setDescription('creates a ticket'),
+async execute(interaction, client) {
+  await interaction.deferReply({ephemeral: true});
 
     const support = interaction.guild.roles.cache.get(tickets.supportRoleID)
 
@@ -82,7 +84,7 @@ module.exports = {
       .setTitle(`🎟  New Ticket`)
       .setDescription(tickets.newTicketEmbed)
       .setTimestamp()
-      .setFooter(`Opened by ${interaction.user.tag}`, `${interaction.user.displayAvatarURL()}`)
+      .setFooter(`Opened by ${interaction.user.tag}`, `${interaction.user.avatarURL()}`)
     channel.send({
       content: `<@${interaction.user.id}>`, 
       embeds: [embed],
@@ -95,23 +97,25 @@ module.exports = {
 
     let guildId = serverID
 
-    let db = new sqlite('database/database.db', sqlite.OPEN_READWRITE);
+    let db = new sqlite.Database('database/database.db', sqlite.OPEN_READWRITE);
 
-    var query = `SELECT * FROM ticketDataExtra WHERE guildId = ?`;
+    var query = `SELECT * FROM ticketData WHERE guildId = ?`;
+    var logged = db.exec(`SELECT * FROM ticketData LIMIT 1`)
+    console.log(logged)
     db.get(query, [guildId], (err, row) => {
       if (err) {
         console.log(err);
         return;
       }
       if (row === undefined) {
-        let insertdata = db.prepare(`INSERT INTO ticketDataExtra VALUES(?,?)`);
+        let insertdata = db.prepare(`INSERT INTO ticketData VALUES(?,?)`);
         insertdata.run(guildId, "0");
         insertdata.finalize();
         db.close();
       } else {
         var ticketCount = row.ticketCount;
         ticketCount++;
-        db.run(`UPDATE ticketDataExtra SET ticketCount = ? WHERE guildId = ?`, [ticketCount, guildId]);
+        db.run(`UPDATE ticketData SET ticketCount = ? WHERE guildId = ?`, [ticketCount, guildId]);
 
 
         let channelId = channel.id
@@ -125,7 +129,7 @@ module.exports = {
         let channelName = channel.name
 
         var query = `SELECT * FROM ticketData WHERE channelId = ?`;
-        db.get(query, [channelId], (err, row) => {
+        db.exec(query, [channelId], (err, row) => {
           if (err) {
             console.log(err);
             return;
@@ -135,7 +139,6 @@ module.exports = {
             insertdata.run(channelId, channelName, ticketId, authorId, "not_set", "true");
             insertdata.finalize();
             db.close();
-            //console.log(`${channel.name} has been added to the database.`)
             return;
           } else {
             console.log(`${channelName} in already in the database.`)
