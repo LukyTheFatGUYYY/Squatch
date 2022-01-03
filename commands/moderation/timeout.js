@@ -3,6 +3,9 @@ const { adminrole } = require('../../config/constants/roles.json');
 const { serverID } = require('../../config/main.json');
 const ms = require('ms')
 const {
+    channelLog
+  } = require('../../config/constants/channel.json');
+const {
     SlashCommandBuilder
 } = require('@discordjs/builders');
 
@@ -19,6 +22,7 @@ module.exports = {
         const length = interaction.options.getString('time');
         const reason = interaction.options.getString('reason');
         const server = client.guilds.cache.get(serverID);
+        const warnLogs = server.channels.cache.get(channelLog);
         const moderator = interaction.member;
         const Prohibited = new Discord.MessageEmbed()
             .setColor('RED')
@@ -75,5 +79,8 @@ module.exports = {
         interaction.editReply({
             embeds: [Tembed]
         });
+        await warnLogs.send({
+            embeds: [Tembed]
+          });
     },
 };

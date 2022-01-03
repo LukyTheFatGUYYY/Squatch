@@ -4,11 +4,18 @@ const {
     Client
 } = require("discord.js");
 const Discord = require('discord.js')
-const { adminrole } = require('../../config/constants/roles.json');
-const { serverID } = require('../../config/main.json');
+const {
+    adminrole
+} = require('../../config/constants/roles.json');
+const {
+    serverID
+} = require('../../config/main.json');
 const {
     SlashCommandBuilder
 } = require('@discordjs/builders');
+const {
+    channelLog
+} = require('../../config/constants/channel.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,10 +25,11 @@ module.exports = {
         .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to put them in a timeout').setRequired(true)),
     async execute(interaction, client) {
         await interaction.deferReply();
-        const user = interaction.options.getUser('user');
+        const user = interaction.options.getMember('user');
         const reason = interaction.options.getString('reason') || 'no reason provided'
         const server = client.guilds.cache.get(serverID);
         const moderator = interaction.member;
+        const warnLogs = server.channels.cache.get(channelLog);
         const Prohibited = new Discord.MessageEmbed()
             .setColor('RED')
             .setTitle('Prohibited User')
@@ -32,6 +40,10 @@ module.exports = {
             .setColor('RED')
             .setTitle('Error')
             .setDescription('You can\'t kick that user due to role hierarchy');
+        const userhasbeenremoved = new Discord.MessageEmbed()
+            .setColor('GREEN')
+            .setTitle('Success')
+            .setDescription(`${user.user.tag.toString()} has successfully been removed from the timeout`);
         if (!interaction.member.roles.cache.has(adminrole)) {
             return interaction.editReply({
                 embeds: [Prohibited]
@@ -49,6 +61,9 @@ module.exports = {
         }
 
         user.timeout(null, reason);
-        interaction.editReply(`Removed Timeout of the member: ${user.user.tag.toString()}`);
+        interaction.editReply({embeds: [userhasbeenremoved]});
+        await warnLogs.send({
+            embeds: [userhasbeenremoved]
+        });
     },
 };
