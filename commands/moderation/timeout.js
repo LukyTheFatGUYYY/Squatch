@@ -10,7 +10,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('timeout')
         .setDescription('timeout the selected user')
-        .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
+        .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to timeout').setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to put them in a timeout').setRequired(true))
         .addStringOption(option => option.setName('time').setDescription('How long do you want them to be in a timeout for?').setRequired(true)),
     async execute(interaction, client) {
