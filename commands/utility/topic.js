@@ -8,11 +8,13 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('topic')
-    .setDescription('bans the selected user'),
+    .setDescription('sends a randomized topic'),
   async execute(interaction, client) {
     await interaction.deferReply();
-    const topic = randomTopic(7, 'Summer', 'Vacation', 'Family', 'Time', 'People', 'Favorite', 'Memories');
+    let allTopics = ['Summer', 'Vacation', 'Family', 'Time', 'People', 'Favorite', 'Memories'];
+    let random = Math.random() * allTopics.length;
+    let topic = randomTopic(1, allTopics[random]);
     interaction.editReply("New topic")
-    return interaction.channel.send(topic);
+    return interaction.channel.send(topic.Table_Topics);
   },
 };
