@@ -17,14 +17,13 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription('Error')
-      .setFooter(`${interaction.username}`);
     ;
     if (!suggestmsg) return interaction.editReply({ embeds: [noarg] })
     const suggestembed = new Discord.MessageEmbed()
       .setColor('GREEN')
       .setTitle('New Suggestion')
       .setDescription(`${suggestmsg}`)
-      .setFooter(`Suggested by ${interaction.username}!`);
+      .setFooter(`Suggested by ${interaction.user.tag}!`);
     if (suggestchannel) {
       interaction.member.guild.channels.cache.get(suggestchannel).send({ embeds: [suggestembed] }).then(async (interaction) => {
         await interaction.react('👍');

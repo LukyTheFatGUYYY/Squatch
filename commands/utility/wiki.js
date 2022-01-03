@@ -6,7 +6,7 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wiki')
-    .setDescription('bans the selected user')
+    .setDescription('gives you a wikipedia link for the term you searched for')
     .addStringOption(option => option.setName('search').setDescription('please enter what you would like to search for').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ephemeral: true});

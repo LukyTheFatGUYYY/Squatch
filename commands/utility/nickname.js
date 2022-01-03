@@ -6,7 +6,9 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('nick')
-    .setDescription('changes the nick of the selected user'),
+    .setDescription('changes the nickname of the selected user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
+    .addStringOption(option => option.setName('newnickname').setDescription('Please enter the reason why you want to ban them').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     let mentionMember = interaction.options.getMember('user')
