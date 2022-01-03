@@ -56,7 +56,7 @@ const defaultGiveawayMessages = {
 
 Nuggies.Messages(client, { giveawayOptions: defaultGiveawayMessages })
 // Connect to the database
-Nuggies.connect("");
+Nuggies.connect(""); // put the connection to mongodb here
 Nuggies.handleInteractions(client)
 Nuggies.giveaways.startAgain(client);
 

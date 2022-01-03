@@ -16,13 +16,10 @@ If you decided to help out with the bot and you found a few lines of code that c
 
 # To-Do
 
-* Fix the webscraping which can be found at /events/pcbuildhelp.js
+* Also make sure the jointocreate.js and topic.js is working
 
-* Also make sure the jointocreate.js, giveaway.js and topic.js are working as best as possible in /files/dont-touch
+* Add an anti-swear event
 
-* rewrite the ticket system
-
-* fix the antiswear
 
 
 
@@ -32,18 +29,15 @@ If you decided to help out with the bot and you found a few lines of code that c
 If you found any issues that are related to the bot, then you can create an [issue](https://github.com/MrXez/Squatch/issues).
 
 # Currently Known Issues
-* the images for all of the moderation commands are bugged out
 * im trying to figure out how to get deletemsg.js to work since it requires discord links to delete the messages
-* ticket doesnt work, plan to rewrite it after i finished most of the other things
-* antiswear doesnt work
-* the verification code stopped automatically giving member role to bot accounts and letting them bypass the verification
+* the verification code stopped automatically giving member role to other bot's and letting them bypass the verification
 
 
 
 # How to install the bot
-* If you don't have [**Node.js**](https://nodejs.org/en/) then install node first.
+* If you don't have [**Node.js**](https://nodejs.org/en/) then install the latest node version first.
 
-* Download the bot's code from this [GitHub page](https://github.com/MrXez/Squatch/archive/refs/heads/main.zip).
+* Download the bot's code from here[GitHub page](https://github.com/MrXez/Squatch/archive/refs/heads/main.zip).
 
 * Extract the zip file.
 
@@ -69,8 +63,8 @@ npm start
 
 # How to invite the bot to your discord server
 
-* https://discord.com/oauth2/authorize?client_id={PUT YOUR BOTS CLIENT ID HERE}&permissions={ permission level}&scope=bot
+* https://discord.com/oauth2/authorize?client_id=clientid&permissions=permissionlevel&scope=applications.commands%20bot
 
 * use [This website](https://discordapi.com/permissions.html) to caculate the permission needed - i usually use 8 (administrator perms)
 
-* please make sure you put your bots client id and the permission level in the correct places, and remove the {}
+* please make sure you put your bots client id and the permission level in the correct places
