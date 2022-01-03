@@ -42,7 +42,7 @@ const {
       .setTitle('User Added')
       .setDescription(`<@${member.id}> has been successfully added to the ticket.`)
       .setColor("GREEN")
-      interaction.reply({ 
+      interaction.editReply({ 
       embeds: [embed]
     });
   }
