@@ -36,17 +36,17 @@ module.exports = {
     if (DeleteTotal > 100) return interaction.editReply({ embeds: [MessageLimit] });
 
     interaction.channel.bulkDelete(DeleteTotal, true).then((Amount) => {
-      const Embed = new Discord.MessageEmbed()
+      const Successfullydeleted = new Discord.MessageEmbed()
         .setColor('GREEN')
         .setTitle('**Messages Deleted!**')
         .addField(
           '**Moderator**',
-          `${interaction.tag} (${interaction.id})`,
+          `${interaction.user.tag} (${interaction.id})`,
         )
         .addField('**Messages Deleted**', Amount.size.toString())
         .addField('**In Channel**', `<#${interaction.channel.id}>`);
-      logs.send({ embeds: [Embed] });
-      return interaction.channel.send({ embeds: [Embed] });
+      logs.send({ embeds: [Successfullydeleted] });
+      return interaction.editReply({ embeds: [Successfullydeleted] });
     });
   },
 };
