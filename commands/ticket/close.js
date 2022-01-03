@@ -11,15 +11,13 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('close')
-    .setDescription('creates a specific ticket'),
+    .setDescription('closes the ticket the command is ran into'),
   async execute(interaction, client) {
     await interaction.deferReply();
 
     if (!interaction.channel.name.startsWith('ticket-')) {
       return interaction.editReply(`**${interaction.user.tag}**, you are not inside of a ticket.`)
     }
-
-
 
     if (tickets.onlySupportCanClose === 'true' && interaction.member.roles.cache.has(tickets.supportRoleID) === true || tickets.onlySupportCanClose === 'false' || client.user.includes(interactionid)) {
 

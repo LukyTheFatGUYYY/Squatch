@@ -82,9 +82,7 @@ module.exports = {
       )
 
     const menuRow = new MessageActionRow()
-      .addComponents(
-        menu
-      )
+      .addComponents(menu)
 
     const embed = new MessageEmbed()
       .setColor("GREEN")

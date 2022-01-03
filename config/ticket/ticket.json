@@ -1,44 +1,47 @@
 {
-    "tickets": {
-    "supportCategoryID": "",
-    "supportRoleID": "",
-    "newTicketEmbed": "Welcome, thank you for opening a ticket. Our Support Team will be with you shortly. Meanwhile, please provide us with any information that may help us.",
-    "ticketPanelEmbed": "Welcome to our Support & Report Center! This ticket system is currently in beta, feel free to message Spuka for any information!\n\n**Abusing the Ticket System Can Result in a 7 Day Ban** <a:error:921123668791296051>",
-    "onlySupportCanAdd": "true",
-    "onlySupportCanClose": "true",
-    "pingSupportOnOpen": "true",
-    "useNumberedTickets": "true",
-    "ticketCategories": {
-      "enabled": "true",
-      "categories": [
-        {
-          "displayName": "Report User",
-          "categoryDescription": "Report a User for Breaking the Rules",
-          "categoryEmoji": "🏁",
-          "value": "first_option"
-        },
-        {
-          "displayName": "Product Support",
-          "categoryDescription": "For Getting Support with a Product",
-          "categoryEmoji": "🎁",
-          "value": "second_option"
-        },
-        {
-          "displayName": "Other",
-          "categoryDescription": "If your Support Category isn't Listed",
-          "categoryEmoji": "🗑",
-          "value": "third_option"
-        }
-      ]
-    },
-    "waitingCategorySwap": {
-      "enabled": "false",
-      "categoryId": ""
-    },
-    "pingOnMessage": {
-      "pingSupport": "false",
-      "pingUser": "false",
-      "pingOnce": "true"
-    }
+  "tickets": {
+  "supportCategoryID": "",
+  "supportRoleID": "",
+  "newTicketEmbed": "Welcome, thank you for opening a ticket. Our Support Team will be with you shortly. Meanwhile, Please select the appropriate option from the select menu below and please provide us with any information that may help us.",
+  "ticketPanelEmbed": "Welcome to our Support & Report Center! This ticket system is currently in beta, feel free to message [Xez#6207](https://github.com/MrXez) for any information!\n\n**Abusing the Ticket System Can Result in a 7 Day Ban** <a:error:921123668791296051>",
+  "reportUserEmbed": "Welcome, thank you for opening a ticket to report a user!. Our Support Team will be with you shortly. Meanwhile, Please provide us with any information that may help us. e.g. screenshots and an explanation of what happened",
+  "reportBugEmbed": "Welcome, thank you for opening a ticket to report a bug. Our Support Team will be with you shortly. Meanwhile, please provide us with any information that may help us. e.g. How you encountered the bug and what it does!",
+  "otherTicketEmbed": "Welcome, thank you for opening a ticket. Our Support Team will be with you shortly. Meanwhile, Please provide as much information as possible about what your ticket is about",
+  "onlySupportCanAdd": "true",
+  "onlySupportCanClose": "true",
+  "pingSupportOnOpen": "true",
+  "useNumberedTickets": "true",
+  "ticketCategories": {
+    "enabled": "true",
+    "categories": [
+      {
+        "displayName": "Report User",
+        "categoryDescription": "Report a User for Breaking the Rules",
+        "categoryEmoji": "🏁",
+        "value": "first_option"
+      },
+      {
+        "displayName": "Report a bug",
+        "categoryDescription": "Report a bug",
+        "categoryEmoji": "🐛",
+        "value": "second_option"
+      },
+      {
+        "displayName": "Other",
+        "categoryDescription": "If your Support Category isn't Listed",
+        "categoryEmoji": "❓",
+        "value": "third_option"
+      }
+    ]
+  },
+  "waitingCategorySwap": {
+    "enabled": "false",
+    "categoryId": ""
+  },
+  "pingOnMessage": {
+    "pingSupport": "false",
+    "pingUser": "false",
+    "pingOnce": "true"
   }
+}
 }
