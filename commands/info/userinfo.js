@@ -151,9 +151,8 @@ module.exports = {
     }
 
     const embed = new Discord.MessageEmbed()
-      .setAuthor(`Information about ${member.displayName}`)
+      .setAuthor({name: `Information about ${member.displayName}`})
       .setColor('#2F3136')
-      .setFooter(`User Info`, interaction.client.user.avatarURL({ dynamic: true }))
       .setThumbnail(member.user.displayAvatarURL({ format: 'png', dynamic: true }))
       .setTimestamp()
       .setDescription(`__**User Info**__
