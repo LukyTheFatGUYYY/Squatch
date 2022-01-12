@@ -26,7 +26,6 @@ module.exports = {
         .setTitle('Closing Ticket')
         .setDescription('This ticket will be closed in 10 seconds.')
         .setTimestamp()
-        .setFooter(`Closed by ${interaction.user.tag}`, `${interaction.user.avatarURL()}`)  
 
       const btnCancelClose = new MessageButton()
         .setLabel('Cancel Close')

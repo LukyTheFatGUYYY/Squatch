@@ -15,7 +15,7 @@ module.exports = {
                 console.log(message)
 
                 const embed = new MessageEmbed()
-                    .setTitle(`${emojis.error} Scam detected`)
+                    .setTitle(`❌ Scam detected`)
                     .setColor("#ff0000")
                     .setDescription(`${message.author.tag} sent a scam link/said a bad word: ||${message.content.toLowerCase()}||`)
                 message.channel.send({
@@ -27,7 +27,7 @@ module.exports = {
                 const timeout = await message.member.timeout(43200000)
 
                 const embed2 = new MessageEmbed()
-                    .setTitle(`${emojis.error} Scam detected`)
+                    .setTitle(`❌ Scam detected`)
                     .setDescription(`Dear ${message.author.tag}\nYou have received this because you have sent a not-allowed message.\nServer: **${message.guild.name}**\nMessage: ||${message.content.toLowerCase()}||\n\nYour timeout will be removed automatically in exactly **12Hours**.`)
                     .setColor("RED")
                     .setTimestamp()
@@ -38,6 +38,6 @@ module.exports = {
             }
         } catch (err) {
             return Promise.reject(err);
-        }
+          }
     }
 }

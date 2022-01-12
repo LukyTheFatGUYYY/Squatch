@@ -6,7 +6,6 @@ module.exports = {
   name: 'messageCreate',
   once: false,
   async execute(client, message) {
-    message = message[0];
     const linkRegex = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
     const link = message.content.match(linkRegex) ? message.content.match(linkRegex)[0] : null;
     if(!link) return;
