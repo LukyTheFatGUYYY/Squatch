@@ -53,38 +53,38 @@ module.exports = {
                 btnClose
             )
 
-            //This is for the reaction role buttons - the only thing you should change is the id's that go into the variables and at best the variable names
+        //This is for the reaction role buttons - the only thing you should change is the id's that go into the variables and at best the variable names
         if (interaction.isButton()) {
-            await interaction.deferReply();
             if (interaction.customId === 'test1')
-                var role1 = "930456562126954538"
+                var role1 = ""
             if (interaction.member.roles.cache.has(role1)) {
                 interaction.member.roles.remove(role1)
-                interaction.editReply({
+                interaction.reply({
                     content: `you removed the <@&${role1}> role!`
                 })
             } else {
-                interaction.editReply({
+                interaction.reply({
                     content: `You recieved the <@&${role1}> role!`
                 })
-                var role1 = "930456562126954538"
+                var role1 = ""
                 interaction.member.roles.add(role1)
             }
-        } 
-        
-        if (interaction.customId === 'test2')
-            var test2role = "926561265910943785"
-        if (interaction.member.roles.cache.has(test2role)) {
-            interaction.member.roles.remove(test2role)
-            interaction.editReply({
-                content: `You removed the <@&${test2role}> role!`
-            })
-        } else {
-            interaction.editReply({
-                content: `You recieved the <@&${test2role}> role!`
-            })
-            var test2role = "926561265910943785"
-            interaction.member.roles.add(test2role)
+        }
+        if (interaction.isButton()) {
+            if (interaction.customId === 'test2')
+                var test2role = ""
+            if (interaction.member.roles.cache.has(test2role)) {
+                interaction.member.roles.remove(test2role)
+                interaction.reply({
+                    content: `You removed the <@&${test2role}> role!`
+                })
+            } else {
+                interaction.reply({
+                    content: `You recieved the <@&${test2role}> role!`
+                })
+                var test2role = ""
+                interaction.member.roles.add(test2role)
+            }
         }
 
 
@@ -115,7 +115,7 @@ module.exports = {
                 embeds: [reportabugembed],
                 components: [row]
             })
-        } 
+        }
 
         if (interaction.values[0] === 'third_option') {
             await interaction.update({

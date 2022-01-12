@@ -42,7 +42,7 @@ module.exports = {
             const vchannel = client.channels.cache.get(verificationchannel);
             const enableDMEmb = new Discord.MessageEmbed()
               .setTitle('Enable DM\'s')
-              .setDescription(`please enable DMs then run the command ${prefix}verify`)
+              .setDescription(`please enable DMs then run the command /verify`)
               .addField("Look at the image to learn how to enable your dm's", "Not doing so will disable your access to the server")
               .setImage('https://i.imgur.com/sEkQOCf.png');
             ;
