@@ -2,33 +2,42 @@ const {
     MessageEmbed
 } = require("discord.js");
 
+const {
+    channelLog
+} = require('../config/constants/channel.json');
+
+const {
+    serverID
+} = require('../config/main.json');
+
 module.exports = {
     name: 'messageCreate',
     once: false,
     async execute(client, message) {
         try {
-            console.log(message.constructor.name)
             // Create a file with banned words/links and path to it
             const array = require("../files/other/filter.json")
             if (array.some(word => message.content.toLowerCase().includes(word))) {
                 message.delete()
-                console.log(message)
+                const server = client.guilds.cache.get(serverID);
+                const warnLogs = server.channels.cache.get(channelLog);
 
                 const embed = new MessageEmbed()
-                    .setTitle(`❌ Scam detected`)
+                    .setTitle(`❌ Message Deleted`)
                     .setColor("#ff0000")
-                    .setDescription(`${message.author.tag} sent a scam link/said a bad word: ||${message.content.toLowerCase()}||`)
-                message.channel.send({
+                    .addField(`User`, `${message.author.tag}`)
+                    .addField(`Word`, `${message.content.toLowerCase()}`)
+                warnLogs.send({
                     embeds: [embed]
                 })
 
                 // Timeout the User for 12h
-                const member = message.guild.members.cache.get(message.author)
-                const timeout = await message.member.timeout(43200000)
+                //const member = message.guild.members.cache.get(message.author)
+                //const timeout = await message.member.timeout(43200000)
 
                 const embed2 = new MessageEmbed()
-                    .setTitle(`❌ Scam detected`)
-                    .setDescription(`Dear ${message.author.tag}\nYou have received this because you have sent a not-allowed message.\nServer: **${message.guild.name}**\nMessage: ||${message.content.toLowerCase()}||\n\nYour timeout will be removed automatically in exactly **12Hours**.`)
+                    .setTitle(`❌ Message Deleted`)
+                    .setDescription(`Dear ${message.author.tag}\nYou have received this because you have sent a not-allowed message.\nMessage: ${message.content.toLowerCase()}\nPlease dont say it again`)
                     .setColor("RED")
                     .setTimestamp()
 
@@ -38,6 +47,6 @@ module.exports = {
             }
         } catch (err) {
             return Promise.reject(err);
-          }
+        }
     }
 }
