@@ -40,17 +40,17 @@ module.exports = {
       await interaction.editReply({
         embeds: [embed]
       });
-        setTimeout(() => interaction.channel.delete(), 10000);
+      setTimeout(() => interaction.channel.delete(), 10000);
       return;
 
     } else {
-      
+
       const embed = new Discord.MessageEmbed()
         .setColor("RED")
         .setTitle('Insufficient Permission')
         .setDescription('You do not have permission to close this ticket.')
-  
-        interaction.editReply({
+
+      interaction.editReply({
         embeds: [embed]
       });
     }

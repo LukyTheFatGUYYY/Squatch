@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { staffrole } = require('../../config/constants/roles.json');
+const { adminrole } = require('../../config/constants/roles.json');
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -9,8 +9,8 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('giverole')
     .setDescription('gives the selected user a role')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to kick').setRequired(true))
-    .addRoleOption(option => option.setName('role').setDescription('Select a role').setRequired(true)),
+    .addUserOption(option => option.setName('user').setDescription('Please mention the user who should recieve the role').setRequired(true))
+    .addRoleOption(option => option.setName('role').setDescription('Select a role you would like to give to the user').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
@@ -33,7 +33,8 @@ module.exports = {
       .setTitle('Error')
       .setDescription('Role doesnt exist');
     const member = interaction.options.getMember('user')
-    if (!interaction.member.roles.cache.has(staffrole)) return interaction.reply({ embeds: [Prohibited] });
+    const rolegiven = client.channels.cache.get(channelLog);
+    if (!interaction.member.roles.cache.has(adminrole)) return interaction.reply({ embeds: [Prohibited] });
     if (!member) return interaction.editReply({ embeds: [Error] });
 
     try {

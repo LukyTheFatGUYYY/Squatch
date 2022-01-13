@@ -9,7 +9,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('clear')
     .setDescription('Clears a selected amount of messages')
-    .addIntegerOption(option => option.setName('clear').setDescription('Enter a number').setRequired(true)),
+    .addIntegerOption(option => option.setName('clear').setDescription('Enter the total number of messages you would like to clear, Please note it must be below 100').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const logs = await client.channels.cache.get(channelLog);

@@ -7,9 +7,9 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('fakeprofile')
-    .setDescription('generates a fake profile'),
+    .setDescription('Generates a fake profile'),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     var randomName = faker.name.findName()
     var randomEmail = faker.internet.email();
     var randomImage = faker.image.image();

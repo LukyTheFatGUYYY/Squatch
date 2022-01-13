@@ -7,11 +7,11 @@ const {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('giveaway')
-        .setDescription('starts a giveaway')
-        .addStringOption(option => option.setName('prize').setDescription('Prize of giveaway').setRequired(true))
-        .addNumberOption(option => option.setName('winners').setDescription('Amount of winners in the giveaway').setRequired(true))
-        .addStringOption(option => option.setName('endafter').setDescription('Time for the giveaway').setRequired(true))
-        .addRoleOption(option => option.setName('role').setDescription('Select a role').setRequired(true)),
+        .setDescription('Start a giveaway!')
+        .addStringOption(option => option.setName('prize').setDescription('Enter what the prize for the giveaway should be').setRequired(true))
+        .addNumberOption(option => option.setName('winners').setDescription('Enter the total amount of winners there should be').setRequired(true))
+        .addStringOption(option => option.setName('endafter').setDescription('Enterhow long the giveaway should last').setRequired(true))
+        .addRoleOption(option => option.setName('role').setDescription('Select a role you must have to enter the giveaway').setRequired(true)),
     async execute(interaction, client) {
         await interaction.deferReply({ ephemeral: true });
         let requirements = {};

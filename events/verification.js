@@ -105,7 +105,7 @@ module.exports = {
                          *  Check for new Captcha
                          */
             if (userCaptchaData[args[0].id].captchaValue === captcha.value) {
-              channel.send(`Operation timed out, please run ${prefix}verify to try again.`);
+              channel.send(`Operation timed out, please run /verify to try again.`);
             }
           });
       } catch (err) {

@@ -10,9 +10,9 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('bean')
-    .setDescription('beans the selected user')
+    .setDescription('Beans the mention user')
     .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to bean').setRequired(true))
-    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to bean them').setRequired(true)),
+    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you would like to bean them').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const warnsDB = new Enmap({ name: 'warns' });

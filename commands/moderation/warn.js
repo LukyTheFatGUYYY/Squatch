@@ -13,9 +13,9 @@ const { serverID } = require('../../config/main.json');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('warn')
-    .setDescription('warn the selected user')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true))
-    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to warn them').setRequired(true)),
+    .setDescription('Warn the selected user')
+    .addUserOption(option => option.setName('user').setDescription('Please mention the user you would like to warn').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you would to warn the user').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const warnsDB = new Enmap({ name: 'warns' });

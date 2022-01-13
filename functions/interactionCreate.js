@@ -24,9 +24,6 @@ module.exports = {
         }
 
 
-        await interaction.deferReply()
-
-
         //Embeds for the ticket system
         const closeticket = new Discord.MessageEmbed()
             .setColor("GREEN")

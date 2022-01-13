@@ -9,9 +9,9 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('announce')
-    .setDescription('send an announcement message')
-    .addStringOption(option => option.setName('title').setDescription('Please enter a title of the announcement').setRequired(true))
-    .addStringOption(option => option.setName('announce').setDescription('Please enter a message for the announcement').setRequired(true)),
+    .setDescription('Send an announcement ')
+    .addStringOption(option => option.setName('title').setDescription('Enter what the title of the announcement should be').setRequired(true))
+    .addStringOption(option => option.setName('announce').setDescription('Enter the text that should go into the announcement').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()

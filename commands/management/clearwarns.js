@@ -12,8 +12,8 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('clearwarns')
-    .setDescription('clear all specific warnings')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true)),
+    .setDescription('Clear all warnings given to the user')
+    .addUserOption(option => option.setName('user').setDescription('Mention a user that you would like to clear all of the warnings for').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
@@ -24,7 +24,7 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription(
-        'Include the user of whome you want to clear the warning,please note that if they were previously banned that they will be unbanned.',
+        'Include the user you would like to clear the warns for, Please note if they were banned than they will be unbanned',
       );
     if (!interaction.member.roles.cache.has(adminrole)) return interaction.editReply({ embeds: [Prohibited] });
     const warnsDB = new Enmap({ name: 'warns' });

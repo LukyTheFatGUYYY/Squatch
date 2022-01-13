@@ -6,10 +6,10 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wiki')
-    .setDescription('gives you a wikipedia link for the term you searched for')
-    .addStringOption(option => option.setName('search').setDescription('please enter what you would like to search for').setRequired(true)),
+    .setDescription('Gives you a wikipedia link for the term you searched for')
+    .addStringOption(option => option.setName('search').setDescription('Please enter what you would like to search for').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     const search = interaction.options.getString('search');
     const error = new Discord.MessageEmbed()
       .setTitle("Error")

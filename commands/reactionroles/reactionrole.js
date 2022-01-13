@@ -8,14 +8,14 @@ const {
   module.exports = {
     data: new SlashCommandBuilder()
       .setName('testrr') 
-      .setDescription('reactionroles'),
+      .setDescription('Reaction role system'),
     async execute(interaction, client) {
       await interaction.deferReply({ephemeral: true});
       const reactionrolechan = interaction.client.channels.cache.get(reactionrolechannel);
       const success = new Discord.MessageEmbed()
       .setColor('GREEN')
       .setTitle('Success')
-      .setDescription('You sucessfully created a reaction roles')
+      .setDescription('You sucessfully created a reaction roles system')
       ;
       const Prohibited = new Discord.MessageEmbed()
       .setColor('RED')

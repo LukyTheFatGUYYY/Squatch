@@ -11,7 +11,7 @@ module.exports = {
     .setDescription('give the server a suggestion!')
     .addStringOption(option => option.setName('suggestion').setDescription('Please enter your suggestion').setRequired(true)),
   async execute(interaction, client) {
-    await interaction.deferReply({ephemeral: true});
+    await interaction.deferReply({ ephemeral: true });
     const suggestmsg = interaction.options.getString('suggestion');
     const noarg = new Discord.MessageEmbed()
       .setColor('RED')
@@ -24,7 +24,7 @@ module.exports = {
       .setColor('GREEN')
       .setTitle('New Suggestion')
       .setDescription(`${suggestmsg}`)
-      .setFooter({name: `Suggested by ${interaction.user.tag}!`});
+      .setFooter({ name: `Suggested by ${interaction.user.tag}!` });
     if (suggestchannel) {
       interaction.member.guild.channels.cache.get(suggestchannel).send({ embeds: [suggestembed] }).then(async (interaction) => {
         await interaction.react('👍');

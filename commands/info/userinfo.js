@@ -151,7 +151,7 @@ module.exports = {
     }
 
     const embed = new Discord.MessageEmbed()
-      .setAuthor({name: `Information about ${member.displayName}`})
+      .setAuthor({ name: `Information about ${member.displayName}` })
       .setColor('#2F3136')
       .setThumbnail(member.user.displayAvatarURL({ format: 'png', dynamic: true }))
       .setTimestamp()

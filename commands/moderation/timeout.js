@@ -12,7 +12,7 @@ const {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('timeout')
-        .setDescription('timeout the selected user')
+        .setDescription('Sends the mentioned user into a timeout')
         .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to timeout').setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to put them in a timeout').setRequired(true))
         .addStringOption(option => option.setName('time').setDescription('How long do you want them to be in a timeout for?').setRequired(true)),
@@ -42,7 +42,7 @@ module.exports = {
 
         const timer = ms(length);
         if (!timer)
-            return interaction.editReply("Please specify the time!");
+            return interaction.editReply("Please specify how long you want the timeout to be!");
 
         if (
             server.members.cache.get(moderator.id).roles.highest.rawPosition <=

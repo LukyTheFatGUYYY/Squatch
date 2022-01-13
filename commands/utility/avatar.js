@@ -7,8 +7,8 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('avatar')
-    .setDescription('See either your own avatar or another users avatar')
-    .addUserOption(option => option.setName('user').setDescription('Please select another user')),
+    .setDescription('Enables you to see your own avatar or another user\'s avatar')
+    .addUserOption(option => option.setName('user').setDescription('Please select a user')),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const member = interaction.options.getMember("user") ?? interaction.member

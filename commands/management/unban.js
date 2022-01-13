@@ -11,8 +11,8 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('unban')
-    .setDescription('Unban a specific user')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to unban').setRequired(true)),
+    .setDescription('Unban the specified user')
+    .addUserOption(option => option.setName('user').setDescription('Please enter the user in which you would like to unban').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()

@@ -10,8 +10,8 @@ const { staffrole } = require('../../config/constants/roles.json');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('warning')
-    .setDescription('Get information about a case')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true))
+    .setDescription('Get information about a warning')
+    .addUserOption(option => option.setName('user').setDescription('Please mention a valid user').setRequired(true))
     .addStringOption(option => option.setName('caseid').setDescription('Please enter the Case ID').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });

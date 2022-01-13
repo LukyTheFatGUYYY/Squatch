@@ -20,9 +20,9 @@ const {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('untimeout')
-        .setDescription('removes the timeout from the selected user')
-        .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to ban').setRequired(true))
-        .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you want to put them in a timeout').setRequired(true)),
+        .setDescription('Removes the timeout from a selected user')
+        .addUserOption(option => option.setName('user').setDescription('Please mention the user with an ongoing timeout').setRequired(true))
+        .addStringOption(option => option.setName('reason').setDescription('Please enter the reason why you would like to remove the timeout').setRequired(true)),
     async execute(interaction, client) {
         await interaction.deferReply();
         const user = interaction.options.getMember('user');

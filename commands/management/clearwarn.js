@@ -11,9 +11,9 @@ const {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('clearwarn')
-    .setDescription('clears a specific warning')
-    .addUserOption(option => option.setName('user').setDescription('Please enter the user you would like to warn').setRequired(true))
-    .addStringOption(option => option.setName('caseid').setDescription('Please enter the Case ID').setRequired(true)),
+    .setDescription('Clears a specific warning')
+    .addUserOption(option => option.setName('user').setDescription('Please mention a user that should have a warning cleared').setRequired(true))
+    .addStringOption(option => option.setName('caseid').setDescription('Please enter the Case ID for the warning you would like to delete').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
