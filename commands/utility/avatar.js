@@ -17,7 +17,7 @@ module.exports = {
       .setTitle(`${member.user.tag}'s avatar`)
       .setImage(member.user.displayAvatarURL({ format: 'png', dynamic: true }));
     if (interaction.member.id != member.id) {
-      em.setFooter(`Requested by ${interaction.user.tag}`);
+      em.setFooter({name: `Requested by ${interaction.user.tag}`});
     }
     interaction.editReply({ embeds: [em] });
   },

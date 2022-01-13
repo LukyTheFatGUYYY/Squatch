@@ -24,7 +24,7 @@ module.exports = {
       .setColor('GREEN')
       .setTitle('New Suggestion')
       .setDescription(`${suggestmsg}`)
-      .setFooter(`Suggested by ${interaction.user.tag}!`);
+      .setFooter({name: `Suggested by ${interaction.user.tag}!`});
     if (suggestchannel) {
       interaction.member.guild.channels.cache.get(suggestchannel).send({ embeds: [suggestembed] }).then(async (interaction) => {
         await interaction.react('👍');

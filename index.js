@@ -20,6 +20,7 @@ for (const file of eventFiles) {
 	else client.on(event.name, (...args) => event.execute(client, ...args));
 }
 
+
 const handler = fs.readdirSync("./handler").filter(file => file.endsWith('.js'));
 const functions = fs.readdirSync("./functions").filter(file => file.endsWith('.js'));
 const commandFolders = fs.readdirSync("./commands");
@@ -29,8 +30,10 @@ const commandFolders = fs.readdirSync("./commands");
 	}
 	client.handleEvents(functions, "./functions");
 	client.handleCommands(commandFolders, "./commands");
-
 })();
+
+process.on("uncaughtException", error => console.error(error));
+process.on("unhandledRejection", error => console.error(error));
 
 
 const defaultGiveawayMessages = {

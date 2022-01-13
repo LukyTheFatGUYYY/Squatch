@@ -37,8 +37,7 @@ module.exports = {
 
                 const embed2 = new MessageEmbed()
                     .setTitle(`❌ Message Deleted`)
-                    .setDescription("You have received this because you have sent a restricted message")
-                    .addField(`Message:`, `${message.content.toLowerCase()}`)
+                    .setDescription(`Dear ${message.author.tag}\nYou have received this because you have sent a not-allowed message.\nMessage: ${message.content.toLowerCase()}\nPlease dont say it again`)
                     .setColor("RED")
                     .setTimestamp()
 
