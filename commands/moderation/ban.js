@@ -106,7 +106,7 @@ module.exports = {
     const emUser = new Discord.MessageEmbed()
       .setTitle('Banned')
       .setColor('GREEN')
-      .setImage('https://i.imgur.com/BSzzbNJ.jpg')
+      .setThumbnail('https://i.imgur.com/BSzzbNJ.jpg')
       .setDescription(`You were banned from **${server}** for ${reason}!`)
       .addField('Case ID', `\`${caseID}\``)
       .addField('Ban Appeal Server', `[Join Me](${appeallink})`);
@@ -129,8 +129,6 @@ module.exports = {
     );
     return client.guilds.cache
       .get(serverID)
-      .members.ban(toWarn, {
-        reason
-      });
+      .members.ban(toWarn, {reason, days: 7}); //the days section is how many days worth of message should be deleted when the user is banned, must be 0-7 otherwise theres going to be an error
   }
 };

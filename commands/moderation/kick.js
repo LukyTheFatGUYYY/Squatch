@@ -87,7 +87,7 @@ module.exports = {
     const emUser = new Discord.MessageEmbed()
       .setTitle(`Case - ${caseID}`)
       .setColor('RED')
-      .setImage('https://i.imgur.com/3fxf41t.jpg')
+      .setThumbnail('https://i.imgur.com/3fxf41t.jpg')
       .setDescription(
         `You were kicked from ${server} for ${reason}, please don't do it again!`,
       )

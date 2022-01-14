@@ -47,7 +47,7 @@ module.exports = {
     const caseID = nanoid();
     const emUser = new Discord.MessageEmbed()
       .setTitle('Beaned')
-      .setImage('https://i.imgur.com/BSzzbNJ.jpg')
+      .setThumbnail('https://i.imgur.com/BSzzbNJ.jpg')
       .setColor('GREEN')
       .setDescription(`You were beaned from **${Server}** for ${reason}!`)
       .addField('Case ID', `\`${caseID}\``)
