@@ -60,13 +60,13 @@ module.exports = {
         return interaction.channel
           .send({ embeds: [AlreadyHas] })
       }
-
       const wowitworked = new Discord.MessageEmbed()
         .setTitle('Role successfully recieved')
         .setColor("GREEN")
         .setDescription(
           `**Moderator:** ${interaction.user}\n**Role Recieved:** ${roleName}\n**Member:** ${member.user}`,
         );
+      rolegiven.send({ embeds: [wowitworked] });
       return member.roles.add(roleName).then(() => interaction.editReply({ embeds: [wowitworked] }));
     } catch (e) {
       console.error(e);
