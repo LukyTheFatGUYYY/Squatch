@@ -151,39 +151,27 @@ module.exports = {
     }
 
     const embed = new Discord.MessageEmbed()
-      .setAuthor({ name: `Information about ${member.displayName}` })
+      .setAuthor({name: `Information about ${member.displayName}`})
       .setColor('#2F3136')
       .setThumbnail(member.user.displayAvatarURL({ format: 'png', dynamic: true }))
       .setTimestamp()
-      .setDescription(`__**User Info**__
-  **•** \`ID:\` **${member.id}**
-  **•** \`Profile:\` **${member}**
-  **•** \`Bot:\` **${member.user.bot ? "Yes" : "No"}**
-  **•** \`Created At:\` **${moment(member.user.createdAt).format(
-        "MMMM Do YYYY, H:mm:ss a"
-      )}**
-  __**Member Info**__
-  **•** \`Username:\` **${member.displayName} **
-  **•** \`Tag:\` ** ${member.user.discriminator}**
-  **•** \`Nickname:\` **${member.nickname ? member.nickname : "No Nickname"}**
-  **•** \`Joined At:\` **${moment(member.joinedAt).format(
-        "MMMM Do YYYY, H:mm:ss a"
-      )}**
-  **•** \`Activity:\` **${custom}**
-  __**Roles:**__
-  ${userRoles}
-  __**Badge Information**__
-  ${flags} 
-  
-  __**Suspicious Check**__
-  • ${safe}
-  __**Boosting Since:**__ 
-  **•**${member.premiumSince ? member.premiumSince : "Not a server booster!"}
-   __**Permissions:**__ 
-  **•**\`${permissions.join(` | `)}\`
-  __**Acknowledgements:**__
-  **•**\`${acknowledgements}\``)
+      .addField(`__User info__\n• ID`, `${member.id}`)
+      .addField(`• Profile`, `${member}`)
+      .addField(`• Bot?`, `${member.user.bot ? "Yes" : "No"}`)
+      .addField(`• Created At:`, `${moment(member.user.createdAt).format("MMMM Do YYYY, H:mm:ss a")}`)
+      .addField(`__Member Info__\n• Username:`, `${member.displayName}`)
+      .addField(`• Tag`, `${member.user.discriminator}`)
+      .addField(`• Nickname:`, `${member.nickname ? member.nickname : "No Nickname"}`)
+      .addField(`• Joined At:`, `${moment(member.joinedAt).format("MMMM Do YYYY, H:mm:ss a")}`)
+      .addField(`• Activity`, `${custom}`)
+      .addField(`__Roles:__`, `${userRoles || `No roles`} `)
+      .addField(`__Badge Information__`, `${flags}`)
+      .addField(`__Boosting Since:__`, `• ${member.premiumSince ? member.premiumSince : "Not a server booster!"}`)
+      .addField(`__Suspicious Check__`, `•  ${safe || `Safe`}`)
+      .addField(`__Permissions:__`, `• ${permissions.join(` | `)}`)
+      .addField(`__Acknowledgements__`, `• ${acknowledgements}`)
       .setColor("GREEN")
+
 
     interaction.editReply({ embeds: [embed] });
   },
