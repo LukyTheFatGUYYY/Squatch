@@ -1,0 +1,10 @@
+{
+    "messages": {
+        "successfulColor": "GREEN",
+        "errorColor": "RED",
+        "prohibitedEmbedDesc": "Error - You are a prohibited user",
+        "prohibitedEmbedTitle": "❌ Prohibited User ❌",
+        "commandWentWellTitle": "✅ Success! ✅",
+        "commandWentWellDesc": "Success - Command went well"
+    }
+}
