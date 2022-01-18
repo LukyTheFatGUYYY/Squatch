@@ -27,11 +27,8 @@ module.exports = {
     });
 
     const support = interaction.guild.roles.cache.get(tickets.supportRoleID)
-
     const everyone = interaction.guild.roles.cache.find(r => r.name === "@everyone");
-
     const category = interaction.guild.channels.cache.get(tickets.supportCategoryID);
-
     const channel = await interaction.guild.channels.create(`ticket-${interaction.user.tag}`, {
       type: 'text',
       parent: category
@@ -85,11 +82,11 @@ module.exports = {
       .addComponents(menu)
 
     const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .setTitle(`🎟  New Ticket`)
+      .setColor(tickets.successfulColor)
+      .setTitle(tickets.newTicketTitle)
       .setDescription(tickets.newTicketEmbed)
       .setTimestamp()
-      .setFooter(`Opened by ${interaction.user.tag}`, `${interaction.user.avatarURL()}`)
+      .setFooter({text: `Opened by ${interaction.user.tag}`, iconURL:`${interaction.user.avatarURL()}`})
     channel.send({
       content: `<@${interaction.user.id}>`,
       embeds: [embed],
@@ -101,9 +98,7 @@ module.exports = {
     });
 
     let guildId = serverID
-
     let db = new sqlite.Database('database/database.db', sqlite.OPEN_READWRITE);
-
     var query = `SELECT * FROM ticketData WHERE guildId = ?`;
     db.get(query, [guildId], (err, row) => {
       if (err) {

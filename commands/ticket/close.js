@@ -1,6 +1,8 @@
 require('discord-reply');
 const configuration = require('../../config/ticket/ticket.json')
+const Embedconfiguration = require('../../config/embed/embedMsg.json')
 const tickets = configuration.tickets
+const embedMsg = Embedconfiguration.messages
 const Discord = require('discord.js');
 const { MessageButton, MessageActionRow } = require('discord.js')
 
@@ -22,10 +24,9 @@ module.exports = {
     if (tickets.onlySupportCanClose === 'true' && interaction.member.roles.cache.has(tickets.supportRoleID) === true || tickets.onlySupportCanClose === 'false' || client.user.includes(interactionid)) {
 
       const embed = new Discord.MessageEmbed()
-        .setColor("GREEN")
+        .setColor(tickets.successfulColor)
         .setTitle('Closing Ticket')
         .setDescription('This ticket will be closed in 10 seconds.')
-        .setTimestamp()
 
       const btnCancelClose = new MessageButton()
         .setLabel('Cancel Close')
@@ -40,17 +41,17 @@ module.exports = {
       await interaction.editReply({
         embeds: [embed]
       });
-      setTimeout(() => interaction.channel.delete(), 10000);
+        setTimeout(() => interaction.channel.delete(), 10000);
       return;
 
     } else {
-
+      
       const embed = new Discord.MessageEmbed()
-        .setColor("RED")
-        .setTitle('Insufficient Permission')
-        .setDescription('You do not have permission to close this ticket.')
-
-      interaction.editReply({
+        .setColor(tickets.successfulColor)
+        .setTitle(embedMsg.prohibitedEmbedTitle)
+        .setDescription(embedMsg.prohibitedEmbedDesc);
+  
+        interaction.editReply({
         embeds: [embed]
       });
     }

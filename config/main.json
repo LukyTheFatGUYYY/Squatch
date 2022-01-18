@@ -1,8 +1,7 @@
 {
 	"unknownCommandMessage": ":x: That command doesn't exist!",
 	"OwnerID": "",
-	"xEmoji": ":x:",
 	"serverID": "",
 	"botID": "",
-	"appeallink": ""
+	"appeallink": "" 
 }

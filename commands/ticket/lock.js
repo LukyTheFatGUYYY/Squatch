@@ -3,15 +3,15 @@ const tickets = configuration.tickets
 const Discord = require('discord.js');
 
 const {
-  SlashCommandBuilder
-} = require('@discordjs/builders');
-
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('lock')
-    .setDescription('locks the channel'),
-  async execute(interaction, client) {
-    await interaction.deferReply();
+    SlashCommandBuilder
+  } = require('@discordjs/builders');
+  
+  module.exports = {
+    data: new SlashCommandBuilder()
+      .setName('lock')
+      .setDescription('locks the channel'),
+    async execute(interaction, client) {
+      await interaction.deferReply();
     if (!interaction.channel.name.startsWith('ticket-')) {
       return interaction.editReply(`**${interaction.user.tag}**, you are not inside of a ticket.`)
     }
@@ -20,7 +20,7 @@ module.exports = {
       return interaction.editReply(`**${interaction.user.tag}**, you do not have permission to lock this ticket.`)
     }
 
-    interaction.channel.permissionOverwrites.cache.forEach(function (p) {
+    interaction.channel.permissionOverwrites.cache.forEach(function(p) {
       if (p.type === 'member') {
         var member = interaction.guild.members.cache.find(u => u.id === p.id)
         interaction.channel.permissionOverwrites.edit(member, {
@@ -29,12 +29,12 @@ module.exports = {
         });
       }
     });
-
+    
     let embed = new Discord.MessageEmbed()
       .setTitle('Ticket Locked  🔒')
       .setDescription(`This ticket has been locked until further notice.`)
-      .setColor("GREEN")
-    interaction.editReply({
+      .setColor(tickets.successfulColor)
+      interaction.editReply({ 
       embeds: [embed]
     });
   }
