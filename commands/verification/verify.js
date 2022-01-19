@@ -1,7 +1,7 @@
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
-const { verificationchannel, channelLog } = require('../config/constants/channel.json');
+const { verificationchannel, channelLog } = require('../../config/constants/channel.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
