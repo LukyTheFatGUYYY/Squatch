@@ -28,7 +28,7 @@ module.exports = {
     const animatedEmojis = await guild.emojis.cache.filter((e) => e.animated).size;
     const boostLevel = await guild.premiumTier ? guild.premiumTier : "0";
     const totalBoosts = await guild.premiumSubscriptionCount || "0";
-    const embed = new Discord.MessageEmbed()
+    const serverInfoEmbed = new Discord.MessageEmbed()
       .setTitle("Server Information")
       .setColor("GREEN")
       .addFields(
@@ -43,6 +43,6 @@ module.exports = {
         { name: `**Creation Date:**`, value: `\`\`\`${moment(guild.createdTimestamp).format("LT")} ${moment(guild.createdTimestamp).format("LL")} (${moment(guild.createdTimestamp).fromNow()})\`\`\``, inline: false },
       );
 
-    interaction.editReply({ embeds: [embed] });
+    interaction.editReply({ embeds: [serverInfoEmbed] });
   },
 };

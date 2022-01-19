@@ -1,6 +1,8 @@
 const moment = require('moment');
 const Enmap = require('enmap');
 const Discord = require('discord.js');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -28,26 +30,25 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription(
-        'You have to be in the moderation team to be able to use this command!',
-      );
-    const validuser = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Mention a valid user');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
+      const includeuser = new Discord.MessageEmbed()
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.enterValidUser);
     const stateareason = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Mention a valid reason to ban the user');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.errorNoReason);
     const cantbanyourself = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('You cant ban yourself');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.cantDoAnythingToYourself);
     const samerankorhigher = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
       .setDescription('You can\'t ban that user due to role hierarchy');
     const warnsDB = new Enmap({
       name: 'warns'
@@ -65,7 +66,7 @@ module.exports = {
     const moderator = interaction.member;
     if (!toWarn)
       interaction.editReply({
-        embeds: [validuser]
+        embeds: [includeuser]
       });
     warnsDB.ensure(toWarn.id, {
       warns: {}
@@ -94,14 +95,14 @@ module.exports = {
     const warnLogs = server.channels.cache.get(channelLog);
     const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
     const caseID = nanoid();
-    const em = new Discord.MessageEmbed()
+    const usergotbanned = new Discord.MessageEmbed()
       .setTitle(`Case - ${caseID}`)
       .setColor('GREEN')
       .addField('Member', `${toWarn.tag} (${toWarn.id})`)
       .addField('Moderator', `${moderator.user.tag} (${moderator.id})`)
       .addField('Reason', `\`(banned) - ${reason}\``)
     await warnLogs.send({
-      embeds: [em]
+      embeds: [usergotbanned]
     });
     const emUser = new Discord.MessageEmbed()
       .setTitle('Banned')
@@ -114,7 +115,7 @@ module.exports = {
       embeds: [emUser]
     }).catch((err) => err);
     const emChan = new Discord.MessageEmbed()
-      .setDescription(`You have succesfully banned **${toWarn.tag}**.`)
+      .setDescription(`You have succesfully banned **${toWarn.tag}**`)
       .setColor('GREEN');
     await interaction.editReply({
       embeds: [emChan]

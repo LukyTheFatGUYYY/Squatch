@@ -3,6 +3,8 @@ require('moment-duration-format');
 const { adminrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
 const { serverID } = require('../../config/main.json');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const Discord = require('discord.js')
 const {
   SlashCommandBuilder
@@ -16,28 +18,32 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription('You have to be an administrator to use this command!')
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
       ;
+    const includeuser = new Discord.MessageEmbed()
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.enterValidUser);
     if (!interaction.member.roles.cache.has(adminrole)) {
       return interaction.editReply({ embeds: [Prohibited] });
     }
     const warnsDB = new Enmap({ name: 'warns' });
     const user = interaction.options.getUser('user')
-    if (!user) return interaction.editReply('Please insert the user you want to unban.');
+    if (!user) return interaction.editReply({ embeds: [includeuser] });
     warnsDB.ensure(user.id, { points: 0, warns: {} });
     client.guilds.cache
       .get(serverID)
       .members.unban(user.id, `unbanning admin - ${interaction.tag}`)
       .catch((err) => err);
     const clearedWarnsLog = client.channels.cache.get(channelLog);
-    const em = new Discord.MessageEmbed()
+    const usergotunbanned = new Discord.MessageEmbed()
       .setTitle('Unbanned')
       .setColor('GREEN')
       .addField('Manager', `${interaction.tag} (${interaction.id})`)
       .addField('User', `${user.tag} (${user.id})`);
-    await clearedWarnsLog.send({ embeds: [em] });
+    await clearedWarnsLog.send({ embeds: [usergotunbanned] });
     return interaction.editReply({
       embeds: [
         new Discord.MessageEmbed()

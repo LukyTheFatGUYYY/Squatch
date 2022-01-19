@@ -2,9 +2,11 @@ const Discord = require('discord.js')
 const { adminrole } = require('../../config/constants/roles.json');
 const { serverID } = require('../../config/main.json');
 const ms = require('ms')
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const {
     channelLog
-  } = require('../../config/constants/channel.json');
+} = require('../../config/constants/channel.json');
 const {
     SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -24,16 +26,21 @@ module.exports = {
         const server = client.guilds.cache.get(serverID);
         const warnLogs = server.channels.cache.get(channelLog);
         const moderator = interaction.member;
+
+        const Duration = new Discord.MessageEmbed()
+            .setColor(embedMSG.errorColor)
+            .setTitle(embedMSG.errorEmbedTitle)
+            .setDescription(embedMSG.timeoutDuration)
+            ;
         const Prohibited = new Discord.MessageEmbed()
-            .setColor('RED')
-            .setTitle('Prohibited User')
-            .setDescription(
-                'You have to be in the moderation team to be able to use this command!',
-            );
+            .setColor(embedMSG.errorColor)
+            .setTitle(embedMSG.prohibitedEmbedTitle)
+            .setDescription(embedMSG.prohibitedEmbedDesc)
+            ;
         const samerankorhigher = new Discord.MessageEmbed()
-            .setColor('RED')
-            .setTitle('Error')
-            .setDescription('You can\'t kick that user due to role hierarchy');
+            .setColor(embedMSG.errorColor)
+            .setTitle(embedMSG.errorEmbedTitle)
+            .setDescription(embedMSG.errorRolehierarchy);
         if (!interaction.member.roles.cache.has(adminrole)) {
             return interaction.editReply({
                 embeds: [Prohibited]
@@ -42,7 +49,7 @@ module.exports = {
 
         const timer = ms(length);
         if (!timer)
-            return interaction.editReply("Please specify how long you want the timeout to be!");
+            return interaction.editReply({ embeds: [Duration] });
 
         if (
             server.members.cache.get(moderator.id).roles.highest.rawPosition <=
@@ -81,6 +88,6 @@ module.exports = {
         });
         await warnLogs.send({
             embeds: [Tembed]
-          });
+        });
     },
 };

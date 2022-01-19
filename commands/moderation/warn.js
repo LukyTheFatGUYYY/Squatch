@@ -2,6 +2,8 @@ const Enmap = require('enmap');
 require('moment-duration-format');
 const Discord = require('discord.js');
 const moment = require('moment');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -21,27 +23,26 @@ module.exports = {
     const warnsDB = new Enmap({ name: 'warns' });
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription(
-        'You have to be in the moderation team to be able to use this command!',
-      );
-    const validuser = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Mention a valid user');
-    const stateareason = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Mention a valid reason to warn the user');
-    const cantwarnyourself = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('You cant warn yourself');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
     const samerankorhigher = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('You can\'t warn that user due to role hierarchy');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.errorRolehierarchy);
+    const validuser = new Discord.MessageEmbed()
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.enterValidUser);
+    const stateareason = new Discord.MessageEmbed()
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.errorNoReason);
+    const cantwarnyourself = new Discord.MessageEmbed()
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.cantDoAnythingToYourself);
     const server = client.guilds.cache.get(serverID);
     if (!interaction.member.roles.cache.has(staffrole)) {
       return interaction.editReply({ embeds: [Prohibited] });
@@ -80,9 +81,7 @@ module.exports = {
     const emUser = new Discord.MessageEmbed()
       .setTitle('Warned')
       .setColor('RED')
-      .setDescription(
-        `You were warned in **${Server}** for ${reason}, please don't do it again!`,
-      )
+      .setDescription(`You were warned in **${Server}** for ${reason}, please don't do it again!`)
       .addField('Case ID', `\`${caseID}\``);
     await toWarn.send({ embeds: [emUser] }).catch((err) => err);
     const emChan = new Discord.MessageEmbed()

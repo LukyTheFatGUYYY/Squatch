@@ -2,9 +2,39 @@
     "messages": {
         "successfulColor": "GREEN",
         "errorColor": "RED",
-        "prohibitedEmbedDesc": "Error - You are a prohibited user",
-        "prohibitedEmbedTitle": "❌ Prohibited User ❌",
+
+
+        "prohibitedEmbedTitle": "❌ Woops, you're not allowed to do that ❌",
         "commandWentWellTitle": "✅ Success! ✅",
-        "commandWentWellDesc": "Success - Command went well"
+        "errorEmbedTitle": "❌ Error ❌",
+
+
+        "commandWentWellDesc": "Command Executed Successfully",
+        "prohibitedEmbedDesc": "Error - You're not allowed to do that",
+
+
+        "cantFindValidCase": "Cant find a valid case with this ID, please make sure you filled it in correctly (case senstive)",
+        "pleaseEnterID": "Please make sure to provide a valid user ID",
+        "requestedInfo": "Please check your direct messages for more information",
+
+
+        "enterValidUser": "Please mention a valid user",
+        "errorNoReason": "Please provide a valid reason",
+
+
+        "cantDoAnythingToYourself": "➰ Loop Protection - Try running this command on someone else",
+        "errorRolehierarchy": "Hm, it seems like that user has elevated privileges",
+
+
+        "messageDeletion": "How many messages should be deleted?",
+        "messageLimit": "You can only delete 100 messages at once!",
+
+        "newNicknameEmbed": "Please provide the new nickname",
+
+
+        "timeoutDuration": "How long should the user be timed-out",
+
+
+        "warningEnableDMs": "It seems like you're not allowing me to send a DM. Try again"
     }
 }

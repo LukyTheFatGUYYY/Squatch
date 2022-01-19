@@ -1,10 +1,11 @@
 const Enmap = require('enmap');
 require('moment-duration-format');
 const Discord = require('discord.js');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
-
 const { staffrole } = require('../../config/constants/roles.json');
 
 module.exports = {
@@ -16,25 +17,22 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription(
-        'You have to be in the moderation team to be able to use this command!',
-      );
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
     const enabledms = new Discord.MessageEmbed()
-      .setColor('RED')
+      .setColor(embedMSG.errorColor)
       .setTitle('Error!')
-      .setDescription(
-        'Please enable your dms with this server to that I can send you the information you requested!',
-      );
+      .setDescription(embedMSG.warningEnableDMs);
     const caseidincorrect = new Discord.MessageEmbed()
-      .setColor('RED')
+      .setColor(embedMSG.errorColor)
       .setTitle('Error')
-      .setDescription(`Please do ${prefix}warning (caseid) (user id)`);
+      .setDescription(embedMSG.pleaseEnterID);
     const warninginfo = new Discord.MessageEmbed()
-      .setColor('GREEN')
-      .setTitle('Success')
-      .setDescription('I have sent you a dm with your requested information!');
+      .setColor(embedMSG.sucessfulColor)
+      .setTitle(embedMSG.commandWentWellTitle)
+      .setDescription(embedMSG.requestedInfo);
     const warnsDB = new Enmap({ name: 'warns' });
     let usermention = interaction.options.getMember('userid');
     const user = client.users.cache.get(usermention || interaction.member);
@@ -48,15 +46,7 @@ module.exports = {
         .addField('Reason', warnsDB.get(user.id).warns[caseID].reason)
         .addField('Date', warnsDB.get(user.id).warns[caseID].date);
       await interaction.member.send({ embeds: [em] }).catch((err) => interaction.editReply({ embeds: [enabledms] }));
-      await interaction.channel.send({
-        embeds: [
-          new Discord.MessageEmbed()
-            .setColor('GREEN')
-            .setDescription(
-              'I have sent you a dm with your requested information!',
-            ),
-        ],
-      });
+      await interaction.channel.send({embeds: [warninginfo] });
     } else {
       if (!interaction.member.roles.cache.has(staffrole)) return interaction.editReply({ embeds: [Prohibited] });
       const em = new Discord.MessageEmbed()

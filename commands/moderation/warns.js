@@ -1,6 +1,8 @@
 const Enmap = require('enmap');
 require('moment-duration-format');
 const Discord = require('discord.js');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');

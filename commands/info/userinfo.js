@@ -150,7 +150,7 @@ module.exports = {
       acknowledgements = 'Server Owner';
     }
 
-    const embed = new Discord.MessageEmbed()
+    const userInfoEmbed = new Discord.MessageEmbed()
       .setAuthor({name: `Information about ${member.displayName}`})
       .setColor('#2F3136')
       .setThumbnail(member.user.displayAvatarURL({ format: 'png', dynamic: true }))
@@ -173,6 +173,6 @@ module.exports = {
       .setColor("GREEN")
 
 
-    interaction.editReply({ embeds: [embed] });
+    interaction.editReply({ embeds: [userInfoEmbed] });
   },
 }

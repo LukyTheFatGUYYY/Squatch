@@ -1,7 +1,5 @@
 const Discord = require('discord.js');
-const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
-const { adminrole } = require('../../config/constants/roles.json');
+const { pmanager, prole } = require('../../config/constants/roles.json');
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -9,10 +7,9 @@ const { channelLog } = require('../../config/constants/channel.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('giverole')
-    .setDescription('gives the selected user a role')
-    .addUserOption(option => option.setName('user').setDescription('Please mention the user who should recieve the role').setRequired(true))
-    .addRoleOption(option => option.setName('role').setDescription('Select a role you would like to give to the user').setRequired(true)),
+    .setName('pgive')
+    .setDescription('give a partner the partner role')
+    .addUserOption(option => option.setName('user').setDescription('Please mention the user').setRequired(true)),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
@@ -28,32 +25,28 @@ module.exports = {
     const Error = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Error')
-      .setDescription('Error - Use format giverole <member> <role>');
-
+      .setDescription('Error - Use format giverole <member>');
     const RoleError = new Discord.MessageEmbed()
       .setColor('RED')
       .setTitle('Error')
       .setDescription('Role doesnt exist');
+
     const member = interaction.options.getMember('user')
-    const rolegiven = client.channels.cache.get(channelLog);
-    if (!interaction.member.roles.cache.has(adminrole)) return interaction.reply({ embeds: [Prohibited] });
+    if (!interaction.member.roles.cache.has(pmanager)) return interaction.reply({ embeds: [Prohibited] });
     if (!member) return interaction.editReply({ embeds: [Error] });
 
     try {
-      const roleName = interaction.options.getRole('role');
-
+      const roleName = interaction.guild.roles.cache.has(prole)
       if (!roleName) return interaction.editReply({ embeds: [RoleError] });
-
-      // get position of role - gives you integer
       const userRolePosition = interaction.member.roles.highest.position;
       const selectedRolePosition = roleName.position;
 
       if (userRolePosition < selectedRolePosition) {
-        const youdonthaveaccess = new Discord.MessageEmbed()
+        const embed = new Discord.MessageEmbed()
           .setTitle("You don't have access to selected role.")
           .setColor("RED")
 
-        return interaction.editReply({ embeds: [youdonthaveaccess] })
+        return interaction.editReply({ embeds: [embed] })
       }
 
       const alreadyHasRole = await member.roles.cache.has(roleName.id);
@@ -62,13 +55,13 @@ module.exports = {
         return interaction.channel
           .send({ embeds: [AlreadyHas] })
       }
+
       const wowitworked = new Discord.MessageEmbed()
         .setTitle('Role successfully recieved')
         .setColor("GREEN")
         .setDescription(
           `**Moderator:** ${interaction.user}\n**Role Recieved:** ${roleName}\n**Member:** ${member.user}`,
         );
-      rolegiven.send({ embeds: [wowitworked] });
       return member.roles.add(roleName).then(() => interaction.editReply({ embeds: [wowitworked] }));
     } catch (e) {
       console.error(e);

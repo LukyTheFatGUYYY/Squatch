@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 require('moment-duration-format');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const { adminrole, roleID } = require('../../config/constants/roles.json');
 const { announcement } = require('../../config/constants/channel.json');
 const {
@@ -15,14 +17,14 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription('You have to be an administrator to use this command!')
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
       ;
     const success = new Discord.MessageEmbed()
-      .setColor('GREEN')
-      .setTitle('Success')
-      .setDescription('You sucessfully sent an announcement!')
+      .setColor(embedMSG.successfulColor)
+      .setTitle(embedMSG.commandWentWellTitle)
+      .setDescription(embedMSG.commandWentWellDesc)
       ;
     const AnnDesc = interaction.options.getString('announce');
     const AnnTitle = interaction.options.getString('title');
@@ -31,7 +33,7 @@ module.exports = {
     }
     const announceChan = interaction.client.channels.cache.get(announcement);
     interaction.editReply({ embeds: [success] })
-    const em = new Discord.MessageEmbed().setColor('PURPLE').setDescription(AnnDesc).setTitle(AnnTitle);
-    await announceChan.send({ content: `<@&${roleID}>`, embeds: [em] });
+    const announcementEmbed = new Discord.MessageEmbed().setColor('PURPLE').setDescription(AnnDesc).setTitle(AnnTitle);
+    await announceChan.send({ content: `<@&${roleID}>`, embeds: [announcementEmbed] });
   },
 };

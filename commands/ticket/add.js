@@ -14,7 +14,7 @@ const {
     async execute(interaction, client) {
       await interaction.deferReply();
     if (!interaction.channel.name.startsWith('ticket-')) {
-      return interaction.editReply(`**${interaction.tag}**, you are not inside of a ticket.`)
+      return interaction.editReply(`**${interaction.tag}**, You have to be inside a ticket to run that command!`)
     }
 
     if (tickets.onlySupportCanAdd === 'true' && !interaction.member.roles.cache.has(tickets.supportRoleID)) {

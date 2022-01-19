@@ -1,6 +1,8 @@
 const Enmap = require('enmap');
 const Discord = require('discord.js');
 const { customAlphabet } = require('nanoid')
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 require('moment-duration-format');
 const { staffrole } = require('../../config/constants/roles.json');
 const {
@@ -17,17 +19,18 @@ module.exports = {
     await interaction.deferReply({ ephemeral: true });
     const warnsDB = new Enmap({ name: 'warns' });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription('You have to be in the moderation team to be able to use this command!');
-    const validuser = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Mention a valid user');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
+    const includeuser = new Discord.MessageEmbed()
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.enterValidUser);
     const stateareason = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Mention a valid reason to ban the user');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.errorNoReason);
     const cannedMsgs = new Enmap({ name: 'cannedMsgs' });
     if (!interaction.member.roles.cache.has(staffrole)) {
       return interaction.editReply({ embeds: [Prohibited] });
@@ -35,7 +38,7 @@ module.exports = {
     const toWarn = interaction.options.getUser('user')
     const Server = interaction.member.guild.name;
     if (!toWarn) {
-      return interaction.editReply({ embeds: [validuser] });
+      return interaction.editReply({ embeds: [includeuser] });
     }
     warnsDB.ensure(toWarn.id, { warns: {} });
     let reason = interaction.options.getString('reason');

@@ -2,15 +2,27 @@
   "tickets": {
   "supportCategoryID": "",
   "supportRoleID": "",
+
+
   "successfulColor": "GREEN",
   "errorColor": "RED",
+
+  
   "newTicketEmbed": "Welcome, thank you for opening a ticket. Our Support Team will be with you shortly. Meanwhile, Please select the appropriate option from the select menu below and please provide us with any information that may help us.",
   "newTicketTitle": "🎟  New Ticket  🎟",
   "reportUserEmbed": "Welcome, thank you for opening a ticket to report a user!. Our Support Team will be with you shortly. Meanwhile, Please provide us with any information that may help us. e.g. screenshots and an explanation of what happened",
   "reportBugEmbed": "Welcome, thank you for opening a ticket to report a bug. Our Support Team will be with you shortly. Meanwhile, please provide us with any information that may help us. e.g. How you encountered the bug and what it does!",
   "otherTicketEmbed": "Welcome, thank you for opening a ticket. Our Support Team will be with you shortly. Meanwhile, Please provide as much information as possible about what your ticket is about",
+
+
   "ticketUnlockedTitle": "🔓  Ticket Unlocked  🔓",
   "ticketUnlockedEmbed": "The ticket has been successfully unlocked - everyone now has access to talk in the ticket",
+
+
+  "ticketLockedTitle": "🔒 Ticket Locked  🔒",
+  "ticketLockedEmbed": "This ticket has been locked until further notice.",
+
+
   "onlySupportCanAdd": "true",
   "onlySupportCanClose": "true",
   "pingSupportOnOpen": "true",

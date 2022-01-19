@@ -2,6 +2,8 @@ const Enmap = require('enmap');
 require('moment-duration-format');
 const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const { adminrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
 const {
@@ -17,25 +19,21 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription('You have to be an administrator to use this command!');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
     const insertID = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Please insert the ID of the case you want to clear');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.pleaseEnterID);
     const includeuser = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription(
-        'Please include the user in which you want to unban, please note if they were banned they will be unbanned',
-      );
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.enterValidUser);
     const wrongid = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription(
-        '"I could not find a case with this ID, please make sure you filled it in correctly (case senstive)"',
-      );
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.cantFindValidCase);
     if (!interaction.member.roles.cache.has(adminrole)) return interaction.editReply({ embeds: [Prohibited] });
     const warnsDB = new Enmap({ name: 'warns' });
     const user = interaction.options.getUser('user')
@@ -57,7 +55,7 @@ module.exports = {
         .catch((err) => err);
     }
     const clearedWarnsLog = client.channels.cache.get(channelLog);
-    const em = new MessageEmbed()
+    const clearedWarnsSuccessfully = new MessageEmbed()
       .setTitle('Warning cleared')
       .setColor('GREEN')
       .addField('Adminstrator', `${interaction.tag} (${interaction.id})`)
@@ -66,14 +64,12 @@ module.exports = {
       .addField('Case Points', `\`${parseInt(casePoints).toLocaleString()}\``)
       .addField('Case Reason', `\`${caseReason}\``)
       .addField('Unbanned?', userBanned ? 'Yes' : 'No')
-    await clearedWarnsLog.send({ embeds: [em] });
+    await clearedWarnsLog.send({ embeds: [clearedWarnsSuccessfully] });
     return interaction.editReply({
       embeds: [
         new MessageEmbed()
           .setColor('GREEN')
-          .setDescription(
-            `I have successfully cleared warning **${caseID}** from **${user.tag}**!`,
-          ),
+          .setDescription(`I have successfully cleared warning **${caseID}** from **${user.tag}**!`),
       ],
     });
   },

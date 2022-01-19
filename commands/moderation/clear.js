@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const { staffrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -14,19 +16,18 @@ module.exports = {
     await interaction.deferReply({ ephemeral: true });
     const logs = await client.channels.cache.get(channelLog);
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription(
-        'You have to be in the moderation team to be able to use this command!',
-      );
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
     const MessageDeletion = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Please type in the amount of messages you would like to delete');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.messageDeletion);
     const MessageLimit = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('The limit of messages you can delete at once is 100');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.messageLimit);
     if (!interaction.member.roles.cache.has(staffrole)) return interaction.editReply({ embeds: [Prohibited] });
 
     const DeleteTotal = interaction.options.getInteger('clear')
@@ -39,10 +40,7 @@ module.exports = {
       const Successfullydeleted = new Discord.MessageEmbed()
         .setColor('GREEN')
         .setTitle('**Messages Deleted!**')
-        .addField(
-          '**Moderator**',
-          `${interaction.user.tag} (${interaction.id})`,
-        )
+        .addField('**Moderator**', `${interaction.user.tag} (${interaction.id})`)
         .addField('**Messages Deleted**', Amount.size.toString())
         .addField('**In Channel**', `<#${interaction.channel.id}>`);
       logs.send({ embeds: [Successfullydeleted] });

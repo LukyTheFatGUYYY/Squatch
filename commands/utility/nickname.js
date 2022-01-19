@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.tickets
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -14,17 +16,21 @@ module.exports = {
     let mentionMember = interaction.options.getMember('user')
     let newNickname = interaction.options.getString('newnickname');
     const mentionuser = new Discord.MessageEmbed()
-      .setTitle("Error")
-      .setDescription(`Mention the user you want to change the nickname`)
-      .setColor("RED");
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.enterValidUser)
+      .setColor(embedMSG.errorColor);
     const nicknamechange = new Discord.MessageEmbed()
-      .setTitle("Error")
-      .setDescription(`Input the new nickname for the user you mentioned`)
-      .setColor("RED");
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.newNicknameEmbed)
+      .setColor(embedMSG.errorColor);
     const cantchangeit = new Discord.MessageEmbed()
-      .setTitle("Error")
-      .setDescription(`Can't change nickname of this user, does he have a higher role? Is the server creator? Have I got the permission to change his nickname?`)
-      .setColor("RED");
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.errorRolehierarchy)
+      .setColor(embedMSG.errorColor);
+    const changedit = new Discord.MessageEmbed()
+      .setTitle(embedMSG.commandWentWellTitle)
+      .setDescription(`Changed the nickname of ${mentionMember} to **${newNickname}**`)
+      .setColor(embedMSG.successfulColor);
     if (!mentionMember) {
       return interaction.editReply({ embeds: [mentionuser] });
     }
@@ -36,6 +42,6 @@ module.exports = {
     } catch (error) {
       interaction.editReply({ embeds: [cantchangeit] });
     }
-    interaction.editReply(`Changed nickname of ${mentionMember} to **${newNickname}**`);
+    interaction.editReply({ embeds: [changedit] });
   },
 };

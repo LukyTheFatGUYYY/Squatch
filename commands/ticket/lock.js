@@ -31,8 +31,8 @@ const {
     });
     
     let embed = new Discord.MessageEmbed()
-      .setTitle('Ticket Locked  🔒')
-      .setDescription(`This ticket has been locked until further notice.`)
+      .setTitle(tickets.ticketLockedTitle)
+      .setDescription(tickets.ticketLockedEmbed)
       .setColor(tickets.successfulColor)
       interaction.editReply({ 
       embeds: [embed]
