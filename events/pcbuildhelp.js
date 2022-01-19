@@ -23,10 +23,12 @@ module.exports = {
         Authorization: `${pcbuildhelp}`,
       },
     }).then((res) => res.json());
+    //console.log(data)
+    //console.log(JSON.stringify(data, null, 2));
     const cpuData = data.data.find((m) => m.component.name == 'CPU');
     const mbData = data.data.find((m) => m.component.name == 'Motherboard');
-    const ramData = data.data.find((m) => m.component.name == 'Memory');
-    const storageData = data.data.find((m) => m.component.name == 'Storage');
+    const ramArray = data.data.filter((m) => m.component.name == 'Memory');
+    const storageArray = data.data.filter((m) => m.component.name == 'Storage');
     const caseData = data.data.find((m) => m.component.name == 'Case');
     const powerData = data.data.find((m) => m.component.name == 'Power Supply');
     const gpuData = data.data.find((m) => m.component.name == 'Video Card');
@@ -36,11 +38,28 @@ module.exports = {
       .addField('CPU', cpuData ? `[${cpuData.selection.name}](${cpuData.selection.link})` : "No data")
       .addField('Motherboard', mbData ? `[${mbData.selection.name}](${mbData.selection.link})` : "No data")
       .addField('Graphics Card', gpuData ? `[${gpuData.selection.name}](${gpuData.selection.link})` : "No data")
-      .addField('Memory', ramData ? `[${ramData.selection.name}](${ramData.selection.link})` : "No data")
-      .addField('Storage', storageData ? `[${storageData.selection.name}](${storageData.selection.link})` : "No data")
       .addField('Case', caseData ? `[${caseData.selection.name}](${caseData.selection.link})` : "No data")
       .addField('Power Supply', powerData ? `[${powerData.selection.name}](${powerData.selection.link})` : "No data")
-      .setFooter(`Price: ${data.data.reduce((acc, cur) => acc += Number(cur.price.total.replace(/\$|No Prices Available/g, '')), 0).toFixed(2).toLocaleString()}`);
+      .setFooter({text: `Price: ${data.data.reduce((acc, cur) => acc += Number(cur.price.total.replace(/\$|No Prices Available/g, '')), 0).toFixed(2).toLocaleString()}`});
+    
+    if (storageArray.length === 0) { 
+      pcpartpickerembed.addField('Storage', "No data");
+    }
+    
+    // This won't run if the length is 0, so no check necessary
+    storageArray.forEach((storageData) => {
+      pcpartpickerembed.addField('Storage', `[${storageData.selection.name}](${storageData.selection.link})`);
+    });
+
+    if (ramArray.length === 0) { 
+      pcpartpickerembed.addField('Memory', "No data");
+    }
+    
+    // This won't run if the length is 0, so no check necessary
+    ramArray.forEach((memoryData) => {
+      pcpartpickerembed.addField('Memory', `[${memoryData.selection.name}](${memoryData.selection.link})`);
+    });
+    
     message.channel.send({ embeds: [pcpartpickerembed] });
 }
 };
