@@ -14,18 +14,18 @@ const {
     async execute(interaction, client) {
       await interaction.deferReply();
     if (!interaction.channel.name.startsWith('ticket-')) {
-      return interaction.editReply(`**${interaction.tag}**, You have to be inside a ticket to run that command!`)
+      return interaction.editReply(`**${interaction.user.tag}**, you are not inside of a ticket.`)
     }
 
     if (tickets.onlySupportCanAdd === 'true' && !interaction.member.roles.cache.has(tickets.supportRoleID)) {
-      return  interaction.editReply(`**${interaction.tag}**, you do not have permission to add users to this ticket.`)
+      return  interaction.editReply(`**${interaction.user.tag}**, you do not have permission to add users to this ticket.`)
     }
 
 
     let member = interaction.options.getUser('user');
 
     if(interaction.channel.permissionOverwrites.cache.has(member.id)) {
-      return interaction.editReply(`**${interaction.tag}**, you cannot add the same user twice!`)
+      return interaction.editReply(`**${interaction.user.tag}**, you cannot add the same user twice!`)
     }
     try {
         interaction.channel.permissionOverwrites.edit(member, { 
@@ -33,7 +33,7 @@ const {
         "SEND_MESSAGES": true 
       });
     } catch(err) {
-      return interaction.editReply(`**${interaction.tag}**, there was an error whilst trying to add the user to the ticket.`)
+      return interaction.editReply(`**${interaction.user.tag}**, there was an error whilst trying to add the user to the ticket.`)
     }
 
     

@@ -14,11 +14,11 @@ const {
     async execute(interaction, client) {
       await interaction.deferReply();
     if (!interaction.channel.name.startsWith('ticket-')) {
-      return interaction.editReply(`**${interaction.tag}**, you are not inside of a ticket.`)
+      return interaction.editReply(`**${interaction.user.tag}**, you are not inside of a ticket.`)
     }
 
     if (tickets.onlySupportCanAdd === 'true' && !interaction.member.roles.cache.has(tickets.supportRoleID)) {
-      return interaction.editReply(`**${interaction.tag}**, you do not have permission to remove users from this ticket.`)
+      return interaction.editReply(`**${interaction.user.tag}**, you do not have permission to remove users from this ticket.`)
     }
 
     let member = interaction.options.getUser('user');
