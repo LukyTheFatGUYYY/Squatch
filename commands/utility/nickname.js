@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');

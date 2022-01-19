@@ -2,7 +2,7 @@ const Enmap = require('enmap');
 require('moment-duration-format');
 const Discord = require('discord.js');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -17,28 +17,25 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription(
-        'You have to be in the moderation team to look at other people\'s warnings',
-      );
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
     const enabledms = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error!')
-      .setDescription(
-        'Please enable your dms with this server to that I can send you the information you requested!',
-      );
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.warningEnableDMs);
     const warninginfo = new Discord.MessageEmbed()
-      .setColor('GREEN')
-      .setTitle('Success')
-      .setDescription('I have sent you a dm with your requested information!');
+      .setColor(embedMSG.successfulColor)
+      .setTitle(embedMSG.commandWentWellTitle)
+      .setDescription(embedMSG.requestedInfo);
     const warnsDB = new Enmap({ name: 'warns' });
     const user = interaction.options.getMember('user')
     warnsDB.ensure(user.id, { points: 0, warns: {} });
     if (user.id == interaction.member.id) {
       const em = new Discord.MessageEmbed()
         .setTitle('Warnings')
-        .setColor('GREEN')
+        .setColor(embedMSG.successfulColor)
         .setDescription(
           `\`${Object.keys(warnsDB.get(user.id).warns).length != 0
             ? Object.keys(warnsDB.get(user.id).warns).join('\n')
@@ -49,10 +46,8 @@ module.exports = {
       await interaction.editReply({
         embeds: [
           new Discord.MessageEmbed()
-            .setColor('GREEN')
-            .setDescription(
-              'I have sent you a dm with your requested information!',
-            ),
+            .setColor(embedMSG.successfulColor)
+            .setDescription(embedMSG.requestedInfo),
         ],
       });
     } else {

@@ -2,7 +2,7 @@ const moment = require('moment');
 const Enmap = require('enmap');
 const Discord = require('discord.js');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -34,7 +34,7 @@ module.exports = {
       .setTitle(embedMSG.prohibitedEmbedTitle)
       .setDescription(embedMSG.prohibitedEmbedDesc)
       ;
-      const includeuser = new Discord.MessageEmbed()
+    const includeuser = new Discord.MessageEmbed()
       .setColor(embedMSG.errorColor)
       .setTitle(embedMSG.errorEmbedTitle)
       .setDescription(embedMSG.enterValidUser);
@@ -130,6 +130,6 @@ module.exports = {
     );
     return client.guilds.cache
       .get(serverID)
-      .members.ban(toWarn, {reason, days: 7}); //the days section is how many days worth of message should be deleted when the user is banned, must be 0-7 otherwise theres going to be an error
+      .members.ban(toWarn, { reason, days: 7 }); //the days section is how many days worth of message should be deleted when the user is banned, must be 0-7 otherwise theres going to be an error
   }
 };

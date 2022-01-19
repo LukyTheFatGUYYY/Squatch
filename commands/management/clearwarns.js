@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 require('moment-duration-format');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const { adminrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
 const { serverID } = require('../../config/main.json');

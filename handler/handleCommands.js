@@ -14,10 +14,8 @@ const {
 } = require('../config/main.json');
 
 
-// Place your client and guild ids here
 const clientId = botID;
 const guildId = serverID;
-
 
 module.exports = (client) => {
 	client.handleCommands = async (commandFolders, path) => {
@@ -38,13 +36,11 @@ module.exports = (client) => {
 		(async () => {
 			try {
 				console.log('Started refreshing application (/) commands.');
-
 				await rest.put(
 					Routes.applicationGuildCommands(clientId, guildId), {
 					body: client.commandArray
 				},
 				);
-
 				console.log('Successfully reloaded application (/) commands.');
 			} catch (error) {
 				console.error(error);

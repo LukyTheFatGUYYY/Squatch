@@ -1,5 +1,5 @@
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const Discord = require('discord.js')
 const {
     adminrole
@@ -27,7 +27,7 @@ module.exports = {
         const server = client.guilds.cache.get(serverID);
         const moderator = interaction.member;
         const warnLogs = server.channels.cache.get(channelLog);
-        
+
         const Prohibited = new Discord.MessageEmbed()
             .setColor(embedMSG.errorColor)
             .setTitle(embedMSG.prohibitedEmbedTitle)

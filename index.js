@@ -32,6 +32,7 @@ const commandFolders = fs.readdirSync("./commands");
 	client.handleCommands(commandFolders, "./commands");
 })();
 
+// these two lines of code stops your bot from crashing from certain errors :)
 process.on("uncaughtException", error => console.error(error));
 process.on("unhandledRejection", error => console.error(error));
 

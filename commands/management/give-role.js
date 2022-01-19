@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const { adminrole } = require('../../config/constants/roles.json');
 const {
   SlashCommandBuilder
@@ -16,24 +16,25 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription('You are prohibited from doing this command');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
 
     const AlreadyHas = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('User already has that role');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.alreadyHasRole);
 
     const Error = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Error - Use format giverole <member> <role>');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.wrongCommandFormatDesc);
 
     const RoleError = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Role doesnt exist');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.roleDoesntExist);
     const member = interaction.options.getMember('user')
     const rolegiven = client.channels.cache.get(channelLog);
     if (!interaction.member.roles.cache.has(adminrole)) return interaction.reply({ embeds: [Prohibited] });
@@ -50,8 +51,8 @@ module.exports = {
 
       if (userRolePosition < selectedRolePosition) {
         const youdonthaveaccess = new Discord.MessageEmbed()
-          .setTitle("You don't have access to selected role.")
-          .setColor("RED")
+          .setTitle(embedMSG.missingRolePermission)
+          .setColor(embedMSG.errorColor)
 
         return interaction.editReply({ embeds: [youdonthaveaccess] })
       }
@@ -64,7 +65,7 @@ module.exports = {
       }
       const wowitworked = new Discord.MessageEmbed()
         .setTitle('Role successfully recieved')
-        .setColor("GREEN")
+        .setColor(embedMSG.successfulColor)
         .setDescription(
           `**Moderator:** ${interaction.user}\n**Role Recieved:** ${roleName}\n**Member:** ${member.user}`,
         );

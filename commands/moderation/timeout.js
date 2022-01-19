@@ -3,7 +3,7 @@ const { adminrole } = require('../../config/constants/roles.json');
 const { serverID } = require('../../config/main.json');
 const ms = require('ms')
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const {
     channelLog
 } = require('../../config/constants/channel.json');

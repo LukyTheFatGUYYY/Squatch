@@ -2,7 +2,7 @@ const Enmap = require('enmap');
 require('moment-duration-format');
 const Discord = require('discord.js');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -46,7 +46,7 @@ module.exports = {
         .addField('Reason', warnsDB.get(user.id).warns[caseID].reason)
         .addField('Date', warnsDB.get(user.id).warns[caseID].date);
       await interaction.member.send({ embeds: [em] }).catch((err) => interaction.editReply({ embeds: [enabledms] }));
-      await interaction.channel.send({embeds: [warninginfo] });
+      await interaction.channel.send({ embeds: [warninginfo] });
     } else {
       if (!interaction.member.roles.cache.has(staffrole)) return interaction.editReply({ embeds: [Prohibited] });
       const em = new Discord.MessageEmbed()

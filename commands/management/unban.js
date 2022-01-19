@@ -4,7 +4,7 @@ const { adminrole } = require('../../config/constants/roles.json');
 const { channelLog } = require('../../config/constants/channel.json');
 const { serverID } = require('../../config/main.json');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const Discord = require('discord.js')
 const {
   SlashCommandBuilder

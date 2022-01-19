@@ -2,7 +2,7 @@ const Enmap = require('enmap');
 const Discord = require('discord.js');
 const { customAlphabet } = require('nanoid')
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 require('moment-duration-format');
 const { staffrole } = require('../../config/constants/roles.json');
 const {

@@ -30,7 +30,7 @@ module.exports = {
     const caseData = data.data.find((m) => m.component.name == 'Case');
     const powerData = data.data.find((m) => m.component.name == 'Power Supply');
     const gpuData = data.data.find((m) => m.component.name == 'Video Card');
-    const embed = new Discord.MessageEmbed()
+    const pcpartpickerembed = new Discord.MessageEmbed()
       .setColor('PURPLE')
       .setTitle(`Sent by ${message.author.tag}`)
       .addField('CPU', cpuData ? `[${cpuData.selection.name}](${cpuData.selection.link})` : "No data")
@@ -41,6 +41,6 @@ module.exports = {
       .addField('Case', caseData ? `[${caseData.selection.name}](${caseData.selection.link})` : "No data")
       .addField('Power Supply', powerData ? `[${powerData.selection.name}](${powerData.selection.link})` : "No data")
       .setFooter(`Price: ${data.data.reduce((acc, cur) => acc += Number(cur.price.total.replace(/\$|No Prices Available/g, '')), 0).toFixed(2).toLocaleString()}`);
-    message.channel.send({ embeds: [embed] });
+    message.channel.send({ embeds: [pcpartpickerembed] });
 }
 };

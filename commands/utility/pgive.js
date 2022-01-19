@@ -3,6 +3,8 @@ const { pmanager, prole } = require('../../config/constants/roles.json');
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
+const configuration = require('../../config/embed/embedMsg.json')
+const embedMSG = configuration.messages
 const { channelLog } = require('../../config/constants/channel.json');
 
 module.exports = {
@@ -13,23 +15,23 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
     const Prohibited = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Prohibited User')
-      .setDescription('You are prohibited from doing this command');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.prohibitedEmbedTitle)
+      .setDescription(embedMSG.prohibitedEmbedDesc)
+      ;
 
     const AlreadyHas = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('User already has that role');
-
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.alreadyHasRole);
     const Error = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Error - Use format giverole <member>');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.wrongCommandFormatDesc);
     const RoleError = new Discord.MessageEmbed()
-      .setColor('RED')
-      .setTitle('Error')
-      .setDescription('Role doesnt exist');
+      .setColor(embedMSG.errorColor)
+      .setTitle(embedMSG.errorEmbedTitle)
+      .setDescription(embedMSG.roleDoesntExist);
 
     const member = interaction.options.getMember('user')
     if (!interaction.member.roles.cache.has(pmanager)) return interaction.reply({ embeds: [Prohibited] });

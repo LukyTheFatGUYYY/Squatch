@@ -37,7 +37,7 @@ module.exports = {
 
                 const embed2 = new MessageEmbed()
                     .setTitle(`❌ Message Deleted`)
-                    .setDescription(`Dear ${message.author.tag}\nYou have received this because you have sent a restricted word.\nPlease dont say it again`)
+                    .setDescription(`Dear ${message.author.tag}\nYou have received this because you sent a restricted word.\nPlease dont say it again`)
                     .addField('Message', `${message.content.toLowerCase()}`)
                     .setColor("RED")
                     .setTimestamp()

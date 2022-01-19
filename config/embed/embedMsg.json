@@ -10,12 +10,13 @@
 
 
         "commandWentWellDesc": "Command Executed Successfully",
-        "prohibitedEmbedDesc": "Error - You're not allowed to do that",
+        "prohibitedEmbedDesc": "You're not allowed to do that",
+        "wrongCommandFormatDesc": "Please make sure you're using the correct command format",
 
 
         "cantFindValidCase": "Cant find a valid case with this ID, please make sure you filled it in correctly (case senstive)",
         "pleaseEnterID": "Please make sure to provide a valid user ID",
-        "requestedInfo": "Please check your direct messages for more information",
+        "requestedInfo": "Please check your direct messages for the requested information",
 
 
         "enterValidUser": "Please mention a valid user",
@@ -35,6 +36,10 @@
         "timeoutDuration": "How long should the user be timed-out",
 
 
-        "warningEnableDMs": "It seems like you're not allowing me to send a DM. Try again"
+        "warningEnableDMs": "It seems like you're not allowing me to send a DM. Try again after you enabled your dm's",
+
+        "alreadyHasRole": "Seems like the user already has that role - Can't give users duplicate roles",
+        "roleDoesntExist": "Seems like the role doesnt exist - Please try another role",
+        "missingRolePermission": "Seems like you currently cant give edit or give the role to other users - Please make sure you have the correct permissions before making changes or give the role to other users"
     }
 }

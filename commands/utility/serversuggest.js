@@ -17,7 +17,6 @@ module.exports = {
       .setColor('RED')
       .setTitle('Error')
       .setDescription('Error')
-      .setFooter(`${interaction.user.tag}`);
     ;
     if (!suggestmsg) return interaction.editReply({ embeds: [noarg] })
     const suggestembed = new Discord.MessageEmbed()

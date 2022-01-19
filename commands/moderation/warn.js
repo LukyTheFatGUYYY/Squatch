@@ -3,7 +3,7 @@ require('moment-duration-format');
 const Discord = require('discord.js');
 const moment = require('moment');
 const configuration = require('../../config/embed/embedMsg.json')
-const embedMSG = configuration.tickets
+const embedMSG = configuration.messages
 const {
   SlashCommandBuilder
 } = require('@discordjs/builders');
@@ -73,20 +73,20 @@ module.exports = {
     const Server = interaction.guild;
     const em = new Discord.MessageEmbed()
       .setTitle(`Case - ${caseID}`)
-      .setColor('GREEN')
+      .setColor(embedMSG.successfulColor)
       .addField('Member', `${toWarn.tag} (${toWarn.id})`)
       .addField('Moderator', `${moderator.tag} (${moderator.id})`)
       .addField('Reason', `\`(warned) - ${reason}\``)
     await warnLogs.send({ embeds: [em] });
     const emUser = new Discord.MessageEmbed()
       .setTitle('Warned')
-      .setColor('RED')
+      .setColor(embedMSG.errorColor)
       .setDescription(`You were warned in **${Server}** for ${reason}, please don't do it again!`)
       .addField('Case ID', `\`${caseID}\``);
     await toWarn.send({ embeds: [emUser] }).catch((err) => err);
     const emChan = new Discord.MessageEmbed()
       .setDescription(`You have succesfully warned **${toWarn.tag}**.`)
-      .setColor('GREEN');
+      .setColor(embedMSG.successfulColor);
     await interaction.channel
       .send({ embeds: [emChan] });
     warnsDB.set(
