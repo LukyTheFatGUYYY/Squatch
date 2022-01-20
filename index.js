@@ -1,5 +1,6 @@
 require('dotenv').config({ path: './config/credentials.env' });
 const Discord = require('discord.js');
+const Levels = require('discord-xp')
 const fs = require('fs');
 const Nuggies = require('nuggies');
 const sqlite = require('sqlite3').verbose();
@@ -57,8 +58,7 @@ const defaultGiveawayMessages = {
 };
 
 Nuggies.Messages(client, { giveawayOptions: defaultGiveawayMessages })
-// Connect to the database
-Nuggies.connect(""); // put the connection to mongodb here
+Nuggies.connect(""); // connection for giveaway
 Nuggies.handleInteractions(client)
 Nuggies.giveaways.startAgain(client);
 
@@ -66,5 +66,10 @@ Nuggies.giveaways.startAgain(client);
 db.run(`CREATE TABLE IF NOT EXISTS userData(userId INTEGER, tag TEXT, username TEXT, ticketsOpenNow INTEGER, ticketsOpened INTEGER, messagesSent INTEGER)`);
 db.run(`CREATE TABLE IF NOT EXISTS ticketData(channelId INTEGER, channelName TEXT, ticketId INTEGER, authorId INTEGER, guildId INTEGER, ticketType TEXT, opened TEXT)`);
 db.run(`CREATE TABLE IF NOT EXISTS guildData(guildId INTEGER, ticketCount INTEGER, memberCount INEGER)`);
+
+
+
+Levels.connect("") // connection for leveling
+
 
 client.login(process.env.TOKEN);

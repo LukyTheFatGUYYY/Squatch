@@ -11,9 +11,11 @@ module.exports = {
         const welcome = server.channels.cache.get(welcomechannel);
         const UserOnJoin = `<@${args.user.id}>`
         let messages = [
-        `Welcome ${UserOnJoin} to the server!`,
+        `Welcome ${UserOnJoin} to the server !`,
+        `Have a great time in the server ${UserOnJoin} !`,
         `How are you ${UserOnJoin} !`,
-        `Hows your day been so far, ${UserOnJoin} ?`
+        `Hows your day been so far, ${UserOnJoin} ?`,
+        `Hope you enjoy your stay here ${UserOnJoin} !`
     ]
         let chosenMessage = messages[Math.floor(Math.random() * messages.length)]
         welcome.send(chosenMessage)

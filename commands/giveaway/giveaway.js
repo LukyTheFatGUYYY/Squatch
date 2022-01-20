@@ -1,4 +1,5 @@
 const Nuggies = require('nuggies');
+const Discord = require('discord.js')
 const { adminrole } = require('../../config/constants/roles.json');
 const configuration = require('../../config/embed/embedMsg.json')
 const embedMSG = configuration.messages

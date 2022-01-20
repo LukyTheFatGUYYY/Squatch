@@ -23,11 +23,11 @@ module.exports = {
       ;
     const enabledms = new Discord.MessageEmbed()
       .setColor(embedMSG.errorColor)
-      .setTitle('Error!')
+      .setTitle(embedMSG.errorEmbedTitle)
       .setDescription(embedMSG.warningEnableDMs);
     const caseidincorrect = new Discord.MessageEmbed()
       .setColor(embedMSG.errorColor)
-      .setTitle('Error')
+      .setTitle(embedMSG.errorEmbedTitle)
       .setDescription(embedMSG.pleaseEnterID);
     const warninginfo = new Discord.MessageEmbed()
       .setColor(embedMSG.sucessfulColor)
